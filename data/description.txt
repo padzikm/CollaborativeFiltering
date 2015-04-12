@@ -19,5 +19,3 @@ MovieID,YearOfRelease,Title.
 Note that it contains many more movies than have been used in our
 subset.  The README file has been included to conform to the terms of
 use. It will tell you more about the original, complete dataset.
-
-
