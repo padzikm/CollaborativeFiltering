@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="CollaborativeFilteringUI.Views.LoadData.LoadDataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <TextBox Grid.Row="1" Grid.Column="1" IsEnabled="False" HorizontalContentAlignment="Right" Margin="5">
+            <TextBox.BorderBrush>
+                <SolidColorBrush/>
+            </TextBox.BorderBrush> Plik z filmami
+        </TextBox>
+        <TextBox Grid.Row="1" Grid.Column="2"  Margin="5" Text="{Binding MoviesFilePath}"/>
+        <Button Grid.Row="1" Grid.Column="3"  Margin="5" Command="{Binding FindMoviesFile}">Znajdź plik</Button>
+
+        <TextBox Grid.Row="2" Grid.Column="1" IsEnabled="False" HorizontalContentAlignment="Right" Margin="5">
+            <TextBox.BorderBrush>
+                <SolidColorBrush/>
+            </TextBox.BorderBrush> Plik z ocenami
+        </TextBox>
+        <TextBox Grid.Row="2" Grid.Column="2"  Margin="5" Text="{Binding RatingsFilePath}"/>
+        <Button Grid.Row="2" Grid.Column="3"  Margin="5" Command="{Binding FindRatingsFile}">Znajdź plik</Button>
+
+        <Button Grid.Row="3" Grid.Column="3"  Margin="5" Command="{Binding LoadFiles}">Wczytaj dane</Button>
+
+    </Grid>
+</UserControl>

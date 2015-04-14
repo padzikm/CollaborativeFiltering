@@ -1,0 +1,24 @@
+﻿<Window x:Class="CollaborativeFilteringUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525" WindowState="Maximized">
+    <DockPanel>
+        
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Rekomendacje">
+                <MenuItem Header="Sprawdź wartość rekomentacji" Command="{Binding GetRecommendationValue}"/>
+                <MenuItem Header="Zarekomenduj filmy dla użytkownika"/>
+            </MenuItem>
+            <MenuItem Header="Dane">
+                <MenuItem Header="Wczytaj danez z plików" Command="{Binding LoadData}"/>
+                <MenuItem Header="Dodaj nowy film"/>
+                <MenuItem Header="Dodaj nowego użytkownika"/>
+                <MenuItem Header="Dodaj nową ocenę"/>
+            </MenuItem>
+            <MenuItem Header="Zakończ" Command="{Binding Exit}"/>
+        </Menu>
+        
+        <ContentControl Content="{Binding View}" Margin="10"/>
+    </DockPanel>
+
+</Window>
