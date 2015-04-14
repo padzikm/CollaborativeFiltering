@@ -23,7 +23,9 @@ namespace CollaborativeFiltering
                     var tab = line.Split(',');
 
                     var id = int.Parse(tab[0]);
-                    var year = int.Parse(tab[1]);
+                    var year = 0;
+                    if (!int.TryParse(tab[1], out year))
+                        year = 2000;
                     var title = tab[2];
 
                     var movie = new Movie(id, title, year);
