@@ -14,7 +14,7 @@ namespace CollaborativeFiltering
 
         public double Value { get; private set; }
 
-        private Rating(User user, Movie movie, double value)
+        internal Rating(User user, Movie movie, double value)
         {
             if (user == null)
                 throw new ArgumentNullException("user");

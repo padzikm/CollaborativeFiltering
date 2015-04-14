@@ -8,7 +8,7 @@ namespace CollaborativeFiltering
     {
         protected readonly List<Rating> _ratings;
 
-        public MemoryBasedAlgorithm(IEnumerable<Rating> ratings)
+        protected MemoryBasedAlgorithm(IEnumerable<Rating> ratings)
         {
             _ratings = ratings.ToList();
         }
@@ -16,7 +16,7 @@ namespace CollaborativeFiltering
         public virtual double RecommendationValue(User user, Movie movie)
         {
             var meanVote = UsersMeanVote(user);
-            var ratings = GetRatingsForExceptUser(movie, user);
+            var ratings = _ratings.Where(p => p.Movie.Id == movie.Id && p.User.Id != user.Id).ToList();
             var sum = 0D;
             var weightSum = 0D;
 
@@ -37,10 +37,7 @@ namespace CollaborativeFiltering
             return result;
         }
 
-        protected virtual List<Rating> GetRatingsForExceptUser(Movie movie, User user)
-        {
-            return _ratings.Where(p => p.Movie.Id == movie.Id && p.User.Id != user.Id).ToList();
-        }
+        internal abstract double Weight(User baseUser, User neighbour);
 
         protected virtual double UsersMeanVote(User user)
         {
@@ -55,7 +52,5 @@ namespace CollaborativeFiltering
 
             return sum / count;
         }
-
-        protected abstract double Weight(User baseUser, User neighbour);
     }
 }

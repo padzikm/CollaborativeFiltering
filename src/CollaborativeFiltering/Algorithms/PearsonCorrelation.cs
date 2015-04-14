@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CollaborativeFiltering
 {
@@ -9,32 +8,41 @@ namespace CollaborativeFiltering
         public PearsonCorrelation(IEnumerable<Rating> ratings) : base(ratings)
         {}
 
-        protected override double Weight(User baseUser, User neighbour)
+        internal override double Weight(User baseUser, User neighbour)
         {
+            var helper = GetRatingHelper();
+
             var baseUsersMean = UsersMeanVote(baseUser);
             var neighbourMean = UsersMeanVote(neighbour);
             var numerator = 0D;
             var denominatorSumBase = 0D;
             var denominatorSumNeigh = 0D;
 
-            foreach (var baseUsersRating in baseUser.Ratings)
+            var pair = helper.GetNextCommonRatings(baseUser, neighbour);
+
+            while (pair != null)
             {
-                var neighbourRating = neighbour.Ratings.FirstOrDefault(p => p.Movie.Id == baseUsersRating.Movie.Id);
+                var ratingBase = pair.FirstRating;
+                var ratingNeigh = pair.SecondRating;
 
-                if(neighbourRating == null)
-                    continue;
-
-                var diffBase = baseUsersRating.Value - baseUsersMean;
-                var diffNeigh = neighbourRating.Value - neighbourMean;
+                var diffBase = ratingBase.Value - baseUsersMean;
+                var diffNeigh = ratingNeigh.Value - neighbourMean;
 
                 numerator += diffBase*diffNeigh;
                 denominatorSumBase += diffBase*diffBase;
                 denominatorSumNeigh += diffNeigh*diffNeigh;
+
+                pair = helper.GetNextCommonRatings(baseUser, neighbour);
             }
 
             var denominator = Math.Sqrt(denominatorSumBase*denominatorSumNeigh);
 
             return numerator/denominator;
-        } 
+        }
+
+        protected virtual RatingHelper GetRatingHelper()
+        {
+            return new RatingHelper();
+        }
     }
 }

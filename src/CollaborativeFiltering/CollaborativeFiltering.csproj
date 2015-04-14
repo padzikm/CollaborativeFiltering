@@ -44,15 +44,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataReader.cs" />
-    <Compile Include="EvaluationTester.cs" />
-    <Compile Include="IRecommendation.cs" />
-    <Compile Include="MemoryBasedAlgorithm.cs" />
-    <Compile Include="Movie.cs" />
-    <Compile Include="PearsonCorrelation.cs" />
+    <Compile Include="Algorithms\CaseAmplification.cs" />
+    <Compile Include="DataIO\DataReader.cs" />
+    <Compile Include="Algorithms\DefaultVoting.cs" />
+    <Compile Include="Evaluations\EvaluationTester.cs" />
+    <Compile Include="Algorithms\InverseFrequency.cs" />
+    <Compile Include="Helpers\IRatingHelper.cs" />
+    <Compile Include="Algorithms\IRecommendation.cs" />
+    <Compile Include="Algorithms\MemoryBasedAlgorithm.cs" />
+    <Compile Include="Domain\Movie.cs" />
+    <Compile Include="Algorithms\PearsonCorrelation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rating.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="Domain\Rating.cs" />
+    <Compile Include="Helpers\RatingHelper.cs" />
+    <Compile Include="Helpers\RatingHelperDefaulter.cs" />
+    <Compile Include="Domain\User.cs" />
+    <Compile Include="Algorithms\VectorSimilarity.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
