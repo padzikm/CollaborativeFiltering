@@ -7,17 +7,17 @@ namespace CollaborativeFiltering
 {
     public class DataReader
     {
-        public static IEnumerable<Movie> ReadMovies(string path)
+        public List<Movie> ReadMovies(string path)
         {
             var movies = new List<Movie>();
 
             using (var stream = File.OpenText(path))
             {
-                if(stream.EndOfStream)
+                if (stream.EndOfStream)
                     return movies;
 
                 var line = stream.ReadLine();
-                
+
                 while (!stream.EndOfStream && !string.IsNullOrEmpty(line))
                 {
                     var tab = line.Split(',');
@@ -38,16 +38,16 @@ namespace CollaborativeFiltering
             return movies;
         }
 
-        public static IEnumerable<Rating> ReadMoviesAndRatings(string moviesPath, string ratingsPath)
+        public void ReadDataFromFiles(string movisPath, string ratingsPath, out List<Movie> movies, out List<User> users, out List<Rating> ratings)
         {
-            var movies = ReadMovies(moviesPath);
-
-            var ratings = new List<Rating>();
+            movies = ReadMovies(movisPath);
+            users = new List<User>();
+            ratings = new List<Rating>();
 
             using (var stream = File.OpenText(ratingsPath))
             {
                 if (stream.EndOfStream)
-                    return ratings;
+                    return;
 
                 var line = stream.ReadLine();
 
@@ -59,9 +59,17 @@ namespace CollaborativeFiltering
                     var userId = int.Parse(tab[1]);
                     var value = double.Parse(tab[2], CultureInfo.InvariantCulture);
 
-                    var user = new User(userId);
+                    User user;
+                    if(users.Any(u => u.Id == userId))
+                        user = users.First(u => u.Id == userId);
+                    else
+                    {
+                        user = new User(userId);
+                        users.Add(user);
+                    }
+
                     var movie = movies.First(p => p.Id == movieId);
-                    
+
                     var rating = Rating.CreateRating(user, movie, value);
 
                     ratings.Add(rating);
@@ -70,7 +78,6 @@ namespace CollaborativeFiltering
                 }
             }
 
-            return ratings;
         }
     }
 }
