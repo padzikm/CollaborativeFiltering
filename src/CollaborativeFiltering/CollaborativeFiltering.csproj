@@ -46,6 +46,8 @@
   <ItemGroup>
     <Compile Include="DataReader.cs" />
     <Compile Include="EvaluationTester.cs" />
+    <Compile Include="IDataRepository.cs" />
+    <Compile Include="InMemoryDataRepository.cs" />
     <Compile Include="IRecommendation.cs" />
     <Compile Include="MemoryBasedAlgorithm.cs" />
     <Compile Include="Movie.cs" />
