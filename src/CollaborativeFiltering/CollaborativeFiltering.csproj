@@ -47,7 +47,9 @@
     <Compile Include="DataReader.cs" />
     <Compile Include="EvaluationTester.cs" />
     <Compile Include="IRecommendation.cs" />
+    <Compile Include="MemoryBasedAlgorithm.cs" />
     <Compile Include="Movie.cs" />
+    <Compile Include="PearsonCorrelation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rating.cs" />
     <Compile Include="User.cs" />
