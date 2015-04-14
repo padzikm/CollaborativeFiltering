@@ -54,6 +54,8 @@
     <Compile Include="Algorithms\MemoryBasedAlgorithm.cs" />
     <Compile Include="Domain\Movie.cs" />
     <Compile Include="Algorithms\PearsonCorrelation.cs" />
+    <Compile Include="IDataRepository.cs" />
+    <Compile Include="InMemoryDataRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Domain\Rating.cs" />
     <Compile Include="Helpers\RatingHelper.cs" />

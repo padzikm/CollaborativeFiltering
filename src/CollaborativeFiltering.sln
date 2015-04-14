@@ -1,13 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollaborativeFiltering", "CollaborativeFiltering\CollaborativeFiltering.csproj", "{9CAF4D5B-90CE-4074-B88C-8440BD5D8959}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollaborativeFilteringUI", "CollaborativeFilteringUI\CollaborativeFilteringUI.csproj", "{2377508B-7AB5-46FD-8450-22FF68B8B869}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollaborativeFilteringTests", "CollaborativeFilteringTests\CollaborativeFilteringTests.csproj", "{F29BA7E2-30B5-481F-9A0B-399C5E35DC0E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9E2B7AC6-5C9D-4D20-8169-F2CE723A0A93}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
