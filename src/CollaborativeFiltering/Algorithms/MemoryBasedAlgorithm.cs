@@ -36,6 +36,9 @@ namespace CollaborativeFiltering
                 sum += val;
             }
 
+            if (weightSum == 0)
+                return -1;
+
             var kappa = 1/weightSum;
             var result = meanVote + kappa*sum;
 

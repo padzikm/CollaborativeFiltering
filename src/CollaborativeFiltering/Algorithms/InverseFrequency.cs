@@ -46,6 +46,9 @@ namespace CollaborativeFiltering
             var factors = (double)(firstFactor*secondFactor);
             var denominator = (decimal)Math.Sqrt(factors);
 
+            if (denominator == 0)
+                return 0;
+
             var result = numerator / denominator;
 
             return result;

@@ -26,6 +26,9 @@ namespace CollaborativeFiltering
                 sum += ratingBase*ratingNeigh;
             }
 
+            if (denominator == 0)
+                return 0;
+
             var result = sum / denominator;
 
             return result;
