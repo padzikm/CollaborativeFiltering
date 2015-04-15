@@ -17,14 +17,15 @@ namespace CollaborativeFiltering
         {
             var meanVote = UsersMeanVote(user);
             var ratings = _ratings.Where(p => p.Movie.Id == movie.Id && p.User.Id != user.Id).ToList();
-            var sum = 0D;
-            var weightSum = 0D;
+            var sum = 0M;
+            var weightSum = 0M;
 
             foreach (var rating in ratings)
             {
                 var weight = Weight(user, rating.User);
                 var mean = UsersMeanVote(rating.User);
-                var diff = rating.Value - mean;
+                var value = (decimal) rating.Value;
+                var diff = value - mean;
                 var val = weight*diff;
 
                 weightSum += Math.Abs(weight);
@@ -34,19 +35,19 @@ namespace CollaborativeFiltering
             var kappa = 1/weightSum;
             var result = meanVote + kappa*sum;
 
-            return result;
+            return (double)result;
         }
 
-        internal abstract double Weight(User baseUser, User neighbour);
+        internal abstract decimal Weight(User baseUser, User neighbour);
 
-        protected virtual double UsersMeanVote(User user)
+        protected virtual decimal UsersMeanVote(User user)
         {
-            var sum = 0D;
+            var sum = 0M;
             var count = 0;
 
             foreach (var rating in user.Ratings)
             {
-                sum += rating.Value;
+                sum += (decimal)rating.Value;
                 ++count;
             }
 

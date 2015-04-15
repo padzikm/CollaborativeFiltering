@@ -13,14 +13,14 @@ namespace CollaborativeFiltering
             _algorithm = algorithm;
         }
 
-        internal override double Weight(User baseUser, User neighbour)
+        internal override decimal Weight(User baseUser, User neighbour)
         {
-            var weight = _algorithm.Weight(baseUser, neighbour);
+            var weight = (double)_algorithm.Weight(baseUser, neighbour);
 
             if (weight >= 0)
-                return Math.Pow(weight, Ro);
+                return (decimal)Math.Pow(weight, Ro);
  
-            return -Math.Pow(-weight, Ro);
+            return (decimal)-Math.Pow(-weight, Ro);
         }
 
         public override string ToString()
