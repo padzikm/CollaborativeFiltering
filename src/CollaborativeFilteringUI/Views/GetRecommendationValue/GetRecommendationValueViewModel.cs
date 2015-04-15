@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace CollaborativeFilteringUI.Views.GetRecommendationValue
@@ -49,7 +50,14 @@ namespace CollaborativeFilteringUI.Views.GetRecommendationValue
 
         private void OnGetRecommendationValue(object obj)
         {
-            RecommendationValue = SelectedMethod.RecommendationValue(SelectedUser, SelectedMovie);
+            try
+            {
+                RecommendationValue = SelectedMethod.RecommendationValue(SelectedUser, SelectedMovie);
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show("Problem z wyznaczeniem wartości rekomendacji", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
     }
