@@ -38,7 +38,8 @@ namespace CollaborativeFiltering
 
                 var pair = ProcessRatings(firstRating, secondRating);
 
-                yield return pair;
+                if(pair != null)
+                    yield return pair;
             }
         }
 
