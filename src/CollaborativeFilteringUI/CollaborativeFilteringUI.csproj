@@ -71,6 +71,24 @@
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Core\DelegateCommand.cs" />
+    <Compile Include="Views\AddMovie\AddMovieView.xaml.cs">
+      <DependentUpon>AddMovieView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddMovie\AddMovieViewModel.cs" />
+    <Compile Include="Views\AddMovie\IAddMovieView.cs" />
+    <Compile Include="Views\AddMovie\IAddMovieViewModel.cs" />
+    <Compile Include="Views\AddRating\AddRatingView.xaml.cs">
+      <DependentUpon>AddRatingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddRating\AddRatingViewModel.cs" />
+    <Compile Include="Views\AddRating\IAddRatingView.cs" />
+    <Compile Include="Views\AddRating\IAddRatingViewModel.cs" />
+    <Compile Include="Views\AddUser\AddUserView.xaml.cs">
+      <DependentUpon>AddUserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddUser\AddUserViewModel.cs" />
+    <Compile Include="Views\AddUser\IAddUserView.cs" />
+    <Compile Include="Views\AddUser\IAddUserViewModel.cs" />
     <Compile Include="Views\GetRecommendationValue\GetRecommendationValueViewModel.cs" />
     <Compile Include="Views\GetRecommendationValue\GetRecommendationValueView.xaml.cs">
       <DependentUpon>GetRecommendationValueView.xaml</DependentUpon>
@@ -83,14 +101,36 @@
       <DependentUpon>LoadDataView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoadData\LoadDataViewModel.cs" />
+    <Compile Include="Views\Recommend\IRecommendView.cs" />
+    <Compile Include="Views\Recommend\IRecommendViewModel.cs" />
+    <Compile Include="Views\Recommend\RecommendView.xaml.cs">
+      <DependentUpon>RecommendView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Recommend\RecommendViewModel.cs" />
     <Compile Include="Windows\MainWindow\IMainWindow.cs" />
     <Compile Include="Windows\MainWindow\IMainWindowViewModel.cs" />
     <Compile Include="Windows\MainWindow\MainWindowViewModel.cs" />
+    <Page Include="Views\AddMovie\AddMovieView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddRating\AddRatingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddUser\AddUserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\GetRecommendationValue\GetRecommendationValueView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LoadData\LoadDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Recommend\RecommendView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
