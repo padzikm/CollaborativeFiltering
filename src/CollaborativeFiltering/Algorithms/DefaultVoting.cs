@@ -17,7 +17,7 @@ namespace CollaborativeFiltering
             _defaultValue = defaultValue;
         }
 
-        protected override RatingHelper GetRatingHelper()
+        protected override IRatingService GetRatingService()
         {
             return new RatingHelperDefaulter(_defaultValue);
         }

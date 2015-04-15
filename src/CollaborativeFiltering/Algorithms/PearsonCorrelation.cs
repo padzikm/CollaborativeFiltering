@@ -10,7 +10,7 @@ namespace CollaborativeFiltering
 
         internal override decimal Weight(User baseUser, User neighbour)
         {
-            var helper = GetRatingHelper();
+            var helper = GetRatingService();
 
             var baseUsersMean = UsersMeanVote(baseUser);
             var neighbourMean = UsersMeanVote(neighbour);
@@ -39,9 +39,9 @@ namespace CollaborativeFiltering
             return result;
         }
 
-        protected virtual RatingHelper GetRatingHelper()
+        protected virtual IRatingService GetRatingService()
         {
-            return new RatingHelper();
+            return new RatingService();
         }
 
         public override string ToString()

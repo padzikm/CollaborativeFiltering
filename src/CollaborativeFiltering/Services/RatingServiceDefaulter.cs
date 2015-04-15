@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace CollaborativeFiltering
 {
-    public class RatingHelperDefaulter : RatingHelper
+    public class RatingHelperDefaulter : RatingService
     {
         private readonly double _defaultValue;
 

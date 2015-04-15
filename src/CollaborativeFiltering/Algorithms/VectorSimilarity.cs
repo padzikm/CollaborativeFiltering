@@ -11,7 +11,7 @@ namespace CollaborativeFiltering
 
         internal override decimal Weight(User baseUser, User neighbour)
         {
-            var helper = new RatingHelper();
+            var helper = new RatingService();
 
             var baseSum = baseUser.Ratings.Sum(p => p.Value*p.Value);
             var neighSum = neighbour.Ratings.Sum(p => p.Value*p.Value);

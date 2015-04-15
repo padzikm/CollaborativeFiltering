@@ -43,41 +43,41 @@ namespace CollaborativeFiltering
             movies = ReadMovies(movisPath);
             users = new List<User>();
             ratings = new List<Rating>();
+            var text = null as string;
+            var moviesDict = movies.ToDictionary(p => p.Id);
+            var usersDict = new Dictionary<int, User>();
 
             using (var stream = File.OpenText(ratingsPath))
+                text = stream.ReadToEnd();
+
+            var lines = text.Split('\n');
+
+            foreach (var line in lines)
             {
-                if (stream.EndOfStream)
-                    return;
+                var tab = line.Split(',');
 
-                var line = stream.ReadLine();
+                if(tab == null || tab.Length != 3)
+                    continue;
 
-                while (!stream.EndOfStream && !string.IsNullOrEmpty(line))
+                var movieId = int.Parse(tab[0]);
+                var userId = int.Parse(tab[1]);
+                var value = double.Parse(tab[2], CultureInfo.InvariantCulture);
+
+                var user = null as User;
+
+                if (!usersDict.TryGetValue(userId, out user))
                 {
-                    var tab = line.Split(',');
-
-                    var movieId = int.Parse(tab[0]);
-                    var userId = int.Parse(tab[1]);
-                    var value = double.Parse(tab[2], CultureInfo.InvariantCulture);
-
-                    User user;
-                    if(users.Any(u => u.Id == userId))
-                        user = users.First(u => u.Id == userId);
-                    else
-                    {
-                        user = new User(userId);
-                        users.Add(user);
-                    }
-
-                    var movie = movies.First(p => p.Id == movieId);
-
-                    var rating = Rating.CreateRating(user, movie, value);
-
-                    ratings.Add(rating);
-
-                    line = stream.ReadLine();
+                    user = new User(userId);
+                    usersDict.Add(userId, user);
+                    users.Add(user);
                 }
-            }
 
+                var movie = moviesDict[movieId];
+
+                var rating = Rating.CreateRating(user, movie, value);
+
+                ratings.Add(rating);
+            }
         }
     }
 }

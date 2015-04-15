@@ -2,7 +2,7 @@
 
 namespace CollaborativeFiltering
 {
-    interface IRatingHelper
+    public interface IRatingService
     {
         IEnumerable<Pair> GetCommonRatings(User firstUser, User secondUser);
     }

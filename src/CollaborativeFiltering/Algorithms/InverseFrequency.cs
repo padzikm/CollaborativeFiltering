@@ -16,7 +16,7 @@ namespace CollaborativeFiltering
 
         internal override decimal Weight(User baseUser, User neighbour)
         {
-            var helper = new RatingHelper();
+            var helper = new RatingService();
 
             var frequencySum = 0M;
             var commonRatingsSum = 0M;

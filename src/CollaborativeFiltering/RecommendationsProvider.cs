@@ -12,9 +12,9 @@ namespace CollaborativeFiltering
         {
             var recommendations = new List<IRecommendation>();
 
-            recommendations.Add(new DefaultVoting(ratings, 1));
-            recommendations.Add(new InverseFrequency(ratings));
             recommendations.Add(new PearsonCorrelation(ratings));
+            recommendations.Add(new DefaultVoting(ratings, 3));
+            recommendations.Add(new InverseFrequency(ratings));
             recommendations.Add(new VectorSimilarity(ratings));
             recommendations.Add(new CaseAmplification(ratings, new DefaultVoting(ratings, 1)));
             recommendations.Add(new CaseAmplification(ratings, new InverseFrequency(ratings)));

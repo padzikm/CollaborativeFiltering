@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace CollaborativeFiltering
 {
-    public class RatingHelper : IRatingHelper
+    public class RatingService : IRatingService
     {
         protected User FirstUser;
         protected User SecondUser;
