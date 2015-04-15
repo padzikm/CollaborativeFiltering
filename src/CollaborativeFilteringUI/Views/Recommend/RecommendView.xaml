@@ -37,7 +37,7 @@
 
         <ComboBox Grid.Row="2" Grid.Column="2" ItemsSource="{Binding Recommendations}" SelectedItem="{Binding Mode=TwoWay, Path=SelectedMethod}" Margin="2"></ComboBox>
 
-        <Button Grid.Row="3" Grid.Column="3" Margin="5" Command="{Binding GetRecommendationValue}">Zarekomenduj film</Button>
+        <Button Grid.Row="3" Grid.Column="3" Margin="5" Command="{Binding RecommendMovie}">Zarekomenduj film</Button>
 
 
         <TextBox Grid.Row="4" Grid.Column="1" IsEnabled="False" HorizontalContentAlignment="Right" Margin="5">

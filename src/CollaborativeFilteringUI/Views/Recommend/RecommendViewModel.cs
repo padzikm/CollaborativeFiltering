@@ -49,6 +49,7 @@ namespace CollaborativeFilteringUI.Views.Recommend
             double maxRecommendation = double.MinValue;
             Movie recommendedMovie = null;
 
+
             foreach(var m in movies)
             {
                 try
