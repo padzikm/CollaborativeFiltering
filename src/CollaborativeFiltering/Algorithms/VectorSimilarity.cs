@@ -9,24 +9,26 @@ namespace CollaborativeFiltering
         public VectorSimilarity(IEnumerable<Rating> ratings) : base(ratings)
         {}
 
-        internal override double Weight(User baseUser, User neighbour)
+        internal override decimal Weight(User baseUser, User neighbour)
         {
             var helper = new RatingHelper();
 
             var baseSum = baseUser.Ratings.Sum(p => p.Value*p.Value);
             var neighSum = neighbour.Ratings.Sum(p => p.Value*p.Value);
-            var denominator = Math.Sqrt(baseSum)*Math.Sqrt(neighSum);
-            var sum = 0D;
+            var denominator = (decimal)(Math.Sqrt(baseSum)*Math.Sqrt(neighSum));
+            var sum = 0M;
 
             foreach (var pair in helper.GetCommonRatings(baseUser, neighbour))
             {
-                var ratingBase = pair.FirstRating;
-                var ratingNeigh = pair.SecondRating;
+                var ratingBase = (decimal)pair.FirstRating.Value;
+                var ratingNeigh = (decimal)pair.SecondRating.Value;
 
-                sum += ratingBase.Value*ratingNeigh.Value;
+                sum += ratingBase*ratingNeigh;
             }
 
-            return sum/denominator;
+            var result = sum / denominator;
+
+            return result;
         }
 
         public override string ToString()

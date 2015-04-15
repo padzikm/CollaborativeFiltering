@@ -8,32 +8,35 @@ namespace CollaborativeFiltering
         public PearsonCorrelation(IEnumerable<Rating> ratings) : base(ratings)
         {}
 
-        internal override double Weight(User baseUser, User neighbour)
+        internal override decimal Weight(User baseUser, User neighbour)
         {
             var helper = GetRatingHelper();
 
             var baseUsersMean = UsersMeanVote(baseUser);
             var neighbourMean = UsersMeanVote(neighbour);
-            var numerator = 0D;
-            var denominatorSumBase = 0D;
-            var denominatorSumNeigh = 0D;
+            var numerator = 0M;
+            var denominatorSumBase = 0M;
+            var denominatorSumNeigh = 0M;
 
             foreach (var pair in helper.GetCommonRatings(baseUser, neighbour))
             {
-                var ratingBase = pair.FirstRating;
-                var ratingNeigh = pair.SecondRating;
+                var ratingBase = (decimal)pair.FirstRating.Value;
+                var ratingNeigh = (decimal)pair.SecondRating.Value;
 
-                var diffBase = ratingBase.Value - baseUsersMean;
-                var diffNeigh = ratingNeigh.Value - neighbourMean;
+                var diffBase = ratingBase - baseUsersMean;
+                var diffNeigh = ratingNeigh - neighbourMean;
 
                 numerator += diffBase*diffNeigh;
                 denominatorSumBase += diffBase*diffBase;
                 denominatorSumNeigh += diffNeigh*diffNeigh;
             }
 
-            var denominator = Math.Sqrt(denominatorSumBase*denominatorSumNeigh);
+            var tmp = (double)(denominatorSumBase*denominatorSumNeigh);
+            var denominator = (decimal)Math.Sqrt(tmp);
 
-            return numerator/denominator;
+            var result = numerator / denominator;
+
+            return result;
         }
 
         protected virtual RatingHelper GetRatingHelper()
