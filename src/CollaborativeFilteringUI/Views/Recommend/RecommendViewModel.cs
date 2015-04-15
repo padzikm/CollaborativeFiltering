@@ -2,6 +2,7 @@
 using CollaborativeFilteringUI.Core;
 using StructureMap;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -42,32 +43,29 @@ namespace CollaborativeFilteringUI.Views.Recommend
 
         public ICommand RecommendMovie { get; set; }
 
-        public Movie RecommendedMovie { get; set; }
+        public string RecommendedMovie { get; set; }
 
         private void OnRecommendMovie(object obj)
         {
-            double maxRecommendation = double.MinValue;
             Movie recommendedMovie = null;
 
+            ConcurrentBag<Tuple<Movie, double>> results = new ConcurrentBag<Tuple<Movie, double>>();
 
-            foreach(var m in movies)
-            {
-                try
+            Parallel.ForEach(movies, m =>
                 {
-                    var recValue = SelectedMethod.RecommendationValue(SelectedUser, m);
-                    if (recValue > maxRecommendation)
+                    try
                     {
-                        maxRecommendation = recValue;
-                        recommendedMovie = m;
+                        var recValue = SelectedMethod.RecommendationValue(SelectedUser, m);
+                        results.Add(new Tuple<Movie, double>(m, recValue));
                     }
-                }
-                catch(Exception)
-                {
+                    catch (Exception)
+                    {
 
-                }
-            }
+                    }
+                });
 
-            RecommendedMovie = recommendedMovie;
+            var max = results.Max(t => t.Item2);
+            RecommendedMovie = results.Where(t => t.Item2 == max).FirstOrDefault().Item1.ToString();
         }
 
     }
