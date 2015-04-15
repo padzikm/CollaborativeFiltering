@@ -14,19 +14,20 @@ namespace CollaborativeFiltering
 
         public override IEnumerable<Pair> GetCommonRatings(User firstUser, User secondUser)
         {
-            var pair = base.GetCommonRatings(firstUser, secondUser);
+            var list = base.GetCommonRatings(firstUser, secondUser);
 
-            if (pair != null)
-                return pair;
+            foreach (var pair in list)
+                yield return pair;
 
-            pair = GetRatingTail(IndexFirst, CountFirst, RatingsFirstSort, firstUser, true);
+            var tail = GetRatingTail(ref IndexFirst, CountFirst, RatingsFirstSort, firstUser, true);
 
-            if (pair != null && pair.Any())
-                return pair;
+            foreach (var pair in tail)
+                yield return pair;
 
-            pair = GetRatingTail(IndexSecond, CountSecond, RatingsSecondSort, secondUser, false);
+            tail = GetRatingTail(ref IndexSecond, CountSecond, RatingsSecondSort, secondUser, false);
 
-            return pair;
+            foreach (var pair in tail)
+                yield return pair;
         }
 
         protected override Pair ProcessRatings(Rating firstRating, Rating secondRating)
@@ -54,8 +55,10 @@ namespace CollaborativeFiltering
             return pair;
         }
 
-        private IEnumerable<Pair> GetRatingTail(int index, int count, IEnumerable<Rating> ratings, User user, bool isSecondFake)
+        private IEnumerable<Pair> GetRatingTail(ref int index, int count, IEnumerable<Rating> ratings, User user, bool isSecondFake)
         {
+            var list = new LinkedList<Pair>();
+
             while (index < count)
             {
                 var rating = ratings.ElementAt(index);
@@ -66,8 +69,10 @@ namespace CollaborativeFiltering
                 
                 ++index;
 
-                yield return pair;
+                list.AddLast(pair);
             }
+
+            return list;
         }
     }
 }
