@@ -18,9 +18,7 @@ namespace CollaborativeFiltering
             var denominatorSumBase = 0D;
             var denominatorSumNeigh = 0D;
 
-            var pair = helper.GetNextCommonRatings(baseUser, neighbour);
-
-            while (pair != null)
+            foreach (var pair in helper.GetCommonRatings(baseUser, neighbour))
             {
                 var ratingBase = pair.FirstRating;
                 var ratingNeigh = pair.SecondRating;
@@ -31,8 +29,6 @@ namespace CollaborativeFiltering
                 numerator += diffBase*diffNeigh;
                 denominatorSumBase += diffBase*diffBase;
                 denominatorSumNeigh += diffNeigh*diffNeigh;
-
-                pair = helper.GetNextCommonRatings(baseUser, neighbour);
             }
 
             var denominator = Math.Sqrt(denominatorSumBase*denominatorSumNeigh);

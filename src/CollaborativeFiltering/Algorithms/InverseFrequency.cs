@@ -25,9 +25,7 @@ namespace CollaborativeFiltering
             var baseRatingsSquareSum = 0D;
             var neighRatingsSquareSum = 0D;
 
-            var pair = helper.GetNextCommonRatings(baseUser, neighbour);
-
-            while (pair != null)
+            foreach(var pair in helper.GetCommonRatings(baseUser, neighbour))
             {
                 var baseRating = pair.FirstRating;
                 var neighRating = pair.SecondRating;
@@ -40,8 +38,6 @@ namespace CollaborativeFiltering
 
                 baseRatingsSquareSum += frequency*(baseRating.Value*baseRating.Value);
                 neighRatingsSquareSum += frequency*(neighRating.Value*neighRating.Value);
-
-                pair = helper.GetNextCommonRatings(baseUser, neighbour);
             }
 
             var numerator = frequencySum*commonRatingsSum - baseRatingsSum*neighRatingsSum;

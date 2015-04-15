@@ -26,22 +26,20 @@ namespace CollaborativeFiltering
             CountSecond = secondUser.Ratings.Count();
         }
 
-        public virtual Pair GetNextCommonRatings(User firstUser, User secondUser) //O(n)
+        public virtual IEnumerable<Pair> GetCommonRatings(User firstUser, User secondUser) //O(n)
         {
             if (FirstUser != firstUser || SecondUser != secondUser)
                 Initialize(firstUser, secondUser);
 
-            var pair = null as Pair;
-
-            while (IndexFirst < CountFirst && IndexSecond < CountSecond && pair == null)
+            while (IndexFirst < CountFirst && IndexSecond < CountSecond)
             {
                 var firstRating = RatingsFirstSort.ElementAt(IndexFirst);
                 var secondRating = RatingsSecondSort.ElementAt(IndexSecond);
 
-                pair = ProcessRatings(firstRating, secondRating);
-            }
+                var pair = ProcessRatings(firstRating, secondRating);
 
-            return pair;
+                yield return pair;
+            }
         }
 
         protected virtual Pair ProcessRatings(Rating firstRating, Rating secondRating)

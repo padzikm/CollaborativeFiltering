@@ -1,8 +1,10 @@
-﻿namespace CollaborativeFiltering
+﻿using System.Collections.Generic;
+
+namespace CollaborativeFiltering
 {
     interface IRatingHelper
     {
-        Pair GetNextCommonRatings(User firstUser, User secondUser);
+        IEnumerable<Pair> GetCommonRatings(User firstUser, User secondUser);
     }
 
     public class Pair

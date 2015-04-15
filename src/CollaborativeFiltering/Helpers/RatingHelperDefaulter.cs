@@ -12,19 +12,19 @@ namespace CollaborativeFiltering
             _defaultValue = defaultValue;
         }
 
-        public override Pair GetNextCommonRatings(User firstUser, User secondUser)
+        public override IEnumerable<Pair> GetCommonRatings(User firstUser, User secondUser)
         {
-            var pair = base.GetNextCommonRatings(firstUser, secondUser);
+            var pair = base.GetCommonRatings(firstUser, secondUser);
 
             if (pair != null)
                 return pair;
 
-            pair = GetRatingTail(ref IndexFirst, CountFirst, RatingsFirstSort, firstUser, true);
+            pair = GetRatingTail(IndexFirst, CountFirst, RatingsFirstSort, firstUser, true);
 
-            if (pair != null)
+            if (pair != null && pair.Any())
                 return pair;
 
-            pair = GetRatingTail(ref IndexSecond, CountSecond, RatingsSecondSort, secondUser, false);
+            pair = GetRatingTail(IndexSecond, CountSecond, RatingsSecondSort, secondUser, false);
 
             return pair;
         }
@@ -54,17 +54,20 @@ namespace CollaborativeFiltering
             return pair;
         }
 
-        private Pair GetRatingTail(ref int index, int count, IEnumerable<Rating> ratings, User user, bool isSecondFake)
+        private IEnumerable<Pair> GetRatingTail(int index, int count, IEnumerable<Rating> ratings, User user, bool isSecondFake)
         {
-            if (index >= count)
-                return null;
+            while (index < count)
+            {
+                var rating = ratings.ElementAt(index);
+                var ratingFake = new Rating(user, rating.Movie, _defaultValue);
+                var pair = isSecondFake
+                    ? new Pair() {FirstRating = rating, SecondRating = ratingFake}
+                    : new Pair() {FirstRating = ratingFake, SecondRating = rating};
+                
+                ++index;
 
-            var rating = ratings.ElementAt(index);
-            var ratingFake = new Rating(user, rating.Movie, _defaultValue);
-            var pair = isSecondFake ? new Pair() { FirstRating = rating, SecondRating = ratingFake } : new Pair() { FirstRating = ratingFake, SecondRating = rating }; ;
-            ++index;
-
-            return pair;
+                yield return pair;
+            }
         }
     }
 }
