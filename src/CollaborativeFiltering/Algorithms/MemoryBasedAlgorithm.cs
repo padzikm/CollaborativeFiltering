@@ -15,8 +15,12 @@ namespace CollaborativeFiltering
 
         public virtual double RecommendationValue(User user, Movie movie)
         {
-            var meanVote = UsersMeanVote(user);
             var ratings = _ratings.Where(p => p.Movie.Id == movie.Id && p.User.Id != user.Id).ToList();
+            
+            if (!ratings.Any())
+                return -1;
+
+            var meanVote = UsersMeanVote(user);
             var sum = 0M;
             var weightSum = 0M;
 
