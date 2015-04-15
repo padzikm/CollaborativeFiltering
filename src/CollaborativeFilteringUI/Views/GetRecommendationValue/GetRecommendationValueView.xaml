@@ -8,8 +8,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="90"/>
+            <RowDefinition Height="90"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
             <RowDefinition/>
@@ -35,7 +35,7 @@
             </TextBox.BorderBrush> Wybierz film
         </TextBox>
 
-        <ComboBox Grid.Row="2" Grid.Column="2" ItemsSource="{Binding Movies}" SelectedItem="{Binding Mode=TwoWay, Path=SelectedMovie}" Margin="2"></ComboBox>
+        <ListView Grid.Row="2" Grid.Column="2" ItemsSource="{Binding Movies}" SelectedItem="{Binding Mode=TwoWay, Path=SelectedMovie}" Margin="2"></ListView>
 
         <TextBox Grid.Row="3" Grid.Column="1" IsEnabled="False" HorizontalContentAlignment="Right" Margin="5">
             <TextBox.BorderBrush>
