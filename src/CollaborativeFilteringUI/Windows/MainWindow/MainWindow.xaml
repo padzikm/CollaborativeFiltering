@@ -10,7 +10,7 @@
                 <MenuItem Header="Zarekomenduj filmy dla użytkownika" Command="{Binding Recommend}"/>
             </MenuItem>
             <MenuItem Header="Dane">
-                <MenuItem Header="Wczytaj danez z plików" Command="{Binding LoadData}"/>
+                <MenuItem Header="Wczytaj dane z plików" Command="{Binding LoadData}"/>
                 <MenuItem Header="Dodaj nowy film" Command="{Binding AddMovie}"/>
                 <MenuItem Header="Dodaj nowego użytkownika" Command="{Binding AddUser}"/>
                 <MenuItem Header="Dodaj nową ocenę" Command="{Binding AddRating}"/>
