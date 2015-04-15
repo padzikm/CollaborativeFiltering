@@ -23,5 +23,10 @@ namespace CollaborativeFiltering
             Title = title;
             Year = year;
         }
+
+        public override string ToString()
+        {
+            return Title + " (" + Year.ToString() + ")";
+        }
     }
 }

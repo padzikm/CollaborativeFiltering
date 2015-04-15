@@ -28,5 +28,10 @@ namespace CollaborativeFiltering
 
             return sum/denominator;
         }
+
+        public override string ToString()
+        {
+            return "Vector Similarity";
+        }
     }
 }

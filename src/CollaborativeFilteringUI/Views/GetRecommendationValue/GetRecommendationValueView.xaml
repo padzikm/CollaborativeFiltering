@@ -6,6 +6,58 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="500"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBox Grid.Row="1" Grid.Column="1" IsEnabled="False" HorizontalContentAlignment="Right" Margin="5">
+            <TextBox.BorderBrush>
+                <SolidColorBrush/>
+            </TextBox.BorderBrush> Wybierz użytkownika
+        </TextBox>
+        
+        <ListView Grid.Row="1" Grid.Column="2" ItemsSource="{Binding Users}" SelectedItem="{Binding Mode=TwoWay, Path=SelectedUser}"  Margin="2"></ListView>
+
+        <TextBox Grid.Row="2" Grid.Column="1" IsEnabled="False" HorizontalContentAlignment="Right" Margin="5">
+            <TextBox.BorderBrush>
+                <SolidColorBrush/>
+            </TextBox.BorderBrush> Wybierz film
+        </TextBox>
+
+        <ComboBox Grid.Row="2" Grid.Column="2" ItemsSource="{Binding Movies}" SelectedItem="{Binding Mode=TwoWay, Path=SelectedMovie}" Margin="2"></ComboBox>
+
+        <TextBox Grid.Row="3" Grid.Column="1" IsEnabled="False" HorizontalContentAlignment="Right" Margin="5">
+            <TextBox.BorderBrush>
+                <SolidColorBrush/>
+            </TextBox.BorderBrush> Wybierz metodę rekomendacji
+        </TextBox>
+
+        <ComboBox Grid.Row="3" Grid.Column="2" ItemsSource="{Binding Recommendations}" SelectedItem="{Binding Mode=TwoWay, Path=SelectedMethod}" Margin="2"></ComboBox>
+
+        
+        <TextBox Grid.Row="4" Grid.Column="1" IsEnabled="False" HorizontalContentAlignment="Right" Margin="5">
+            <TextBox.BorderBrush>
+                <SolidColorBrush/>
+            </TextBox.BorderBrush> Wartość rekomendacji
+        </TextBox>
+
+        <TextBox Grid.Row="4" Grid.Column="2" IsEnabled="False" HorizontalContentAlignment="Right" Margin="5" Text="{Binding RecommendationValue}">
+            <TextBox.BorderBrush>
+                <SolidColorBrush/>
+            </TextBox.BorderBrush>
+        </TextBox>
+
+        <Button Grid.Row="4" Grid.Column="3" Margin="5" Command="{Binding GetRecommendationValue}">Wyznacz wartość rekomendacji</Button>
     </Grid>
 </UserControl>

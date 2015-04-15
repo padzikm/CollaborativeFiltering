@@ -40,5 +40,10 @@ namespace CollaborativeFiltering
         {
             return new RatingHelper();
         }
+
+        public override string ToString()
+        {
+            return "Person Correlation";
+        }
     }
 }

@@ -65,5 +65,10 @@ namespace CollaborativeFiltering
 
             return value;
         }
+
+        public override string ToString()
+        {
+            return "Inverse Frequency";
+        }
     }
 }

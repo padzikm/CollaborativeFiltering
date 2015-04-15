@@ -21,5 +21,10 @@ namespace CollaborativeFiltering
         {
             return new RatingHelperDefaulter(_defaultValue);
         }
+
+        public override string ToString()
+        {
+            return "Default voting";
+        }
     }
 }

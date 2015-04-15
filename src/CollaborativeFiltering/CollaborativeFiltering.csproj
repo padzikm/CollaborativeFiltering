@@ -56,12 +56,14 @@
     <Compile Include="Algorithms\PearsonCorrelation.cs" />
     <Compile Include="IDataRepository.cs" />
     <Compile Include="InMemoryDataRepository.cs" />
+    <Compile Include="IRecommendationsProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Domain\Rating.cs" />
     <Compile Include="Helpers\RatingHelper.cs" />
     <Compile Include="Helpers\RatingHelperDefaulter.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Algorithms\VectorSimilarity.cs" />
+    <Compile Include="RecommendationsProvider.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

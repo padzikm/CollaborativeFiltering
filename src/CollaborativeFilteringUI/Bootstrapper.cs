@@ -30,6 +30,8 @@ namespace CollaborativeFilteringUI
 
             x.For<IDataRepository>().Singleton().Use<InMemoryDataRepository>();
             x.Policies.SetAllProperties(y => y.OfType<IDataRepository>());
+
+            x.For<IRecommendationsProvider>().Use<RecommendationsProvider>();
         }
     }
 }

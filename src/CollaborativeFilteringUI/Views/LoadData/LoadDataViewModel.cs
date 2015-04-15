@@ -71,7 +71,7 @@ namespace CollaborativeFilteringUI.Views.LoadData
                 DataRepository.Movies.AddRange(movies);
                 DataRepository.Ratings.AddRange(ratings);
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 MessageBox.Show("Błąd w trakcie wczytywania danych", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
             }

@@ -35,5 +35,10 @@ namespace CollaborativeFiltering
 
             _ratings.Add(rating);
         }
+
+        public override string ToString()
+        {
+            return FullName;
+        }
     }
 }

@@ -21,7 +21,11 @@ namespace CollaborativeFiltering
                 return Math.Pow(weight, Ro);
  
             return -Math.Pow(-weight, Ro);
+        }
 
+        public override string ToString()
+        {
+            return _algorithm.ToString() + " with Case Amplification";
         }
     }
 }
