@@ -23,10 +23,11 @@ namespace CollaborativeFiltering
                 return -1;
 
             var meanVote = UsersMeanVote(user);
-            var sum = 0M;
-            var weightSum = 0M;
+            var options = new ParallelOptions() { MaxDegreeOfParallelism = Environment.ProcessorCount };
+            var sumBag = new ConcurrentBag<decimal>();
+            var weightSumBag = new ConcurrentBag<decimal>();
 
-            Parallel.ForEach(ratings, rating =>
+            Parallel.ForEach(ratings, options, rating =>
             {
                 var weight = Weight(user, rating.User);
                 var mean = UsersMeanVote(rating.User);
@@ -34,9 +35,12 @@ namespace CollaborativeFiltering
                 var diff = value - mean;
                 var val = weight*diff;
 
-                weightSum += Math.Abs(weight);
-                sum += val;
+                weightSumBag.Add(Math.Abs(weight));
+                sumBag.Add(val);
             });
+
+            var sum = sumBag.Sum();
+            var weightSum = weightSumBag.Sum();
 
             if (weightSum == 0)
                 return -1;
@@ -49,12 +53,11 @@ namespace CollaborativeFiltering
 
         public virtual IEnumerable<Rating> RecommendMoviesForUser(User user, IEnumerable<Movie> movies, int take = -1, int skip = 0)
         {
-            var dict = new ConcurrentDictionary<Movie, double>();
+            var dict = new Dictionary<Movie, double>();
 
-            Parallel.ForEach(movies, movie =>
-            {
-                dict[movie] = RecommendMovieForUser(user, movie);
-            });
+            foreach (var movie in movies)
+                if(!dict.ContainsKey(movie))
+                    dict[movie] = RecommendMovieForUser(user, movie);
 
             var sortedList = dict.OrderByDescending(p => p.Value).Select(p => new Rating(user, p.Key, p.Value));
 

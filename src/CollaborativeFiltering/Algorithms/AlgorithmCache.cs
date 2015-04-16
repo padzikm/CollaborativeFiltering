@@ -34,28 +34,29 @@ namespace CollaborativeFiltering.Algorithms
 
         public IEnumerable<Rating> RecommendMoviesForUser(User user, IEnumerable<Movie> movies, int take = -1, int skip = 0)
         {
-            var cachedResults = new LinkedList<Rating>();
-            var notCachedMovies = new LinkedList<Movie>();
+            var cachedResults = new ConcurrentBag<Rating>();
+            var notCachedMovies = new ConcurrentBag<Movie>();
+            var options = new ParallelOptions() { MaxDegreeOfParallelism = Environment.ProcessorCount };
 
-            Parallel.ForEach(movies, movie =>
+            Parallel.ForEach(movies, options, movie =>
             {
                 var key = CreateCacheKey(user, movie);
                 var value = 0D;
                 if (_cache.TryGetValue(key, out value))
                 {
                     var ranking = new Rating(user, movie, value);
-                    cachedResults.AddLast(ranking);
+                    cachedResults.Add(ranking);
                 }
                 else
-                    notCachedMovies.AddLast(movie);
+                    notCachedMovies.Add(movie);
             });
 
             var partial = _algorithm.RecommendMoviesForUser(user, notCachedMovies);
 
-            foreach (var rating in partial)
-                cachedResults.AddLast(rating);
+            var results = partial.ToList();
+            results.AddRange(cachedResults);
 
-            var sorted = cachedResults.OrderByDescending(p => p.Value).AsEnumerable();
+            var sorted = results.OrderByDescending(p => p.Value).AsEnumerable();
 
             if (skip > 0)
                 sorted = sorted.Skip(skip);
@@ -75,14 +76,14 @@ namespace CollaborativeFiltering.Algorithms
             _algorithm.AddRating(rating);
         }
 
-        private string CreateCacheKey(User user, Movie movie)
-        {
-            return string.Format("{0}_{1}", user.Id, movie.Id);
-        }
-
         public override string ToString()
         {
             return _algorithm.ToString();
+        }
+
+        private string CreateCacheKey(User user, Movie movie)
+        {
+            return string.Format("{0}_{1}", user.Id, movie.Id);
         }
     }
 }

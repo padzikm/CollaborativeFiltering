@@ -59,9 +59,9 @@ namespace CollaborativeFilteringUI.Views.LoadData
 
         private void OnLoadFiles(object obj)
         {
-            List<User> users;
-            List<Movie> movies;
-            List<Rating> ratings;
+            IEnumerable<User> users;
+            IEnumerable<Movie> movies;
+            IEnumerable<Rating> ratings;
             var dataReader = new DataReader();
 
             try

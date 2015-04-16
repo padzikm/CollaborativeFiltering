@@ -1,13 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CollaborativeFiltering
 {
     public class DataReader
     {
-        public List<Movie> ReadMovies(string path)
+        public IEnumerable<Movie> ReadMovies(string path)
         {
             var movies = new List<Movie>();
 
@@ -38,26 +41,26 @@ namespace CollaborativeFiltering
             return movies;
         }
 
-        public void ReadDataFromFiles(string moviesPath, string ratingsPath, out List<Movie> movies, out List<User> users, out List<Rating> ratings)
+        public void ReadDataFromFiles(string moviesPath, string ratingsPath, out IEnumerable<Movie> movies, out IEnumerable<User> users, out IEnumerable<Rating> ratings)
         {
             movies = ReadMovies(moviesPath);
-            users = new List<User>();
-            ratings = new List<Rating>();
+            var ratingsBag = new ConcurrentBag<Rating>();
             var text = null as string;
             var moviesDict = movies.ToDictionary(p => p.Id);
-            var usersDict = new Dictionary<int, User>();
+            var usersDict = new ConcurrentDictionary<int, User>();
 
             using (var stream = File.OpenText(ratingsPath))
                 text = stream.ReadToEnd();
 
             var lines = text.Split('\n');
-
-            foreach (var line in lines)
+            var options = new ParallelOptions() { MaxDegreeOfParallelism = Environment.ProcessorCount };
+            
+            Parallel.ForEach(lines, options, line =>
             {
                 var tab = line.Split(',');
 
-                if(tab == null || tab.Length != 3)
-                    continue;
+                if (tab.Length != 3)
+                    return;
 
                 var movieId = int.Parse(tab[0]);
                 var userId = int.Parse(tab[1]);
@@ -68,16 +71,18 @@ namespace CollaborativeFiltering
                 if (!usersDict.TryGetValue(userId, out user))
                 {
                     user = new User(userId);
-                    usersDict.Add(userId, user);
-                    users.Add(user);
+                    usersDict[userId] = user;
                 }
 
                 var movie = moviesDict[movieId];
 
                 var rating = Rating.CreateRating(user, movie, value);
 
-                ratings.Add(rating);
-            }
+                ratingsBag.Add(rating);
+            });
+
+            users = usersDict.Select(p => p.Value);
+            ratings = ratingsBag.ToList();
         }
     }
 }

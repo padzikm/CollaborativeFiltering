@@ -29,9 +29,9 @@ namespace CollaborativeFilteringTests
             //given
             var moviesPath = "../../../../data/movie_titles.txt";
             var ratingsPath = "../../../../data/TestingRatingsShort.txt";
-            List<User> users;
-            List<Movie> movies;
-            List<Rating> ratings;
+            IEnumerable<User> users;
+            IEnumerable<Movie> movies;
+            IEnumerable<Rating> ratings;
             var dataReader = new DataReader();
 
             //when

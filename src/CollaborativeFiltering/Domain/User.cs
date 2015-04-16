@@ -1,17 +1,18 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace CollaborativeFiltering
 {
     public class User
     {
-        private readonly List<Rating> _ratings; 
+        private readonly ConcurrentDictionary<int, Rating> _ratings; 
 
         public int Id { get; private set; }
 
         public string FullName { get; private set; }
 
-        public IEnumerable<Rating> Ratings { get { return _ratings; } }
+        public IEnumerable<Rating> Ratings { get { return _ratings.Values; } }
 
         public User(int id) : this(id, id.ToString())
         {}
@@ -25,15 +26,15 @@ namespace CollaborativeFiltering
 
             Id = id;
             FullName = fullName;
-            _ratings = new List<Rating>();
+            _ratings = new ConcurrentDictionary<int, Rating>();
         }
 
         public void AddRating(Rating rating)
         {
-            if(_ratings.Find(p => p.Movie.Id == rating.Movie.Id) != null)
+            if(_ratings.ContainsKey(rating.Movie.Id))
                 throw new InvalidOperationException("User alread voted for this movie");
 
-            _ratings.Add(rating);
+            _ratings[rating.Movie.Id] = rating;
         }
 
         public override string ToString()
