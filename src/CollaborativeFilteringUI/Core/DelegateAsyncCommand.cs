@@ -9,6 +9,13 @@ namespace CollaborativeFilteringUI.Core
 {
     public class DelegateAsyncCommand<T> : DelegateCommand<T> where T : class
     {
+        public DelegateAsyncCommand(Action<T> execute, EventHandler onStarted, EventHandler onEnded)
+            : base(execute)
+        {
+            Started += onStarted;
+            Ended += onEnded;
+        }
+
         public DelegateAsyncCommand(Action<T> execute, Predicate<T> canExecute)
             : base(execute, canExecute)
         {  }

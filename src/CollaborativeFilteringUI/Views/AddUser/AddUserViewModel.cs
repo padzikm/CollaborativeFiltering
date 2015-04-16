@@ -15,7 +15,7 @@ namespace CollaborativeFilteringUI.Views.AddUser
         public AddUserViewModel(IAddUserView view, IContainer container)
             : base(view, container)
         {
-            Add = new DelegateAsyncCommand<object>(OnAdd);
+            Add = new DelegateAsyncCommand<object>(OnAdd, OnResponsivnesLost, OnResponsivnesGained);
         }
 
         public IDataRepository DataRepository { get; set; }
