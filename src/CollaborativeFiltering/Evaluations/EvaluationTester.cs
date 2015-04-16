@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CollaborativeFiltering
 {
@@ -12,11 +13,11 @@ namespace CollaborativeFiltering
 
             foreach (var rating in ratings)
             {
-                var value = system.RecommendationValue(rating.User, rating.Movie);
+                var value = system.RecommendMovieForUser(rating.User, rating.Movie);
                 var diff = value - rating.Value;
                 sum += Math.Abs(diff);
                 ++count;
-            }
+            };
 
             var error = sum/count;
 
@@ -30,11 +31,11 @@ namespace CollaborativeFiltering
 
             foreach (var rating in ratings)
             {
-                var value = system.RecommendationValue(rating.User, rating.Movie);
+                var value = system.RecommendMovieForUser(rating.User, rating.Movie);
                 var diff = value - rating.Value;
                 sum += diff*diff;
                 ++count;
-            }
+            };
 
             var partial = sum / count;
             var error = Math.Sqrt(partial);

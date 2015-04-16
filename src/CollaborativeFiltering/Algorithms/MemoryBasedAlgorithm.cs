@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CollaborativeFiltering
 {
@@ -13,10 +15,10 @@ namespace CollaborativeFiltering
             _ratings = ratings.ToList();
         }
 
-        public virtual double RecommendationValue(User user, Movie movie)
+        public virtual double RecommendMovieForUser(User user, Movie movie)
         {
             var ratings = _ratings.Where(p => p.Movie.Id == movie.Id && p.User.Id != user.Id).ToList();
-            
+
             if (!ratings.Any())
                 return -1;
 
@@ -24,7 +26,7 @@ namespace CollaborativeFiltering
             var sum = 0M;
             var weightSum = 0M;
 
-            foreach (var rating in ratings)
+            Parallel.ForEach(ratings, rating =>
             {
                 var weight = Weight(user, rating.User);
                 var mean = UsersMeanVote(rating.User);
@@ -34,7 +36,7 @@ namespace CollaborativeFiltering
 
                 weightSum += Math.Abs(weight);
                 sum += val;
-            }
+            });
 
             if (weightSum == 0)
                 return -1;
@@ -43,6 +45,30 @@ namespace CollaborativeFiltering
             var result = meanVote + kappa*sum;
 
             return (double)result;
+        }
+
+        public virtual IEnumerable<Rating> RecommendMoviesForUser(User user, IEnumerable<Movie> movies, int take = -1, int skip = 0)
+        {
+            var dict = new ConcurrentDictionary<Movie, double>();
+
+            Parallel.ForEach(movies, movie =>
+            {
+                dict[movie] = RecommendMovieForUser(user, movie);
+            });
+
+            var sortedList = dict.OrderByDescending(p => p.Value).Select(p => new Rating(user, p.Key, p.Value));
+
+            if (skip > 0)
+                sortedList = sortedList.Skip(skip);
+            if (take > 0)
+                sortedList = sortedList.Take(take);
+
+            return sortedList;
+        }
+
+        public virtual void AddRating(Rating rating)
+        {
+            _ratings.Add(rating);
         }
 
         internal abstract decimal Weight(User baseUser, User neighbour);
@@ -58,7 +84,7 @@ namespace CollaborativeFiltering
                 ++count;
             }
 
-            return sum / count;
+            return sum/count;
         }
     }
 }

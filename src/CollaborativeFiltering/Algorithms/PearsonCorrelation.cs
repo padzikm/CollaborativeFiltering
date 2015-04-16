@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CollaborativeFiltering
 {
@@ -18,11 +17,11 @@ namespace CollaborativeFiltering
             var numerator = 0M;
             var denominatorSumBase = 0M;
             var denominatorSumNeigh = 0M;
-            
+
             foreach (var pair in helper.GetCommonRatings(baseUser, neighbour))
             {
-                var ratingBase = (decimal)pair.FirstRating.Value;
-                var ratingNeigh = (decimal)pair.SecondRating.Value;
+                var ratingBase = (decimal) pair.FirstRating.Value;
+                var ratingNeigh = (decimal) pair.SecondRating.Value;
 
                 var diffBase = ratingBase - baseUsersMean;
                 var diffNeigh = ratingNeigh - neighbourMean;
@@ -30,7 +29,7 @@ namespace CollaborativeFiltering
                 numerator += diffBase*diffNeigh;
                 denominatorSumBase += diffBase*diffBase;
                 denominatorSumNeigh += diffNeigh*diffNeigh;
-            }
+            };
 
             var tmp = (double)(denominatorSumBase*denominatorSumNeigh);
             var denominator = (decimal)Math.Sqrt(tmp);
