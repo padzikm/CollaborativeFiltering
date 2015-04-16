@@ -27,5 +27,10 @@ namespace CollaborativeFiltering.Algorithms
 
             return cachedValue;
         }
+
+        public override string ToString()
+        {
+            return _algorithm.ToString();
+        }
     }
 }

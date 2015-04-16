@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CollaborativeFiltering.Algorithms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,14 +13,14 @@ namespace CollaborativeFiltering
         {
             var recommendations = new List<IRecommendation>();
 
-            recommendations.Add(new PearsonCorrelation(ratings));
-            recommendations.Add(new DefaultVoting(ratings, 3));
-            recommendations.Add(new InverseFrequency(ratings));
-            recommendations.Add(new VectorSimilarity(ratings));
-            recommendations.Add(new CaseAmplification(ratings, new DefaultVoting(ratings, 1)));
-            recommendations.Add(new CaseAmplification(ratings, new InverseFrequency(ratings)));
-            recommendations.Add(new CaseAmplification(ratings, new PearsonCorrelation(ratings)));
-            recommendations.Add(new CaseAmplification(ratings, new VectorSimilarity(ratings)));
+            recommendations.Add(new AlgorithmCache(new PearsonCorrelation(ratings)));
+            recommendations.Add(new AlgorithmCache(new DefaultVoting(ratings, 3)));
+            recommendations.Add(new AlgorithmCache(new InverseFrequency(ratings)));
+            recommendations.Add(new AlgorithmCache(new VectorSimilarity(ratings)));
+            recommendations.Add(new AlgorithmCache(new CaseAmplification(ratings, new DefaultVoting(ratings, 1))));
+            recommendations.Add(new AlgorithmCache(new CaseAmplification(ratings, new InverseFrequency(ratings))));
+            recommendations.Add(new AlgorithmCache(new CaseAmplification(ratings, new PearsonCorrelation(ratings))));
+            recommendations.Add(new AlgorithmCache(new CaseAmplification(ratings, new VectorSimilarity(ratings))));
 
             return recommendations;
         }
