@@ -2,12 +2,12 @@
 
 namespace CollaborativeFiltering.Algorithms
 {
-    public class MemoryBasedAlgorithmCache : MemoryBasedAlgorithm
+    public class MemoryBasedAlgorithmWeightCache : MemoryBasedAlgorithm
     {
         private readonly MemoryBasedAlgorithm _algorithm;
         private readonly Dictionary<string, decimal> _cache; 
 
-        public MemoryBasedAlgorithmCache(IEnumerable<Rating> ratings, MemoryBasedAlgorithm algorithm) : base(ratings)
+        public MemoryBasedAlgorithmWeightCache(IEnumerable<Rating> ratings, MemoryBasedAlgorithm algorithm) : base(ratings)
         {
             _algorithm = algorithm;
             _cache = new Dictionary<string, decimal>();
@@ -15,8 +15,8 @@ namespace CollaborativeFiltering.Algorithms
 
         internal override decimal Weight(User baseUser, User neighbour)
         {
-            var key = string.Format("{0}_{1}", baseUser, neighbour);
-            var reverseKey = string.Format("{0}_{1}", neighbour, baseUser);
+            var key = string.Format("{0}_{1}", baseUser.Id, neighbour.Id);
+            var reverseKey = string.Format("{0}_{1}", neighbour.Id, baseUser.Id);
             var cachedWeight = 0M;
 
             if (_cache.TryGetValue(key, out cachedWeight))

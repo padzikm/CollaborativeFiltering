@@ -44,8 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\AlgorithmCache.cs" />
     <Compile Include="Algorithms\CaseAmplification.cs" />
-    <Compile Include="Algorithms\MemoryBasedAlgorithmCache.cs" />
+    <Compile Include="Algorithms\MemoryBasedAlgorithmWeightCache.cs" />
     <Compile Include="DataIO\DataReader.cs" />
     <Compile Include="Algorithms\DefaultVoting.cs" />
     <Compile Include="Evaluations\EvaluationTester.cs" />
