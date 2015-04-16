@@ -1,4 +1,5 @@
 ﻿using StructureMap;
+using System;
 
 namespace CollaborativeFilteringUI.Core
 {
@@ -9,10 +10,23 @@ namespace CollaborativeFilteringUI.Core
             View = view;
             view.DataContext = this;
             Container = container;
+            IsResponsive = true;
         }
 
         public IView View { get; set; }
 
         public IContainer Container { get; set; }
+
+        public bool IsResponsive { get; set; }
+
+        protected void OnResponsivnesLost(object sender, EventArgs e)
+        {
+            IsResponsive = false;
+        }
+
+        protected void OnResponsivnesGained(object sender, EventArgs e)
+        {
+            IsResponsive = true;
+        }
     }
 }

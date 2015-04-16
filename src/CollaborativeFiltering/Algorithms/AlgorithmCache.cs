@@ -79,5 +79,10 @@ namespace CollaborativeFiltering.Algorithms
         {
             return string.Format("{0}_{1}", user.Id, movie.Id);
         }
+
+        public override string ToString()
+        {
+            return _algorithm.ToString();
+        }
     }
 }

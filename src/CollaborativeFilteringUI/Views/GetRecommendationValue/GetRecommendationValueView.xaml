@@ -26,8 +26,8 @@
                 <SolidColorBrush/>
             </TextBox.BorderBrush> Wybierz użytkownika
         </TextBox>
-        
-        <ListView Grid.Row="1" Grid.Column="2" ItemsSource="{Binding Users}" SelectedItem="{Binding Mode=TwoWay, Path=SelectedUser}"  Margin="2"></ListView>
+
+        <ListView Grid.Row="1" Grid.Column="2" ItemsSource="{Binding Users}" SelectedItem="{Binding Mode=TwoWay, Path=SelectedUser}"  Margin="2"  IsEnabled="{Binding IsResponsive}"></ListView>
 
         <TextBox Grid.Row="2" Grid.Column="1" IsEnabled="False" HorizontalContentAlignment="Right" Margin="5">
             <TextBox.BorderBrush>
@@ -35,7 +35,7 @@
             </TextBox.BorderBrush> Wybierz film
         </TextBox>
 
-        <ListView Grid.Row="2" Grid.Column="2" ItemsSource="{Binding Movies}" SelectedItem="{Binding Mode=TwoWay, Path=SelectedMovie}" Margin="2"></ListView>
+        <ListView Grid.Row="2" Grid.Column="2" ItemsSource="{Binding Movies}" SelectedItem="{Binding Mode=TwoWay, Path=SelectedMovie}" Margin="2"  IsEnabled="{Binding IsResponsive}"></ListView>
 
         <TextBox Grid.Row="3" Grid.Column="1" IsEnabled="False" HorizontalContentAlignment="Right" Margin="5">
             <TextBox.BorderBrush>
@@ -43,7 +43,7 @@
             </TextBox.BorderBrush> Wybierz metodę rekomendacji
         </TextBox>
 
-        <ComboBox Grid.Row="3" Grid.Column="2" ItemsSource="{Binding Recommendations}" SelectedItem="{Binding Mode=TwoWay, Path=SelectedMethod}" Margin="2"></ComboBox>
+        <ComboBox Grid.Row="3" Grid.Column="2" ItemsSource="{Binding Recommendations}" SelectedItem="{Binding Mode=TwoWay, Path=SelectedMethod}" Margin="2"  IsEnabled="{Binding IsResponsive}"></ComboBox>
 
         
         <TextBox Grid.Row="4" Grid.Column="1" IsEnabled="False" HorizontalContentAlignment="Right" Margin="5">
@@ -58,6 +58,6 @@
             </TextBox.BorderBrush>
         </TextBox>
 
-        <Button Grid.Row="4" Grid.Column="3" Margin="5" Command="{Binding GetRecommendationValue}">Wyznacz wartość rekomendacji</Button>
+        <Button Grid.Row="4" Grid.Column="3" Margin="5" Command="{Binding GetRecommendationValue}"  IsEnabled="{Binding IsResponsive}">Wyznacz wartość rekomendacji</Button>
     </Grid>
 </UserControl>

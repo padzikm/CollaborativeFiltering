@@ -19,7 +19,7 @@ namespace CollaborativeFilteringUI.Views.LoadData
         {
             FindMoviesFile = new DelegateCommand<object>(OnFindMoviesFile);
             FindRatingsFile = new DelegateCommand<object>(OnFindRatingsFile);
-            LoadFiles = new DelegateCommand<object>(OnLoadFiles); //TODO: Przerobić na async
+            LoadFiles = new DelegateAsyncCommand<object>(OnLoadFiles, OnResponsivnesLost, OnResponsivnesGained);
         }
 
         public string MoviesFilePath { get; set; }

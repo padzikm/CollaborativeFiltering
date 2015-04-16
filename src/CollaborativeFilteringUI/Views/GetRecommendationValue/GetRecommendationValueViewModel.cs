@@ -29,7 +29,7 @@ namespace CollaborativeFilteringUI.Views.GetRecommendationValue
 
             SelectedMethod = Recommendations.FirstOrDefault();
 
-            GetRecommendationValue = new DelegateCommand<object>(OnGetRecommendationValue); //TODO: Przerobić na async
+            GetRecommendationValue = new DelegateAsyncCommand<object>(OnGetRecommendationValue, OnResponsivnesLost, OnResponsivnesGained);
         }
 
         public ObservableCollection<User> Users { get; set; }

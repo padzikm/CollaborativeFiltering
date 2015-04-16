@@ -26,18 +26,18 @@
                 <SolidColorBrush/>
             </TextBox.BorderBrush> Plik z filmami
         </TextBox>
-        <TextBox Grid.Row="1" Grid.Column="2"  Margin="5" Text="{Binding MoviesFilePath}"/>
-        <Button Grid.Row="1" Grid.Column="3"  Margin="5" Command="{Binding FindMoviesFile}">Znajdź plik</Button>
+        <TextBox Grid.Row="1" Grid.Column="2"  Margin="5" Text="{Binding MoviesFilePath}" IsEnabled="{Binding IsResponsive}"/>
+        <Button Grid.Row="1" Grid.Column="3"  Margin="5" Command="{Binding FindMoviesFile}" IsEnabled="{Binding IsResponsive}">Znajdź plik</Button>
 
         <TextBox Grid.Row="2" Grid.Column="1" IsEnabled="False" HorizontalContentAlignment="Right" Margin="5">
             <TextBox.BorderBrush>
                 <SolidColorBrush/>
             </TextBox.BorderBrush> Plik z ocenami
         </TextBox>
-        <TextBox Grid.Row="2" Grid.Column="2"  Margin="5" Text="{Binding RatingsFilePath}"/>
-        <Button Grid.Row="2" Grid.Column="3"  Margin="5" Command="{Binding FindRatingsFile}">Znajdź plik</Button>
+        <TextBox Grid.Row="2" Grid.Column="2"  Margin="5" Text="{Binding RatingsFilePath}" IsEnabled="{Binding IsResponsive}"/>
+        <Button Grid.Row="2" Grid.Column="3"  Margin="5" Command="{Binding FindRatingsFile}" IsEnabled="{Binding IsResponsive}">Znajdź plik</Button>
 
-        <Button Grid.Row="3" Grid.Column="3"  Margin="5" Command="{Binding LoadFiles}">Wczytaj dane</Button>
+        <Button Grid.Row="3" Grid.Column="3"  Margin="5" Command="{Binding LoadFiles}" IsEnabled="{Binding IsResponsive}">Wczytaj dane</Button>
 
     </Grid>
 </UserControl>
