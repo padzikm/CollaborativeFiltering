@@ -24,7 +24,7 @@ namespace CollaborativeFilteringUI.Views.AddRating
             SelectedUser = Users.FirstOrDefault();
             SelectedMovie = Movies.FirstOrDefault();
 
-            Add = new DelegateCommand<object>(OnAdd);
+            Add = new DelegateAsyncCommand<object>(OnAdd);
         }
 
         public ObservableCollection<User> Users { get; set; }

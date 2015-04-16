@@ -28,7 +28,7 @@ namespace CollaborativeFilteringUI.Views.Recommend
 
             SelectedMethod = Recommendations.FirstOrDefault();
 
-            RecommendMovie = new DelegateCommand<object>(OnRecommendMovie);
+            RecommendMovie = new DelegateAsyncCommand<object>(OnRecommendMovie);
         }
 
         private List<Movie> movies;
