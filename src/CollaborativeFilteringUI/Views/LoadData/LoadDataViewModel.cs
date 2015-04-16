@@ -67,6 +67,7 @@ namespace CollaborativeFilteringUI.Views.LoadData
             try
             {
                 dataReader.ReadDataFromFiles(MoviesFilePath, RatingsFilePath, out movies, out users, out ratings);
+                movies = ratings.GroupBy(p => p.Movie.Id).OrderByDescending(p => p.Count()).Select(p => p.First().Movie);
                 DataRepository.Users.AddRange(users);
                 DataRepository.Movies.AddRange(movies);
                 DataRepository.Ratings.AddRange(ratings);

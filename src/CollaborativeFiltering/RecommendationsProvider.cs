@@ -13,14 +13,14 @@ namespace CollaborativeFiltering
         {
             var recommendations = new List<IRecommendation>();
 
-            recommendations.Add(new AlgorithmCache(new PearsonCorrelation(ratings)));
-            recommendations.Add(new AlgorithmCache(new DefaultVoting(ratings, 3)));
-            recommendations.Add(new AlgorithmCache(new InverseFrequency(ratings)));
-            recommendations.Add(new AlgorithmCache(new VectorSimilarity(ratings)));
-            recommendations.Add(new AlgorithmCache(new CaseAmplification(ratings, new DefaultVoting(ratings, 1))));
-            recommendations.Add(new AlgorithmCache(new CaseAmplification(ratings, new InverseFrequency(ratings))));
-            recommendations.Add(new AlgorithmCache(new CaseAmplification(ratings, new PearsonCorrelation(ratings))));
-            recommendations.Add(new AlgorithmCache(new CaseAmplification(ratings, new VectorSimilarity(ratings))));
+            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new PearsonCorrelation(ratings))));
+            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new DefaultVoting(ratings, 3))));
+            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new InverseFrequency(ratings))));
+            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new VectorSimilarity(ratings))));
+            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new CaseAmplification(ratings, new DefaultVoting(ratings, 3)))));
+            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new CaseAmplification(ratings, new InverseFrequency(ratings)))));
+            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new CaseAmplification(ratings, new PearsonCorrelation(ratings)))));
+            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new CaseAmplification(ratings, new VectorSimilarity(ratings)))));
 
             return recommendations;
         }

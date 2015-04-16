@@ -5,31 +5,31 @@ namespace CollaborativeFiltering
 {
     public class RatingService : IRatingService
     {
-        protected User FirstUser;
-        protected User SecondUser;
-        protected IEnumerable<Rating> RatingsFirstSort;
-        protected IEnumerable<Rating> RatingsSecondSort;
+        protected IRater FirstRater;
+        protected IRater SecondRater;
+        protected IEnumerable<IRating> RatingsFirstSort;
+        protected IEnumerable<IRating> RatingsSecondSort;
         protected int IndexFirst;
         protected int IndexSecond;
         protected int CountFirst;
         protected int CountSecond;
 
-        protected virtual void Initialize(User firstUser, User secondUser) //O(nlogn)
+        protected virtual void Initialize(IRater firstRater, IRater secondRater) //O(nlogn)
         {
-            FirstUser = firstUser;
-            SecondUser = secondUser;
-            RatingsFirstSort = firstUser.Ratings.OrderBy(p => p.Movie.Id);
-            RatingsSecondSort = secondUser.Ratings.OrderBy(p => p.Movie.Id);
+            FirstRater = firstRater;
+            SecondRater = secondRater;
+            RatingsFirstSort = firstRater.Ratings.OrderBy(p => p.Subject.Id);
+            RatingsSecondSort = secondRater.Ratings.OrderBy(p => p.Subject.Id);
             IndexFirst = 0;
             IndexSecond = 0;
             CountFirst = RatingsFirstSort.Count();
             CountSecond = RatingsSecondSort.Count();
         }
 
-        public virtual IEnumerable<Pair> GetCommonRatings(User firstUser, User secondUser) //O(n)
+        public virtual IEnumerable<Pair> GetCommonRatings(IRater firstRater, IRater secondRater) //O(n)
         {
-            if (FirstUser != firstUser || SecondUser != secondUser)
-                Initialize(firstUser, secondUser);
+            if (FirstRater != firstRater || SecondRater != secondRater)
+                Initialize(firstRater, secondRater);
 
             while (IndexFirst < CountFirst && IndexSecond < CountSecond)
             {
@@ -43,18 +43,18 @@ namespace CollaborativeFiltering
             }
         }
 
-        protected virtual Pair ProcessRatings(Rating firstRating, Rating secondRating)
+        protected virtual Pair ProcessRatings(IRating firstRating, IRating secondRating)
         {
             var pair = null as Pair;
 
-            if (firstRating.Movie.Id == secondRating.Movie.Id)
+            if (firstRating.Subject.Id == secondRating.Subject.Id)
             {
                 pair = new Pair() { FirstRating = firstRating, SecondRating = secondRating };
 
                 ++IndexFirst;
                 ++IndexSecond;
             }
-            else if (firstRating.Movie.Id < secondRating.Movie.Id)
+            else if (firstRating.Subject.Id < secondRating.Subject.Id)
                 ++IndexFirst;
             else
                 ++IndexSecond;

@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace CollaborativeFiltering
 {
     public interface IRecommendation
     {
-        double RecommendMovieForUser(User user, Movie movie);
+        IRating RecommendSubject(IRater rater, ISubject subject);
 
-        IEnumerable<Rating> RecommendMoviesForUser(User user, IEnumerable<Movie> movies, int take = -1, int skip = 0);
+        IEnumerable<IRating> RecommendSubjects(IRater rater, IEnumerable<ISubject> subjects, int take = -1, int skip = 0);
 
-        void AddRating(Rating rating);
+        void AddRating(IRating rating);
     }
 }

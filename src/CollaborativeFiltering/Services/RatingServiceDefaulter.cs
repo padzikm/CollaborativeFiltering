@@ -12,42 +12,42 @@ namespace CollaborativeFiltering
             _defaultValue = defaultValue;
         }
 
-        public override IEnumerable<Pair> GetCommonRatings(User firstUser, User secondUser)
+        public override IEnumerable<Pair> GetCommonRatings(IRater firstRater, IRater secondRater)
         {
-            var list = base.GetCommonRatings(firstUser, secondUser);
+            var list = base.GetCommonRatings(firstRater, secondRater);
 
             foreach (var pair in list)
                 yield return pair;
 
-            var tail = GetRatingTail(ref IndexFirst, CountFirst, RatingsFirstSort, firstUser, true);
+            var tail = GetRatingTail(ref IndexFirst, CountFirst, RatingsFirstSort, firstRater, true);
 
             foreach (var pair in tail)
                 yield return pair;
 
-            tail = GetRatingTail(ref IndexSecond, CountSecond, RatingsSecondSort, secondUser, false);
+            tail = GetRatingTail(ref IndexSecond, CountSecond, RatingsSecondSort, secondRater, false);
 
             foreach (var pair in tail)
                 yield return pair;
         }
 
-        protected override Pair ProcessRatings(Rating firstRating, Rating secondRating)
+        protected override Pair ProcessRatings(IRating firstRating, IRating secondRating)
         {
             var pair = new Pair() { FirstRating = firstRating, SecondRating = secondRating };
 
-            if (firstRating.Movie.Id == secondRating.Movie.Id)
+            if (firstRating.Subject.Id == secondRating.Subject.Id)
             {
                 ++IndexFirst;
                 ++IndexSecond;
             }
-            else if (firstRating.Movie.Id < secondRating.Movie.Id)
+            else if (firstRating.Subject.Id < secondRating.Subject.Id)
             {
-                var rating = new Rating(firstRating.User, firstRating.Movie, _defaultValue);
+                var rating = new SimpleRating(firstRating.Rater, firstRating.Subject, _defaultValue);
                 pair.FirstRating = rating;
                 ++IndexFirst;
             }
             else
             {
-                var rating = new Rating(secondRating.User, secondRating.Movie, _defaultValue);
+                var rating = new SimpleRating(secondRating.Rater, secondRating.Subject, _defaultValue);
                 pair.SecondRating = rating;
                 ++IndexSecond;
             }
@@ -55,14 +55,14 @@ namespace CollaborativeFiltering
             return pair;
         }
 
-        private IEnumerable<Pair> GetRatingTail(ref int index, int count, IEnumerable<Rating> ratings, User user, bool isSecondFake)
+        private IEnumerable<Pair> GetRatingTail(ref int index, int count, IEnumerable<IRating> ratings, IRater rater, bool isSecondFake)
         {
             var list = new LinkedList<Pair>();
 
             while (index < count)
             {
                 var rating = ratings.ElementAt(index);
-                var ratingFake = new Rating(user, rating.Movie, _defaultValue);
+                var ratingFake = new SimpleRating(rater, rating.Subject, _defaultValue);
                 var pair = isSecondFake
                     ? new Pair() {FirstRating = rating, SecondRating = ratingFake}
                     : new Pair() {FirstRating = ratingFake, SecondRating = rating};

@@ -5,20 +5,20 @@ namespace CollaborativeFiltering
 {
     public class PearsonCorrelation : MemoryBasedAlgorithm
     {
-        public PearsonCorrelation(IEnumerable<Rating> ratings) : base(ratings)
+        public PearsonCorrelation(IEnumerable<IRating> ratings) : base(ratings)
         {}
 
-        internal override decimal Weight(User baseUser, User neighbour)
+        internal override decimal Weight(IRater baseRater, IRater neighbour)
         {
             var helper = GetRatingService();
 
-            var baseUsersMean = UsersMeanVote(baseUser);
-            var neighbourMean = UsersMeanVote(neighbour);
+            var baseUsersMean = RatersMeanVote(baseRater);
+            var neighbourMean = RatersMeanVote(neighbour);
             var numerator = 0M;
             var denominatorSumBase = 0M;
             var denominatorSumNeigh = 0M;
 
-            foreach (var pair in helper.GetCommonRatings(baseUser, neighbour))
+            foreach (var pair in helper.GetCommonRatings(baseRater, neighbour))
             {
                 var ratingBase = (decimal) pair.FirstRating.Value;
                 var ratingNeigh = (decimal) pair.SecondRating.Value;

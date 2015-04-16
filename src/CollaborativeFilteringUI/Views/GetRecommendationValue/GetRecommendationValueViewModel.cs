@@ -52,7 +52,8 @@ namespace CollaborativeFilteringUI.Views.GetRecommendationValue
         {
             try
             {
-                RecommendationValue = SelectedMethod.RecommendMovieForUser(SelectedUser, SelectedMovie);
+                var rating = SelectedMethod.RecommendSubject(SelectedUser, SelectedMovie);
+                RecommendationValue = rating != null ? rating.Value : -1;
             }
             catch(Exception e)
             {

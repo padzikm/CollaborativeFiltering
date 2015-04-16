@@ -6,15 +6,15 @@ namespace CollaborativeFiltering
 {
     public class InverseFrequency : MemoryBasedAlgorithm
     {
-        private readonly Dictionary<int, decimal> _frequencies;
+        private readonly Dictionary<long, decimal> _frequencies;
         private double? _userCount;
 
-        public InverseFrequency(IEnumerable<Rating> ratings) : base(ratings)
+        public InverseFrequency(IEnumerable<IRating> ratings) : base(ratings)
         {
-            _frequencies = new Dictionary<int, decimal>();
+            _frequencies = new Dictionary<long, decimal>();
         }
 
-        internal override decimal Weight(User baseUser, User neighbour)
+        internal override decimal Weight(IRater baseRater, IRater neighbour)
         {
             var helper = new RatingService();
 
@@ -25,11 +25,11 @@ namespace CollaborativeFiltering
             var baseRatingsSquareSum = 0M;
             var neighRatingsSquareSum = 0M;
 
-            foreach(var pair in helper.GetCommonRatings(baseUser, neighbour))
+            foreach(var pair in helper.GetCommonRatings(baseRater, neighbour))
             {
                 var baseRating = (decimal)pair.FirstRating.Value;
                 var neighRating = (decimal)pair.SecondRating.Value;
-                var frequency = GetFrequency(pair.FirstRating.Movie);
+                var frequency = GetFrequency(pair.FirstRating.Subject);
 
                 frequencySum += frequency;
                 commonRatingsSum += frequency*baseRating*neighRating;
@@ -54,19 +54,19 @@ namespace CollaborativeFiltering
             return result;
         }
 
-        private decimal GetFrequency(Movie movie)
+        private decimal GetFrequency(ISubject subject)
         {
             if (_userCount == null)
-                _userCount = _ratings.GroupBy(p => p.User.Id).Count();
+                _userCount = _ratings.GroupBy(p => p.Rater.Id).Count();
 
             var value = 0M;
 
-            if (!_frequencies.TryGetValue(movie.Id, out value))
+            if (!_frequencies.TryGetValue(subject.Id, out value))
             {
-                var movieRateCout = (double)_ratings.Count(p => p.Movie.Id == movie.Id);
+                var movieRateCout = (double)_ratings.Count(p => p.Subject.Id == subject.Id);
                 var tmp = _userCount.Value/movieRateCout;
                 value = (decimal)Math.Log(tmp);
-                _frequencies.Add(movie.Id, value);
+                _frequencies.Add(subject.Id, value);
             }
 
             return value;

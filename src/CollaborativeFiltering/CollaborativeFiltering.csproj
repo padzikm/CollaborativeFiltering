@@ -49,6 +49,10 @@
     <Compile Include="Algorithms\MemoryBasedAlgorithmCache.cs" />
     <Compile Include="DataIO\DataReader.cs" />
     <Compile Include="Algorithms\DefaultVoting.cs" />
+    <Compile Include="Domain\IRater.cs" />
+    <Compile Include="Domain\IRating.cs" />
+    <Compile Include="Domain\ISubject.cs" />
+    <Compile Include="Domain\SimpleRating.cs" />
     <Compile Include="Evaluations\EvaluationTester.cs" />
     <Compile Include="Algorithms\InverseFrequency.cs" />
     <Compile Include="Services\IRatingService.cs" />

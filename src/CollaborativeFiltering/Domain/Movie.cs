@@ -2,15 +2,15 @@
 
 namespace CollaborativeFiltering
 {
-    public class Movie
+    public class Movie : ISubject
     {
-        public int Id { get; private set; }
+        public long Id { get; private set; }
 
         public string Title { get; private set; }
 
         public int Year { get; private set; }
 
-        public Movie(int id, string title, int year)
+        public Movie(long id, string title, int year)
         {
             if(id <= 0)
                 throw new ArgumentException("Id must be greater than zero");

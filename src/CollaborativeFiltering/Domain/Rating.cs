@@ -2,13 +2,17 @@
 
 namespace CollaborativeFiltering
 {
-    public class Rating
+    public class Rating : IRating
     {
         public static readonly double MinValue = 1;
 
         public static readonly double MaxValue = 5;
 
+        public IRater Rater { get { return User; } }
+
         public User User { get; private set; }
+
+        public ISubject Subject { get { return Movie; } }
 
         public Movie Movie { get; private set; }
 

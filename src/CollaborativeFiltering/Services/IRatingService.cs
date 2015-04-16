@@ -4,13 +4,13 @@ namespace CollaborativeFiltering
 {
     public interface IRatingService
     {
-        IEnumerable<Pair> GetCommonRatings(User firstUser, User secondUser);
+        IEnumerable<Pair> GetCommonRatings(IRater firstRater, IRater secondRater);
     }
 
     public class Pair
     {
-        public Rating FirstRating { get; set; }
+        public IRating FirstRating { get; set; }
 
-        public Rating SecondRating { get; set; }
+        public IRating SecondRating { get; set; }
     }
 }

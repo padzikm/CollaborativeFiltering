@@ -4,20 +4,20 @@ using System.Collections.Generic;
 
 namespace CollaborativeFiltering
 {
-    public class User
+    public class User : IRater
     {
-        private readonly ConcurrentDictionary<int, Rating> _ratings; 
+        private readonly ConcurrentDictionary<long, Rating> _ratings; 
 
-        public int Id { get; private set; }
+        public long Id { get; private set; }
 
         public string FullName { get; private set; }
 
-        public IEnumerable<Rating> Ratings { get { return _ratings.Values; } }
+        public IEnumerable<IRating> Ratings { get { return _ratings.Values; } }
 
-        public User(int id) : this(id, id.ToString())
+        public User(long id) : this(id, id.ToString())
         {}
 
-        public User(int id, string fullName)
+        public User(long id, string fullName)
         {
             if(id <= 0)
                 throw new ArgumentException("Id must be greater than zero");
@@ -26,15 +26,15 @@ namespace CollaborativeFiltering
 
             Id = id;
             FullName = fullName;
-            _ratings = new ConcurrentDictionary<int, Rating>();
+            _ratings = new ConcurrentDictionary<long, Rating>();
         }
 
         public void AddRating(Rating rating)
         {
-            if(_ratings.ContainsKey(rating.Movie.Id))
+            if(_ratings.ContainsKey(rating.Subject.Id))
                 throw new InvalidOperationException("User alread voted for this movie");
 
-            _ratings[rating.Movie.Id] = rating;
+            _ratings[rating.Subject.Id] = rating;
         }
 
         public override string ToString()

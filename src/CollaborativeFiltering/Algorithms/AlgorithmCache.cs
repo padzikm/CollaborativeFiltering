@@ -17,41 +17,41 @@ namespace CollaborativeFiltering.Algorithms
             _cache = new ConcurrentDictionary<string, double>();
         }
 
-        public double RecommendMovieForUser(User user, Movie movie)
+        public IRating RecommendSubject(IRater rater, ISubject subject)
         {
-            var key = CreateCacheKey(user, movie);
+            var key = CreateCacheKey(rater, subject);
             var cachedValue = 0D;
 
             if (_cache.TryGetValue(key, out cachedValue))
-                return cachedValue;
+                return new SimpleRating(rater, subject, cachedValue);
 
-            var rating = _algorithm.RecommendMovieForUser(user, movie);
+            var rating = _algorithm.RecommendSubject(rater, subject);
 
-            _cache[key] = rating;
+            _cache[key] = rating.Value;
 
             return rating;
         }
 
-        public IEnumerable<Rating> RecommendMoviesForUser(User user, IEnumerable<Movie> movies, int take = -1, int skip = 0)
+        public IEnumerable<IRating> RecommendSubjects(IRater rater, IEnumerable<ISubject> subjects, int take = -1, int skip = 0)
         {
-            var cachedResults = new ConcurrentBag<Rating>();
-            var notCachedMovies = new ConcurrentBag<Movie>();
+            var cachedResults = new ConcurrentBag<IRating>();
+            var notCachedSubjects = new ConcurrentBag<ISubject>();
             var options = new ParallelOptions() { MaxDegreeOfParallelism = Environment.ProcessorCount };
 
-            Parallel.ForEach(movies, options, movie =>
+            Parallel.ForEach(subjects, options, subject =>
             {
-                var key = CreateCacheKey(user, movie);
+                var key = CreateCacheKey(rater, subject);
                 var value = 0D;
                 if (_cache.TryGetValue(key, out value))
                 {
-                    var ranking = new Rating(user, movie, value);
+                    var ranking = new SimpleRating(rater, subject, value);
                     cachedResults.Add(ranking);
                 }
                 else
-                    notCachedMovies.Add(movie);
+                    notCachedSubjects.Add(subject);
             });
 
-            var partial = _algorithm.RecommendMoviesForUser(user, notCachedMovies);
+            var partial = _algorithm.RecommendSubjects(rater, notCachedSubjects);
 
             var results = partial.ToList();
             results.AddRange(cachedResults);
@@ -66,9 +66,9 @@ namespace CollaborativeFiltering.Algorithms
             return sorted;
         }
 
-        public void AddRating(Rating rating)
+        public void AddRating(IRating rating)
         {
-            var key = CreateCacheKey(rating.User, rating.Movie);
+            var key = CreateCacheKey(rating.Rater, rating.Subject);
             var value = 0D;
 
             _cache.TryRemove(key, out value);
@@ -81,9 +81,9 @@ namespace CollaborativeFiltering.Algorithms
             return _algorithm.ToString();
         }
 
-        private string CreateCacheKey(User user, Movie movie)
+        private string CreateCacheKey(IRater rater, ISubject subject)
         {
-            return string.Format("{0}_{1}", user.Id, movie.Id);
+            return string.Format("{0}_{1}", rater.Id, subject.Id);
         }
     }
 }

@@ -55,7 +55,8 @@ namespace CollaborativeFilteringUI.Views.Recommend
                 {
                     try
                     {
-                        var recValue = SelectedMethod.RecommendMovieForUser(SelectedUser, m);
+                        var rating = SelectedMethod.RecommendSubject(SelectedUser, m);
+                        var recValue = rating != null ? rating.Value : -1;
                         results.Add(new Tuple<Movie, double>(m, recValue));
                     }
                     catch (Exception)
