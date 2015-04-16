@@ -38,9 +38,9 @@ namespace CollaborativeFiltering
             return movies;
         }
 
-        public void ReadDataFromFiles(string movisPath, string ratingsPath, out List<Movie> movies, out List<User> users, out List<Rating> ratings)
+        public void ReadDataFromFiles(string moviesPath, string ratingsPath, out List<Movie> movies, out List<User> users, out List<Rating> ratings)
         {
-            movies = ReadMovies(movisPath);
+            movies = ReadMovies(moviesPath);
             users = new List<User>();
             ratings = new List<Rating>();
             var text = null as string;

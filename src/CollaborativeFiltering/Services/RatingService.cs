@@ -22,8 +22,8 @@ namespace CollaborativeFiltering
             RatingsSecondSort = secondUser.Ratings.OrderBy(p => p.Movie.Id);
             IndexFirst = 0;
             IndexSecond = 0;
-            CountFirst = firstUser.Ratings.Count();
-            CountSecond = secondUser.Ratings.Count();
+            CountFirst = RatingsFirstSort.Count();
+            CountSecond = RatingsSecondSort.Count();
         }
 
         public virtual IEnumerable<Pair> GetCommonRatings(User firstUser, User secondUser) //O(n)
