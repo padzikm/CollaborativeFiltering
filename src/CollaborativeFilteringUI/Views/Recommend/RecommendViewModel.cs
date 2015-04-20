@@ -19,6 +19,7 @@ namespace CollaborativeFilteringUI.Views.Recommend
         {
             var dataRepository = Container.GetInstance<IDataRepository>();
             Users = new ObservableCollection<User>(dataRepository.Users);
+            RecommendedMovies = new ObservableCollection<Tuple<Movie,double>>();
             movies = new List<Movie>(dataRepository.Movies);
 
             SelectedUser = Users.FirstOrDefault();
@@ -43,7 +44,7 @@ namespace CollaborativeFilteringUI.Views.Recommend
 
         public ICommand RecommendMovie { get; set; }
 
-        public string RecommendedMovie { get; set; }
+        public ObservableCollection<Tuple<Movie,double>> RecommendedMovies { get; set; }
 
         private void OnRecommendMovie(object obj)
         {
@@ -66,7 +67,7 @@ namespace CollaborativeFilteringUI.Views.Recommend
                 });
 
             var max = results.Max(t => t.Item2);
-            RecommendedMovie = results.Where(t => t.Item2 == max).FirstOrDefault().Item1.ToString();
+            RecommendedMovies = new ObservableCollection<Tuple<Movie,double>>(results.OrderBy(t => t.Item2).Reverse().Take(10));
         }
 
     }
