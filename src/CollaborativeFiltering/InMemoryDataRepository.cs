@@ -23,5 +23,21 @@ namespace CollaborativeFiltering
         public List<Rating> TrainingRatings { get; set; }
 
         public List<Rating> TestRatings { get; set; }
+
+
+        public void AddDataFromFiles(string moviesFile, string trainingFile, string testFile, double setPercent)
+        {
+            IEnumerable<User> users;
+            IEnumerable<Movie> movies;
+            IEnumerable<Rating> trainingRatings;
+            IEnumerable<Rating> testRatings;
+            var dataReader = new DataReader();
+
+            dataReader.ReadDataFromFiles(MoviesFilePath, TrainingRatingsFilePath, TestRatingsFilePath, SetPercent, out movies, out users, out trainingRatings, out testRatings);
+            Users.AddRange(users);
+            Movies.AddRange(movies);
+            TrainingRatings.AddRange(trainingRatings);
+            TestRatings.AddRange(testRatings);
+        }
     }
 }

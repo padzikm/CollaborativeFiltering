@@ -15,5 +15,7 @@ namespace CollaborativeFiltering
         List<Rating> TrainingRatings { get; set; }
 
         List<Rating> TestRatings { get; set; }
+
+        void AddDataFromFiles(string moviesFile, string trainingFile, string testFile, double setPercent);
     }
 }

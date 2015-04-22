@@ -73,20 +73,9 @@ namespace CollaborativeFilteringUI.Views.LoadData
 
         private void OnLoadFiles(object obj)
         {
-            IEnumerable<User> users;
-            IEnumerable<Movie> movies;
-            IEnumerable<Rating> trainingRatings;
-            IEnumerable<Rating> testRatings;
-            var dataReader = new DataReader();
-
             try
             {
-                dataReader.ReadDataFromFiles(MoviesFilePath, TrainingRatingsFilePath, TestRatingsFilePath, SetPercent, out movies, out users, out trainingRatings, out testRatings);
-                DataRepository.Users.AddRange(users);
-                DataRepository.Movies.AddRange(movies);
-                DataRepository.TrainingRatings.AddRange(trainingRatings);
-                DataRepository.TestRatings.AddRange(testRatings);
-
+                DataRepository.AddDataFromFiles(MoviesFilePath, TrainingRatingsFilePath, TestRatingsFilePath, SetPercent);
                 RaiseOnWindowUpdated(this, EventArgs.Empty);
             }
             catch(Exception)
