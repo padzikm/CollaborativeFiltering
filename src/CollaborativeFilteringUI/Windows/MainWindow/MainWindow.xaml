@@ -3,9 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:CoreControls="clr-namespace:CollaborativeFilteringUI.Core.Controls"
         xmlns:CoreConverters="clr-namespace:CollaborativeFilteringUI.Core.Converters"
+        xmlns:Bot="clr-namespace:PixelLab.Wpf.Transitions;assembly=PixelLab.Wpf"
         Title="Collaborative Filtering" Height="350" Width="525" WindowState="Maximized">
     <Window.Resources>
         <CoreConverters:DoubleToVisibility x:Key="DoubleToVisibility"/>
+        <Bot:FadeTransition x:Key="FadeTransition" Duration="0:0:0.300"/>
     </Window.Resources>
     <DockPanel>
         <TabControl DockPanel.Dock="Top" FontSize="20">
@@ -28,7 +30,8 @@
         </TabControl>
         
         <Grid>
-            <ContentControl Content="{Binding View}" Margin="10"/>
+            <Bot:TransitionPresenter Content="{Binding View}" Transition="{StaticResource FadeTransition}" Margin="10"/>
+
             <CoreControls:CircularProgressBar x:Name="BusyBar" Opacity="0.0" Visibility="{Binding ElementName=BusyBar, Path=Opacity, Converter={StaticResource DoubleToVisibility}}" Background="#FFB0BCC3">
                 <CoreControls:CircularProgressBar.Style>
                     <Style TargetType="CoreControls:CircularProgressBar">

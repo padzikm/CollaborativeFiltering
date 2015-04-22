@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CollaborativeFilteringUI.Core
@@ -15,6 +16,7 @@ namespace CollaborativeFilteringUI.Core
             Window.DataContext = this;
             Container = container;
             IsResponsive = true;
+            IsViewChanged = false;
         }
 
         public IView View { get; set; }
@@ -26,6 +28,8 @@ namespace CollaborativeFilteringUI.Core
         public IWindow Window { get; set; }
 
         public bool IsResponsive { get; set; }
+
+        public bool IsViewChanged { get; set; }
 
         protected void ShowView<T>() where T : IViewModel
         {
