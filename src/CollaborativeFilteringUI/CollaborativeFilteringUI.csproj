@@ -109,6 +109,7 @@
       <DependentUpon>CircularProgressBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Core\Converters\BoolToVisibilityNegate.cs" />
+    <Compile Include="Core\Converters\DoubleToPercentString.cs" />
     <Compile Include="Core\Converters\DoubleToVisibility.cs" />
     <Compile Include="Core\DelegateAsyncCommand.cs" />
     <Compile Include="Core\DelegateCommand.cs" />

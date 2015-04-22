@@ -18,16 +18,25 @@ namespace CollaborativeFilteringUI.Views.LoadData
             : base(view, container)
         {
             FindMoviesFile = new DelegateCommand<object>(OnFindMoviesFile);
-            FindRatingsFile = new DelegateCommand<object>(OnFindRatingsFile);
+            FindTrainingRatingsFile = new DelegateCommand<object>(OnFindTrainingRatingsFile);
+            FindTestRatingsFile = new DelegateCommand<object>(OnFindTestRatingsFile);
             LoadFiles = new DelegateAsyncCommand<object>(OnLoadFiles, OnResponsivnesLost, OnResponsivnesGained);
+            SetPercent = 1.0;
         }
 
         public string MoviesFilePath { get; set; }
-        public string RatingsFilePath { get; set; }
+
+        public string TrainingRatingsFilePath { get; set; }
+
+        public string TestRatingsFilePath { get; set; }
+
+        public double SetPercent { get; set; }
 
         public ICommand FindMoviesFile { get; set; }
 
-        public ICommand FindRatingsFile { get; set; }
+        public ICommand FindTrainingRatingsFile { get; set; }
+
+        public ICommand FindTestRatingsFile { get; set; }
 
         public ICommand LoadFiles { get; set; }
 
@@ -38,9 +47,14 @@ namespace CollaborativeFilteringUI.Views.LoadData
             MoviesFilePath = FindFile("Wczytaj filmy z pliku");
         }
 
-        private void OnFindRatingsFile(object obj)
+        private void OnFindTrainingRatingsFile(object obj)
         {
-            RatingsFilePath = FindFile("Wczytaj oceny z pliku");
+            TrainingRatingsFilePath = FindFile("Wczytaj oceny treningowe z pliku");
+        }
+
+        private void OnFindTestRatingsFile(object obj)
+        {
+            TestRatingsFilePath = FindFile("Wczytaj oceny testowe z pliku");
         }
 
         private string FindFile(string windowTitle)
@@ -66,7 +80,7 @@ namespace CollaborativeFilteringUI.Views.LoadData
 
             try
             {
-                dataReader.ReadDataFromFiles(MoviesFilePath, RatingsFilePath, out movies, out users, out ratings);
+                dataReader.ReadDataFromFiles(MoviesFilePath, TrainingRatingsFilePath, out movies, out users, out ratings);
                 movies = ratings.GroupBy(p => p.Movie.Id).OrderByDescending(p => p.Count()).Select(p => p.First().Movie);
                 DataRepository.Users.AddRange(users);
                 DataRepository.Movies.AddRange(movies);
