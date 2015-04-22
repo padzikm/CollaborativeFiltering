@@ -33,7 +33,7 @@ namespace CollaborativeFiltering
             IEnumerable<Rating> testRatings;
             var dataReader = new DataReader();
 
-            dataReader.ReadDataFromFiles(MoviesFilePath, TrainingRatingsFilePath, TestRatingsFilePath, SetPercent, out movies, out users, out trainingRatings, out testRatings);
+            dataReader.ReadDataFromFiles(moviesFile, trainingFile, testFile, setPercent, out movies, out users, out trainingRatings, out testRatings);
             Users.AddRange(users);
             Movies.AddRange(movies);
             TrainingRatings.AddRange(trainingRatings);
