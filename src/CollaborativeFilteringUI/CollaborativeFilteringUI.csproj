@@ -84,6 +84,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Core\Controls\CircularProgressBar.xaml.cs">
+      <DependentUpon>CircularProgressBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Converters\BoolToVisibilityNegate.cs" />
+    <Compile Include="Core\Converters\DoubleToVisibility.cs" />
     <Compile Include="Core\DelegateAsyncCommand.cs" />
     <Compile Include="Core\DelegateCommand.cs" />
     <Compile Include="Utils\ToStringConverter.cs" />
@@ -126,6 +131,10 @@
     <Compile Include="Windows\MainWindow\IMainWindow.cs" />
     <Compile Include="Windows\MainWindow\IMainWindowViewModel.cs" />
     <Compile Include="Windows\MainWindow\MainWindowViewModel.cs" />
+    <Page Include="Core\Controls\CircularProgressBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Metro\Metro.MSControls.Core.Implicit.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -228,6 +237,7 @@
   <ItemGroup>
     <Resource Include="Themes\Metro\HowToApplyTheme.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="..\packages\Fody.1.28.3\build\Fody.targets" Condition="Exists('..\packages\Fody.1.28.3\build\Fody.targets')" />

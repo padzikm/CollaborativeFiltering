@@ -1,7 +1,12 @@
 ﻿<Window x:Class="CollaborativeFilteringUI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:CoreControls="clr-namespace:CollaborativeFilteringUI.Core.Controls"
+        xmlns:CoreConverters="clr-namespace:CollaborativeFilteringUI.Core.Converters"
         Title="Collaborative Filtering" Height="350" Width="525" WindowState="Maximized">
+    <Window.Resources>
+        <CoreConverters:DoubleToVisibility x:Key="DoubleToVisibility"/>
+    </Window.Resources>
     <DockPanel>
         <TabControl DockPanel.Dock="Top" FontSize="20">
             <TabItem Header="Rekomendacje">
@@ -22,7 +27,33 @@
             
         </TabControl>
         
-        <ContentControl Content="{Binding View}" Margin="10"/>
+        <Grid>
+            <ContentControl Content="{Binding View}" Margin="10"/>
+            <CoreControls:CircularProgressBar x:Name="BusyBar" Opacity="0.0" Visibility="{Binding ElementName=BusyBar, Path=Opacity, Converter={StaticResource DoubleToVisibility}}" Background="#FFB0BCC3">
+                <CoreControls:CircularProgressBar.Style>
+                    <Style TargetType="CoreControls:CircularProgressBar">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsResponsive}" Value="False">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.5" Duration="0:0:0.300" AutoReverse="False"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.0" Duration="0:0:0.300" AutoReverse="False"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </CoreControls:CircularProgressBar.Style>
+            </CoreControls:CircularProgressBar>
+        </Grid>
     </DockPanel>
 
 </Window>
