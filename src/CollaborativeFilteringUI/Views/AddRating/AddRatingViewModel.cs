@@ -43,7 +43,7 @@ namespace CollaborativeFilteringUI.Views.AddRating
         {
             var dataRepository = Container.GetInstance<IDataRepository>();
 
-            if (dataRepository.Ratings.Any(r => r.User == SelectedUser && r.Movie == SelectedMovie))
+            if (dataRepository.TrainingRatings.Any(r => r.User == SelectedUser && r.Movie == SelectedMovie))
             { 
                 MessageBox.Show("Taka ocena jest już w bazie", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
                 RatingValue = string.Empty;
@@ -52,7 +52,7 @@ namespace CollaborativeFilteringUI.Views.AddRating
 
             double ratingValue;
             if (double.TryParse(RatingValue, out ratingValue))
-                dataRepository.Ratings.Add(Rating.CreateRating(SelectedUser, SelectedMovie, ratingValue));
+                dataRepository.TrainingRatings.Add(Rating.CreateRating(SelectedUser, SelectedMovie, ratingValue));
 
             RatingValue = string.Empty;
         }

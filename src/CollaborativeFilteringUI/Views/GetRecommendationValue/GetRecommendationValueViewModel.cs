@@ -29,7 +29,7 @@ namespace CollaborativeFilteringUI.Views.GetRecommendationValue
             SelectedMovie = RatedMovies.FirstOrDefault();
 
             var recProvider = Container.GetInstance<IRecommendationsProvider>();
-            Recommendations = new ObservableCollection<IRecommendation>(recProvider.GetRecommendations(dataRepository.Ratings));
+            Recommendations = new ObservableCollection<IRecommendation>(recProvider.GetRecommendations(dataRepository.TrainingRatings));
 
             SelectedMethod = Recommendations.FirstOrDefault();
 
@@ -44,7 +44,7 @@ namespace CollaborativeFilteringUI.Views.GetRecommendationValue
         private void OnSelectedUserChanged(object obj)
         {
             var dataRepository = Container.GetInstance<IDataRepository>();
-            var userMovies = dataRepository.Ratings.Where(r => r.User == SelectedUser).Select(r => r.Movie);
+            var userMovies = dataRepository.TrainingRatings.Where(r => r.User == SelectedUser).Select(r => r.Movie);
             RatedMovies = new ObservableCollection<Movie>(userMovies);
 
             var unratedMovies = new ConcurrentBag<Movie>();

@@ -25,7 +25,7 @@ namespace CollaborativeFilteringUI.Views.Recommend
             SelectedUser = Users.FirstOrDefault();
 
             var recProvider = Container.GetInstance<IRecommendationsProvider>();
-            Recommendations = new ObservableCollection<IRecommendation>(recProvider.GetRecommendations(dataRepository.Ratings));
+            Recommendations = new ObservableCollection<IRecommendation>(recProvider.GetRecommendations(dataRepository.TrainingRatings));
 
             SelectedMethod = Recommendations.FirstOrDefault();
 

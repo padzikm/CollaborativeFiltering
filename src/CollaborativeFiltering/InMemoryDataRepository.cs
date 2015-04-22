@@ -12,13 +12,16 @@ namespace CollaborativeFiltering
         {
             Users = new List<User>();
             Movies = new List<Movie>();
-            Ratings = new List<Rating>();
+            TrainingRatings = new List<Rating>();
+            TestRatings = new List<Rating>();
         }
 
         public List<User> Users { get; set; }
 
         public List<Movie> Movies { get; set; }
 
-        public List<Rating> Ratings { get; set; }
+        public List<Rating> TrainingRatings { get; set; }
+
+        public List<Rating> TestRatings { get; set; }
     }
 }

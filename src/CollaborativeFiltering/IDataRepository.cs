@@ -12,6 +12,8 @@ namespace CollaborativeFiltering
 
         List<Movie> Movies { get; set; }
 
-        List<Rating> Ratings { get; set; }
+        List<Rating> TrainingRatings { get; set; }
+
+        List<Rating> TestRatings { get; set; }
     }
 }

@@ -75,16 +75,17 @@ namespace CollaborativeFilteringUI.Views.LoadData
         {
             IEnumerable<User> users;
             IEnumerable<Movie> movies;
-            IEnumerable<Rating> ratings;
+            IEnumerable<Rating> trainingRatings;
+            IEnumerable<Rating> testRatings;
             var dataReader = new DataReader();
 
             try
             {
-                dataReader.ReadDataFromFiles(MoviesFilePath, TrainingRatingsFilePath, out movies, out users, out ratings);
-                movies = ratings.GroupBy(p => p.Movie.Id).OrderByDescending(p => p.Count()).Select(p => p.First().Movie);
+                dataReader.ReadDataFromFiles(MoviesFilePath, TrainingRatingsFilePath, TestRatingsFilePath, SetPercent, out movies, out users, out trainingRatings, out testRatings);
                 DataRepository.Users.AddRange(users);
                 DataRepository.Movies.AddRange(movies);
-                DataRepository.Ratings.AddRange(ratings);
+                DataRepository.TrainingRatings.AddRange(trainingRatings);
+                DataRepository.TestRatings.AddRange(testRatings);
 
                 RaiseOnWindowUpdated(this, EventArgs.Empty);
             }
