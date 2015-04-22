@@ -71,6 +71,8 @@ namespace CollaborativeFilteringUI.Views.LoadData
                 DataRepository.Users.AddRange(users);
                 DataRepository.Movies.AddRange(movies);
                 DataRepository.Ratings.AddRange(ratings);
+
+                RaiseOnWindowUpdated(this, EventArgs.Empty);
             }
             catch(Exception)
             {

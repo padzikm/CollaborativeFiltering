@@ -11,5 +11,11 @@ namespace CollaborativeFilteringUI.Core
         IView View { get; set; }
 
         bool IsResponsive { get; set; }
+
+        event EventHandler OnWindowUpdated;
+
+        event EventHandler OnWindowResponsivnesLost;
+
+        event EventHandler OnWindowResponsivnesGained;
     }
 }

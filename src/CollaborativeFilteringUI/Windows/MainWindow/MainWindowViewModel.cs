@@ -78,5 +78,10 @@ namespace CollaborativeFilteringUI
         {
             ShowView<IRecommendViewModel>();
         }
+
+        override protected void ViewModelOnWindowUpdated(object sender, EventArgs e)
+        {
+            MessageBox.Show("Abc");
+        }
     }
 }

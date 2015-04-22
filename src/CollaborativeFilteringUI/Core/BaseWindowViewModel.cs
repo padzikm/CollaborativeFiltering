@@ -14,17 +14,40 @@ namespace CollaborativeFilteringUI.Core
             Window = window;
             Window.DataContext = this;
             Container = container;
+            IsResponsive = true;
         }
 
         public IView View { get; set; }
+
+        public IViewModel ViewModel { get; set; }
 
         public IContainer Container { get; set; }
 
         public IWindow Window { get; set; }
 
+        public bool IsResponsive { get; set; }
+
         protected void ShowView<T>() where T : IViewModel
         {
-            View = Container.GetInstance<T>().View;
+            ViewModel = Container.GetInstance<T>();
+            ViewModel.OnWindowUpdated += ViewModelOnWindowUpdated;
+            ViewModel.OnWindowResponsivnesLost += ViewModelOnWindowResponsivnesLost;
+            ViewModel.OnWindowResponsivnesGained += ViewModelOnWindowResponsivnesGained;
+            View = ViewModel.View;
+        }
+
+        void ViewModelOnWindowResponsivnesGained(object sender, EventArgs e)
+        {
+            IsResponsive = true;
+        }
+
+        private void ViewModelOnWindowResponsivnesLost(object sender, EventArgs e)
+        {
+            IsResponsive = false;
+        }
+
+        protected virtual void ViewModelOnWindowUpdated(object sender, EventArgs e)
+        {
         }
     }
 }

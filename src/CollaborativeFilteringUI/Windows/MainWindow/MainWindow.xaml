@@ -3,20 +3,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Collaborative Filtering" Height="350" Width="525" WindowState="Maximized">
     <DockPanel>
-        
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="Rekomendacje">
-                <MenuItem Header="Sprawdź wartość rekomentacji" Command="{Binding GetRecommendationValue}"/>
-                <MenuItem Header="Zarekomenduj filmy dla użytkownika" Command="{Binding Recommend}"/>
-            </MenuItem>
-            <MenuItem Header="Dane">
-                <MenuItem Header="Wczytaj dane z plików" Command="{Binding LoadData}"/>
-                <MenuItem Header="Dodaj nowy film" Command="{Binding AddMovie}"/>
-                <MenuItem Header="Dodaj nowego użytkownika" Command="{Binding AddUser}"/>
-                <MenuItem Header="Dodaj nową ocenę" Command="{Binding AddRating}"/>
-            </MenuItem>
-            <MenuItem Header="Zakończ" Command="{Binding Exit}"/>
-        </Menu>
+        <TabControl DockPanel.Dock="Top" FontSize="20">
+            <TabItem Header="Rekomendacje">
+                <StackPanel Orientation="Horizontal">
+                    <Button Command="{Binding GetRecommendationValue}" IsEnabled="{Binding IsResponsive}">Sprawdź wartość rekomentacji</Button>
+                    <Button Command="{Binding Recommend}" IsEnabled="{Binding IsResponsive}">Zarekomenduj filmy dla użytkownika</Button>
+                </StackPanel>
+                
+            </TabItem>
+            <TabItem Header="Dane">
+                <StackPanel Orientation="Horizontal">
+                <Button Command="{Binding LoadData}" IsEnabled="{Binding IsResponsive}">Wczytaj dane z plików</Button>
+                    <Button Command="{Binding AddMovie}" IsEnabled="{Binding IsResponsive}">Dodaj nowy film</Button>
+                    <Button Command="{Binding AddUser}" IsEnabled="{Binding IsResponsive}">Dodaj nowego użytkownika</Button>
+                    <Button Command="{Binding AddRating}" IsEnabled="{Binding IsResponsive}">Dodaj nową ocenę</Button>
+                </StackPanel>
+            </TabItem>
+            
+        </TabControl>
         
         <ContentControl Content="{Binding View}" Margin="10"/>
     </DockPanel>

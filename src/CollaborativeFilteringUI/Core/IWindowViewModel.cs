@@ -9,5 +9,7 @@ namespace CollaborativeFilteringUI.Core
     public interface IWindowViewModel
     {
         IWindow Window { get; set; }
+
+        bool IsResponsive { get; set; }
     }
 }
