@@ -81,7 +81,60 @@ namespace CollaborativeFiltering
                 ratingsBag.Add(rating);
             });
 
+            ratings = ratingsBag.ToList();
+            movies = ratings.GroupBy(p => p.Movie.Id).OrderByDescending(p => p.Count()).Select(p => p.First().Movie).ToList();
             users = usersDict.Select(p => p.Value);
+        }
+
+        public void ReadDataFromFiles(string moviesFile, string trainingRatingsFile, string testRatingsFile, double percentToRead, out IEnumerable<Movie> movies, out IEnumerable<User> users, out IEnumerable<Rating> trainingRatings, out IEnumerable<Rating> testRatings)
+        {
+            movies = ReadMovies(moviesFile);
+            var moviesById = movies.ToDictionary(m => m.Id);
+            var usersById = new ConcurrentDictionary<int, User>();
+
+            ReadRatings(trainingRatingsFile, percentToRead, moviesById, usersById, out trainingRatings);
+            ReadRatings(testRatingsFile, percentToRead, moviesById, usersById, out testRatings);
+
+            users = usersById.Select(u => u.Value);
+            movies = testRatings.GroupBy(p => p.Movie.Id).OrderByDescending(p => p.Count()).Select(p => p.First().Movie).ToList();
+
+        }
+
+        private void ReadRatings(string ratingsFile, double percentToRead, Dictionary<long,Movie> movies, ConcurrentDictionary<int, User> usersById, out IEnumerable<Rating> ratings)
+        {
+            String file;
+            using (var stream = File.OpenText(ratingsFile))
+                file = stream.ReadToEnd();
+
+            var lines = file.Split('\n');
+
+            var linesToRead = (int)((double)lines.Count() * percentToRead);
+            var readedLines = lines.Take(linesToRead);
+
+            var ratingsBag = new ConcurrentBag<Rating>();
+
+            Parallel.ForEach(readedLines, line => 
+            {
+                var tab = line.Split(',');
+                if (tab.Length != 3)
+                    return;
+
+                var movieId = int.Parse(tab[0]);
+                var userId = int.Parse(tab[1]);
+                var value = double.Parse(tab[2], CultureInfo.InvariantCulture);
+
+                User user;
+                if (!usersById.TryGetValue(userId, out user))
+                {
+                    user = new User(userId);
+                    usersById[userId] = user;
+                }
+
+                var movie = movies[movieId];
+                var rating = Rating.CreateRating(user, movie, value);
+                ratingsBag.Add(rating);
+            });
+
             ratings = ratingsBag.ToList();
         }
     }

@@ -1,24 +1,64 @@
 ﻿<Window x:Class="CollaborativeFilteringUI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:CoreControls="clr-namespace:CollaborativeFilteringUI.Core.Controls"
+        xmlns:CoreConverters="clr-namespace:CollaborativeFilteringUI.Core.Converters"
+        xmlns:Bot="clr-namespace:PixelLab.Wpf.Transitions;assembly=PixelLab.Wpf"
         Title="Collaborative Filtering" Height="350" Width="525" WindowState="Maximized">
+    <Window.Resources>
+        <CoreConverters:DoubleToVisibility x:Key="DoubleToVisibility"/>
+        <Bot:FadeTransition x:Key="FadeTransition" Duration="0:0:0.300"/>
+    </Window.Resources>
     <DockPanel>
+        <TabControl DockPanel.Dock="Top" FontSize="16">
+            <TabItem Header="Rekomendacje">
+                <StackPanel Orientation="Horizontal">
+                    <Button Command="{Binding GetRecommendationValue}" IsEnabled="{Binding IsResponsive}" Style="{StaticResource TopMenuButton}">Sprawdź wartość rekomentacji</Button>
+                    <Button Command="{Binding Recommend}" IsEnabled="{Binding IsResponsive}" Style="{StaticResource TopMenuButton}">Zarekomenduj filmy dla użytkownika</Button>
+                </StackPanel>
+                
+            </TabItem>
+            <TabItem Header="Dane">
+                <StackPanel Orientation="Horizontal">
+                <Button Command="{Binding LoadData}" IsEnabled="{Binding IsResponsive}" Style="{StaticResource TopMenuButton}">Wczytaj dane z plików</Button>
+                    <Button Command="{Binding AddMovie}" IsEnabled="{Binding IsResponsive}" Style="{StaticResource TopMenuButton}">Dodaj nowy film</Button>
+                    <Button Command="{Binding AddUser}" IsEnabled="{Binding IsResponsive}" Style="{StaticResource TopMenuButton}">Dodaj nowego użytkownika</Button>
+                    <Button Command="{Binding AddRating}" IsEnabled="{Binding IsResponsive}" Style="{StaticResource TopMenuButton}">Dodaj nową ocenę</Button>
+                </StackPanel>
+            </TabItem>
+            
+        </TabControl>
         
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="Rekomendacje">
-                <MenuItem Header="Sprawdź wartość rekomentacji" Command="{Binding GetRecommendationValue}"/>
-                <MenuItem Header="Zarekomenduj filmy dla użytkownika" Command="{Binding Recommend}"/>
-            </MenuItem>
-            <MenuItem Header="Dane">
-                <MenuItem Header="Wczytaj dane z plików" Command="{Binding LoadData}"/>
-                <MenuItem Header="Dodaj nowy film" Command="{Binding AddMovie}"/>
-                <MenuItem Header="Dodaj nowego użytkownika" Command="{Binding AddUser}"/>
-                <MenuItem Header="Dodaj nową ocenę" Command="{Binding AddRating}"/>
-            </MenuItem>
-            <MenuItem Header="Zakończ" Command="{Binding Exit}"/>
-        </Menu>
-        
-        <ContentControl Content="{Binding View}" Margin="10"/>
+        <Grid>
+            <ScrollViewer>
+                <Bot:TransitionPresenter Content="{Binding View}" Transition="{StaticResource FadeTransition}" Margin="10"/>
+            </ScrollViewer>
+            
+            <CoreControls:CircularProgressBar x:Name="BusyBar" Opacity="0.0" Visibility="{Binding ElementName=BusyBar, Path=Opacity, Converter={StaticResource DoubleToVisibility}}" Background="#FFB0BCC3">
+                <CoreControls:CircularProgressBar.Style>
+                    <Style TargetType="CoreControls:CircularProgressBar">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsResponsive}" Value="False">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.5" Duration="0:0:0.300" AutoReverse="False"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.0" Duration="0:0:0.300" AutoReverse="False"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </CoreControls:CircularProgressBar.Style>
+            </CoreControls:CircularProgressBar>
+        </Grid>
     </DockPanel>
 
 </Window>

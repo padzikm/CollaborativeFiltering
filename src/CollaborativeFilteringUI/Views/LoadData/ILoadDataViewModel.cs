@@ -13,11 +13,17 @@ namespace CollaborativeFilteringUI.Views.LoadData
     {
         string MoviesFilePath { get; set; }
 
-        string RatingsFilePath { get; set; }
+        string TrainingRatingsFilePath { get; set; }
+
+        string TestRatingsFilePath { get; set; }
+
+        double SetPercent { get; set; }
 
         ICommand FindMoviesFile { get; set; }
 
-        ICommand FindRatingsFile { get; set; }
+        ICommand FindTrainingRatingsFile { get; set; }
+
+        ICommand FindTestRatingsFile { get; set; }
 
         ICommand LoadFiles { get; set; }
 

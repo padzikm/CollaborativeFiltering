@@ -12,13 +12,32 @@ namespace CollaborativeFiltering
         {
             Users = new List<User>();
             Movies = new List<Movie>();
-            Ratings = new List<Rating>();
+            TrainingRatings = new List<Rating>();
+            TestRatings = new List<Rating>();
         }
 
         public List<User> Users { get; set; }
 
         public List<Movie> Movies { get; set; }
 
-        public List<Rating> Ratings { get; set; }
+        public List<Rating> TrainingRatings { get; set; }
+
+        public List<Rating> TestRatings { get; set; }
+
+
+        public void AddDataFromFiles(string moviesFile, string trainingFile, string testFile, double setPercent)
+        {
+            IEnumerable<User> users;
+            IEnumerable<Movie> movies;
+            IEnumerable<Rating> trainingRatings;
+            IEnumerable<Rating> testRatings;
+            var dataReader = new DataReader();
+
+            dataReader.ReadDataFromFiles(moviesFile, trainingFile, testFile, setPercent, out movies, out users, out trainingRatings, out testRatings);
+            Users.AddRange(users);
+            Movies.AddRange(movies);
+            TrainingRatings.AddRange(trainingRatings);
+            TestRatings.AddRange(testRatings);
+        }
     }
 }

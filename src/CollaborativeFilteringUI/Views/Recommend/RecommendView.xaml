@@ -11,7 +11,7 @@
             <RowDefinition Height="90"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="90"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -43,13 +43,11 @@
         <TextBox Grid.Row="4" Grid.Column="1" IsEnabled="False" HorizontalContentAlignment="Right" Margin="5">
             <TextBox.BorderBrush>
                 <SolidColorBrush/>
-            </TextBox.BorderBrush> Zarekomendowany film
+            </TextBox.BorderBrush> Zarekomendowane filmy
         </TextBox>
 
-        <TextBox Grid.Row="4" Grid.Column="2" IsEnabled="False" HorizontalContentAlignment="Right" Margin="5" Text="{Binding RecommendedMovie}">
-            <TextBox.BorderBrush>
-                <SolidColorBrush/>
-            </TextBox.BorderBrush>
-        </TextBox>
+        <ListView Grid.Row="4" Grid.Column="2" ItemsSource="{Binding RecommendedMovies}" Margin="2" IsEnabled="{Binding IsResponsive}"></ListView>
+
+
     </Grid>
 </UserControl>

@@ -16,7 +16,9 @@ namespace CollaborativeFilteringUI.Views.GetRecommendationValue
 
         User SelectedUser { get; set; }
 
-        ObservableCollection<Movie> Movies { get; set; }
+        ObservableCollection<Movie> RatedMovies { get; set; }
+
+        ObservableCollection<Movie> UnratedMovies { get; set; }
 
         Movie SelectedMovie { get; set; }
 
@@ -27,5 +29,7 @@ namespace CollaborativeFilteringUI.Views.GetRecommendationValue
         double RecommendationValue { get; set; }
 
         ICommand GetRecommendationValue { get; set; }
+
+        ICommand SelectedUserChangedCommand { get; set; }
     }
 }

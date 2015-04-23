@@ -19,12 +19,13 @@ namespace CollaborativeFilteringUI.Views.Recommend
         {
             var dataRepository = Container.GetInstance<IDataRepository>();
             Users = new ObservableCollection<User>(dataRepository.Users);
+            RecommendedMovies = new ObservableCollection<IRating>();
             movies = new List<Movie>(dataRepository.Movies);
 
             SelectedUser = Users.FirstOrDefault();
 
             var recProvider = Container.GetInstance<IRecommendationsProvider>();
-            Recommendations = new ObservableCollection<IRecommendation>(recProvider.GetRecommendations(dataRepository.Ratings));
+            Recommendations = new ObservableCollection<IRecommendation>(recProvider.GetRecommendations(dataRepository.TrainingRatings));
 
             SelectedMethod = Recommendations.FirstOrDefault();
 
@@ -43,30 +44,27 @@ namespace CollaborativeFilteringUI.Views.Recommend
 
         public ICommand RecommendMovie { get; set; }
 
-        public string RecommendedMovie { get; set; }
+        public ObservableCollection<IRating> RecommendedMovies { get; set; }
 
         private void OnRecommendMovie(object obj)
         {
-            Movie recommendedMovie = null;
-
-            ConcurrentBag<Tuple<Movie, double>> results = new ConcurrentBag<Tuple<Movie, double>>();
+            var results = new ConcurrentBag<IRating>();
 
             Parallel.ForEach(movies, m =>
+            {
+                try
                 {
-                    try
-                    {
-                        var rating = SelectedMethod.RecommendSubject(SelectedUser, m);
-                        var recValue = rating != null ? rating.Value : -1;
-                        results.Add(new Tuple<Movie, double>(m, recValue));
-                    }
-                    catch (Exception)
-                    {
+                    var rating = SelectedMethod.RecommendSubject(SelectedUser, m);
+                    if(rating != null)
+                        results.Add(rating);
+                }
+                catch (Exception)
+                {
 
-                    }
-                });
+                }
+            });
 
-            var max = results.Max(t => t.Item2);
-            RecommendedMovie = results.Where(t => t.Item2 == max).FirstOrDefault().Item1.ToString();
+            RecommendedMovies = new ObservableCollection<IRating>(results.OrderBy(r => r.Value).Reverse().Take(10));
         }
 
     }

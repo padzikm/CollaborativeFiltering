@@ -22,6 +22,6 @@ namespace CollaborativeFilteringUI.Views.Recommend
 
         ICommand RecommendMovie { get; set; }
 
-        string RecommendedMovie { get; set; }
+        ObservableCollection<IRating> RecommendedMovies { get; set; }
     }
 }
