@@ -27,7 +27,8 @@ namespace CollaborativeFiltering.Algorithms
 
             var rating = _algorithm.RecommendSubject(rater, subject);
 
-            _cache[key] = rating.Value;
+            if(rating != null)
+                _cache[key] = rating.Value;
 
             return rating;
         }

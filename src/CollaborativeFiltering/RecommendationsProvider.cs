@@ -14,10 +14,10 @@ namespace CollaborativeFiltering
             var recommendations = new List<IRecommendation>();
 
             recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new PearsonCorrelation(ratings))));
-            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new DefaultVoting(ratings, 3))));
+            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new DefaultVoting(ratings, Rating.DefaultValue))));
             recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new InverseFrequency(ratings))));
             recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new VectorSimilarity(ratings))));
-            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new CaseAmplification(ratings, new DefaultVoting(ratings, 3)))));
+            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new CaseAmplification(ratings, new DefaultVoting(ratings, Rating.DefaultValue)))));
             recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new CaseAmplification(ratings, new InverseFrequency(ratings)))));
             recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new CaseAmplification(ratings, new PearsonCorrelation(ratings)))));
             recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new CaseAmplification(ratings, new VectorSimilarity(ratings)))));

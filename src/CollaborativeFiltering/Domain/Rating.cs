@@ -8,6 +8,8 @@ namespace CollaborativeFiltering
 
         public static readonly double MaxValue = 5;
 
+        public static readonly double DefaultValue = 3;
+
         public IRater Rater { get { return User; } }
 
         public User User { get; private set; }

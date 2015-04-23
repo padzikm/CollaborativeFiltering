@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CollaborativeFiltering
 {
@@ -30,7 +31,32 @@ namespace CollaborativeFiltering
             return error;
         }
 
-        public static double RootMeanSquareError(IRecommendation system, IEnumerable<Rating> ratings)
+        public static double AvarageRaterMeanAbsoluteError(IRecommendation system, IEnumerable<IRating> ratings)
+        {
+            var grouppedByRater = ratings.GroupBy(p => p.Rater.Id);
+            var count = 0D;
+            var sum = 0D;
+
+            foreach (var rater in grouppedByRater)
+            {
+                var error = MeanAbsoluteError(system, rater.AsEnumerable());
+
+                if (error != -1)
+                {
+                    sum += error;
+                    ++count;
+                }
+            }
+
+            if (count == 0)
+                return -1;
+
+            var avarage = sum/count;
+
+            return avarage;
+        }
+
+        public static double RootMeanSquareError(IRecommendation system, IEnumerable<IRating> ratings)
         {
             var sum = 0D;
             var count = 0;
