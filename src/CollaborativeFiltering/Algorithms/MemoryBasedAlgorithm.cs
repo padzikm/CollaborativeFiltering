@@ -40,7 +40,7 @@ namespace CollaborativeFiltering
                 var diff = value - mean;
                 var val = weight*diff;
 
-                weightSumBag.Add(Math.Abs(weight));
+                weightSumBag.Add(weight);
                 sumBag.Add(val);
             });
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,12 +7,12 @@ namespace CollaborativeFiltering
 {
     public class InverseFrequency : MemoryBasedAlgorithm
     {
-        private readonly Dictionary<long, decimal> _frequencies;
+        private readonly ConcurrentDictionary<long, decimal> _frequencies;
         private double? _userCount;
 
         public InverseFrequency(IEnumerable<IRating> ratings) : base(ratings)
         {
-            _frequencies = new Dictionary<long, decimal>();
+            _frequencies = new ConcurrentDictionary<long, decimal>();
         }
 
         internal override decimal Weight(IRater baseRater, IRater neighbour)
@@ -66,7 +67,7 @@ namespace CollaborativeFiltering
                 var movieRateCout = (double)_ratings.Count(p => p.Subject.Id == subject.Id);
                 var tmp = _userCount.Value/movieRateCout;
                 value = (decimal)Math.Log(tmp);
-                _frequencies.Add(subject.Id, value);
+                _frequencies.TryAdd(subject.Id, value);
             }
 
             return value;
