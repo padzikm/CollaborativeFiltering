@@ -33,6 +33,8 @@ namespace CollaborativeFilteringUI.Views.AddUser
             if(UserName !=  string.Empty)
                 DataRepository.Users.Add(new User(id, UserName));
             UserName = string.Empty;
+
+            RaiseOnWindowUpdated(this, EventArgs.Empty);
         }
     }
 }

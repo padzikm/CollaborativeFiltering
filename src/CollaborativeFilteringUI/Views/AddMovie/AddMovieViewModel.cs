@@ -38,6 +38,8 @@ namespace CollaborativeFilteringUI.Views.AddMovie
 
             Year = string.Empty;
             Title = string.Empty;
+
+            RaiseOnWindowUpdated(this, EventArgs.Empty);
         }
     }
 }

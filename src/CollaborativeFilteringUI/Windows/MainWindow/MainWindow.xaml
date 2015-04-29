@@ -11,29 +11,55 @@
     </Window.Resources>
     <DockPanel>
         <TabControl DockPanel.Dock="Top" FontSize="16">
-            <TabItem Header="Rekomendacje">
-                <StackPanel Orientation="Horizontal">
-                    <Button Command="{Binding GetRecommendationValue}" IsEnabled="{Binding IsResponsive}" Style="{StaticResource TopMenuButton}">Sprawdź wartość rekomentacji</Button>
-                    <Button Command="{Binding Recommend}" IsEnabled="{Binding IsResponsive}" Style="{StaticResource TopMenuButton}">Zarekomenduj filmy dla użytkownika</Button>
-                </StackPanel>
-                
-            </TabItem>
             <TabItem Header="Dane">
-                <StackPanel Orientation="Horizontal">
-                <Button Command="{Binding LoadData}" IsEnabled="{Binding IsResponsive}" Style="{StaticResource TopMenuButton}">Wczytaj dane z plików</Button>
-                    <Button Command="{Binding AddMovie}" IsEnabled="{Binding IsResponsive}" Style="{StaticResource TopMenuButton}">Dodaj nowy film</Button>
-                    <Button Command="{Binding AddUser}" IsEnabled="{Binding IsResponsive}" Style="{StaticResource TopMenuButton}">Dodaj nowego użytkownika</Button>
-                    <Button Command="{Binding AddRating}" IsEnabled="{Binding IsResponsive}" Style="{StaticResource TopMenuButton}">Dodaj nową ocenę</Button>
-                </StackPanel>
+                <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Command="{Binding LoadData}" IsEnabled="{Binding IsResponsive}" Style="{StaticResource TopMenuButton}">Wczytaj dane z plików</Button>
+                        <Button Command="{Binding AddMovie}" IsEnabled="{Binding IsResponsive}" Style="{StaticResource TopMenuButton}">Dodaj nowy film</Button>
+                        <Button Command="{Binding AddUser}" IsEnabled="{Binding IsResponsive}" Style="{StaticResource TopMenuButton}">Dodaj nowego użytkownika</Button>
+                        <Button Command="{Binding AddRating}" IsEnabled="{Binding IsResponsive}" Style="{StaticResource TopMenuButton}">Dodaj nową ocenę</Button>
+                        <Button Command="{Binding ClearData}" IsEnabled="{Binding IsResponsive}" Style="{StaticResource TopMenuButton}">Wyczyść dane</Button>
+                    </StackPanel>
+                </ScrollViewer>
             </TabItem>
-            
+            <TabItem Header="Rekomendacje">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Command="{Binding GetRecommendationValue}" IsEnabled="{Binding IsResponsive}" Style="{StaticResource TopMenuButton}">Sprawdź wartość rekomentacji</Button>
+                        <Button Command="{Binding Recommend}" IsEnabled="{Binding IsResponsive}" Style="{StaticResource TopMenuButton}">Zarekomenduj filmy dla użytkownika</Button>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Ewaluacja">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Command="{Binding Evaluate}" IsEnabled="{Binding IsResponsive}" Style="{StaticResource TopMenuButton}">Porównaj algorytmy</Button>
+                        </StackPanel>
+                </ScrollViewer>
+            </TabItem>
         </TabControl>
-        
+
+        <ScrollViewer DockPanel.Dock="Right" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <Border BorderBrush="#FFC5C5C5" BorderThickness="1" Margin="5" Padding="5">
+                <StackPanel>
+                    <Label Style="{StaticResource PageTitle}">Aktualne dane</Label>
+                    <Label Style="{StaticResource Descriptor}">Liczba filmów</Label>
+                    <Label Style="{StaticResource ValueHolder}" Content="{Binding MoviesCount}"/>
+                    <Label Style="{StaticResource Descriptor}">Liczba użytkowników</Label>
+                    <Label Style="{StaticResource ValueHolder}" Content="{Binding UsersCount}"/>
+                    <Label Style="{StaticResource Descriptor}">Liczba ocen treningowych</Label>
+                    <Label Style="{StaticResource ValueHolder}" Content="{Binding TrainingRatingsCount}"/>
+                    <Label Style="{StaticResource Descriptor}">Liczba ocen testowych</Label>
+                    <Label Style="{StaticResource ValueHolder}" Content="{Binding TestRatingsCount}"/>
+                </StackPanel>
+            </Border>
+        </ScrollViewer>
+
         <Grid>
-            <ScrollViewer>
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" >
                 <Bot:TransitionPresenter Content="{Binding View}" Transition="{StaticResource FadeTransition}" Margin="10"/>
             </ScrollViewer>
-            
+
             <CoreControls:CircularProgressBar x:Name="BusyBar" Opacity="0.0" Visibility="{Binding ElementName=BusyBar, Path=Opacity, Converter={StaticResource DoubleToVisibility}}" Background="#FFB0BCC3">
                 <CoreControls:CircularProgressBar.Style>
                     <Style TargetType="CoreControls:CircularProgressBar">

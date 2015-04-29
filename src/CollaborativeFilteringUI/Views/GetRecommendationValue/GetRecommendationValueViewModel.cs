@@ -19,22 +19,29 @@ namespace CollaborativeFilteringUI.Views.GetRecommendationValue
         public GetRecommendationValueViewModel(IGetRecommendationValueView view, IContainer container)
             : base(view, container)
         {
-            var dataRepository = Container.GetInstance<IDataRepository>();
-            Users = new ObservableCollection<User>(dataRepository.Users);
-
+            Users = new ObservableCollection<User>();
             RatedMovies = new ObservableCollection<Movie>();
             UnratedMovies = new ObservableCollection<Movie>();
-
-            SelectedUser = Users.FirstOrDefault();
-            SelectedMovie = RatedMovies.FirstOrDefault();
-
-            var recProvider = Container.GetInstance<IRecommendationsProvider>();
-            Recommendations = new ObservableCollection<IRecommendation>(recProvider.GetRecommendations(dataRepository.TrainingRatings));
-
-            SelectedMethod = Recommendations.FirstOrDefault();
-
+            Recommendations = new ObservableCollection<IRecommendation>();
             GetRecommendationValue = new DelegateAsyncCommand<object>(OnGetRecommendationValue, OnResponsivnesLost, OnResponsivnesGained);
             SelectedUserChangedCommand = new DelegateAsyncCommand<object>(OnSelectedUserChanged, OnResponsivnesLost, OnResponsivnesGained);
+
+            Task.Run(() =>
+            {
+                var dataRepository = Container.GetInstance<IDataRepository>();
+                Users = new ObservableCollection<User>(dataRepository.Users);
+
+                RatedMovies = new ObservableCollection<Movie>();
+                UnratedMovies = new ObservableCollection<Movie>();
+
+                SelectedUser = Users.FirstOrDefault();
+                SelectedMovie = RatedMovies.FirstOrDefault();
+
+                var recProvider = Container.GetInstance<IRecommendationsProvider>();
+                Recommendations = new ObservableCollection<IRecommendation>(recProvider.GetRecommendations(dataRepository.TrainingRatings));
+
+                SelectedMethod = Recommendations.FirstOrDefault();
+            });
         }
 
         public ObservableCollection<User> Users { get; set; }
@@ -43,6 +50,10 @@ namespace CollaborativeFilteringUI.Views.GetRecommendationValue
 
         private void OnSelectedUserChanged(object obj)
         {
+            RatedMovies = null;
+            UnratedMovies = null;
+
+            OnResponsivnesLost(this, EventArgs.Empty);
             var dataRepository = Container.GetInstance<IDataRepository>();
             var userMovies = dataRepository.TrainingRatings.Where(r => r.User == SelectedUser).Select(r => r.Movie);
             RatedMovies = new ObservableCollection<Movie>(userMovies);
@@ -55,6 +66,7 @@ namespace CollaborativeFilteringUI.Views.GetRecommendationValue
             });
 
             UnratedMovies = new ObservableCollection<Movie>(unratedMovies);
+            OnResponsivnesGained(this, EventArgs.Empty);
         }
 
         public ObservableCollection<Movie> RatedMovies { get; set; }
@@ -67,7 +79,7 @@ namespace CollaborativeFilteringUI.Views.GetRecommendationValue
 
         public IRecommendation SelectedMethod { get; set; }
 
-        public double RecommendationValue { get; set; }
+        public IRating RecommendationValue { get; set; }
 
         public ICommand GetRecommendationValue { get; set; }
 
@@ -77,8 +89,7 @@ namespace CollaborativeFilteringUI.Views.GetRecommendationValue
         {
             try
             {
-                var rating = SelectedMethod.RecommendSubject(SelectedUser, SelectedMovie);
-                RecommendationValue = rating != null ? rating.Value : -1;
+                RecommendationValue = SelectedMethod.RecommendSubject(SelectedUser, SelectedMovie);
             }
             catch (Exception e)
             {

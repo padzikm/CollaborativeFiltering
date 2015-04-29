@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="CollaborativeFilteringUI.Views.Evaluate.EvaluateView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             xmlns:c="clr-namespace:CollaborativeFilteringUI.Core.Converters">
+    <UserControl.Resources>
+        <c:BoolToVisibility x:Key="boolToVisibility"/>
+    </UserControl.Resources>
+    <StackPanel>
+        <Label Style="{StaticResource PageTitle}">Porównaj metody rekomendacji</Label>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource Descriptor}">Wybierz metodę porównania</Label>
+            <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Evaluators}" SelectedItem="{Binding SelectedEvaluator, Mode=TwoWay}" Margin="5" IsEnabled="{Binding IsResponsive}"/>
+
+            <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource Descriptor}">Wybierz algorytmy</Label>
+            <ListView Grid.Row="1" Grid.Column="1" Style="{StaticResource ValuesPicker}" ItemsSource="{Binding RecommendationsToCompare, Mode=TwoWay}" IsEnabled="{Binding IsResponsive}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <ToggleButton IsChecked="{Binding Item2}" Margin="5"/>
+                            <Label Content="{Binding Item1}" Style="{StaticResource Descriptor}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Button Grid.Row="2" Grid.Column="2" Command="{Binding EvaluateCommand}" IsEnabled="{Binding IsResponsive}">Porównaj algorytmy</Button>
+        </Grid>
+
+        <StackPanel Visibility="{Binding ShowResults, Converter={StaticResource boolToVisibility}}">
+            <Label Style="{StaticResource PageTitle}">Wyniki porównania</Label>
+
+        </StackPanel>
+
+
+    </StackPanel>
+</UserControl>

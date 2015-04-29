@@ -20,7 +20,7 @@ namespace CollaborativeFilteringUI.Views.AddRating
 
         Movie SelectedMovie { get; set; }
 
-        string RatingValue { get; set; }
+        double RatingValue { get; set; }
 
         ICommand Add { get; set; }
     }

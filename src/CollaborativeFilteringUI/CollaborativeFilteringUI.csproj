@@ -108,11 +108,13 @@
     <Compile Include="Core\Controls\CircularProgressBar.xaml.cs">
       <DependentUpon>CircularProgressBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Core\Converters\BoolToVisibility.cs" />
     <Compile Include="Core\Converters\BoolToVisibilityNegate.cs" />
     <Compile Include="Core\Converters\DoubleToPercentString.cs" />
     <Compile Include="Core\Converters\DoubleToVisibility.cs" />
     <Compile Include="Core\DelegateAsyncCommand.cs" />
     <Compile Include="Core\DelegateCommand.cs" />
+    <Compile Include="Core\Utils\Pair.cs" />
     <Compile Include="Utils\ToStringConverter.cs" />
     <Compile Include="Views\AddMovie\AddMovieView.xaml.cs">
       <DependentUpon>AddMovieView.xaml</DependentUpon>
@@ -132,6 +134,12 @@
     <Compile Include="Views\AddUser\AddUserViewModel.cs" />
     <Compile Include="Views\AddUser\IAddUserView.cs" />
     <Compile Include="Views\AddUser\IAddUserViewModel.cs" />
+    <Compile Include="Views\Evaluate\EvaluateView.xaml.cs">
+      <DependentUpon>EvaluateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Evaluate\EvaluateViewModel.cs" />
+    <Compile Include="Views\Evaluate\IEvaluateView.cs" />
+    <Compile Include="Views\Evaluate\IEvaluateViewModel.cs" />
     <Compile Include="Views\GetRecommendationValue\GetRecommendationValueViewModel.cs" />
     <Compile Include="Views\GetRecommendationValue\GetRecommendationValueView.xaml.cs">
       <DependentUpon>GetRecommendationValueView.xaml</DependentUpon>
@@ -186,6 +194,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddUser\AddUserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Evaluate\EvaluateView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

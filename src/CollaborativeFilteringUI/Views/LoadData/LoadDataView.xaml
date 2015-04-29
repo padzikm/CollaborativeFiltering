@@ -9,39 +9,41 @@
     <UserControl.Resources>
         <CoreConverters:DoubleToPercentString x:Key="DoubleToPercent"/>
     </UserControl.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="400"/>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource Descriptor}">Plik z filmami</Label>
-        <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource InputTextBox}"  Text="{Binding MoviesFilePath}" IsEnabled="{Binding IsResponsive}"/>
-        <Button Grid.Row="0" Grid.Column="2"  Command="{Binding FindMoviesFile}" IsEnabled="{Binding IsResponsive}">Znajdź plik</Button>
+    <StackPanel>
+        <Label Style="{StaticResource PageTitle}">Wczytaj dane z plików</Label>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource Descriptor}">Plik z ocenami treningowymi</Label>
-        <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource InputTextBox}"  Text="{Binding TrainingRatingsFilePath}" IsEnabled="{Binding IsResponsive}"/>
-        <Button Grid.Row="1" Grid.Column="2" Command="{Binding FindTrainingRatingsFile}" IsEnabled="{Binding IsResponsive}">Znajdź plik</Button>
+            <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource Descriptor}">Plik z filmami</Label>
+            <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource InputTextBox}"  Text="{Binding MoviesFilePath}" IsEnabled="{Binding IsResponsive}"/>
+            <Button Grid.Row="0" Grid.Column="2"  Command="{Binding FindMoviesFile}" IsEnabled="{Binding IsResponsive}">Znajdź plik</Button>
 
-        <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource Descriptor}">Plik z ocenami testowymi</Label>
-        <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource InputTextBox}"  Text="{Binding TestRatingsFilePath}" IsEnabled="{Binding IsResponsive}"/>
-        <Button Grid.Row="2" Grid.Column="2" Command="{Binding FindTestRatingsFile}" IsEnabled="{Binding IsResponsive}">Znajdź plik</Button>
+            <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource Descriptor}">Plik z ocenami treningowymi</Label>
+            <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource InputTextBox}"  Text="{Binding TrainingRatingsFilePath}" IsEnabled="{Binding IsResponsive}"/>
+            <Button Grid.Row="1" Grid.Column="2" Command="{Binding FindTrainingRatingsFile}" IsEnabled="{Binding IsResponsive}">Znajdź plik</Button>
 
-        <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource Descriptor}">Procent ocen do wczytania</Label>
-        <Slider Grid.Row="3" Grid.Column="1" Value="{Binding SetPercent}"  VerticalAlignment="Center" Margin="5" Padding="5" Maximum="1"/>
-        <Label Grid.Row="3" Grid.Column="2" Style="{StaticResource ValueHolder}" Content="{Binding SetPercent, Converter={StaticResource DoubleToPercent}}"/>
+            <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource Descriptor}">Plik z ocenami testowymi</Label>
+            <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource InputTextBox}"  Text="{Binding TestRatingsFilePath}" IsEnabled="{Binding IsResponsive}"/>
+            <Button Grid.Row="2" Grid.Column="2" Command="{Binding FindTestRatingsFile}" IsEnabled="{Binding IsResponsive}">Znajdź plik</Button>
 
-        <Button Grid.Row="4" Grid.Column="2" Command="{Binding LoadFiles}" IsEnabled="{Binding IsResponsive}">Wczytaj dane</Button>
+            <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource Descriptor}">Procent ocen do wczytania</Label>
+            <Slider Grid.Row="3" Grid.Column="1" Value="{Binding SetPercent}"  VerticalAlignment="Center" Margin="5" Padding="5" Maximum="1"/>
+            <Label Grid.Row="3" Grid.Column="2" Style="{StaticResource ValueHolder}" Content="{Binding SetPercent, Converter={StaticResource DoubleToPercent}}"/>
 
-    </Grid>
+            <Button Grid.Row="4" Grid.Column="2" Command="{Binding LoadFiles}" IsEnabled="{Binding IsResponsive}">Wczytaj dane</Button>
+
+        </Grid>
+    </StackPanel>
 </UserControl>

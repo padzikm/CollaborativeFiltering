@@ -2,6 +2,7 @@
 using CollaborativeFilteringUI.Core;
 using StructureMap;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -17,14 +18,19 @@ namespace CollaborativeFilteringUI.Views.AddRating
         public AddRatingViewModel(IAddRatingView view, IContainer container)
             : base(view, container)
         {
-            var dataRepository = Container.GetInstance<IDataRepository>();
-            Users = new ObservableCollection<User>(dataRepository.Users);
-            Movies = new ObservableCollection<Movie>(dataRepository.Movies);
-
-            SelectedUser = Users.FirstOrDefault();
-            SelectedMovie = Movies.FirstOrDefault();
-
+            Users = new ObservableCollection<User>();
+            Movies = new ObservableCollection<Movie>();
             Add = new DelegateAsyncCommand<object>(OnAdd, OnResponsivnesLost, OnResponsivnesGained);
+            SelectedUserChangedCommand = new DelegateAsyncCommand<object>(OnSelectedUserChanged, OnResponsivnesLost, OnResponsivnesGained);
+            RatingValue = 3.0;
+
+            Task.Run(() =>
+            {
+                var dataRepository = Container.GetInstance<IDataRepository>();
+                Users = new ObservableCollection<User>(dataRepository.Users);
+                SelectedUser = Users.FirstOrDefault();
+                SelectedMovie = Movies.FirstOrDefault();
+            });
         }
 
         public ObservableCollection<User> Users { get; set; }
@@ -35,26 +41,46 @@ namespace CollaborativeFilteringUI.Views.AddRating
 
         public Movie SelectedMovie { get; set; }
 
-        public string RatingValue { get; set; }
+        public double RatingValue { get; set; }
 
         public ICommand Add { get; set; }
+
+        public ICommand SelectedUserChangedCommand { get; set; }
 
         private void OnAdd(object obj)
         {
             var dataRepository = Container.GetInstance<IDataRepository>();
 
             if (dataRepository.TrainingRatings.Any(r => r.User == SelectedUser && r.Movie == SelectedMovie))
-            { 
+            {
                 MessageBox.Show("Taka ocena jest już w bazie", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
-                RatingValue = string.Empty;
+                RatingValue = 3.0;
                 return;
             }
 
-            double ratingValue;
-            if (double.TryParse(RatingValue, out ratingValue))
-                dataRepository.TrainingRatings.Add(Rating.CreateRating(SelectedUser, SelectedMovie, ratingValue));
+            dataRepository.TrainingRatings.Add(Rating.CreateRating(SelectedUser, SelectedMovie, RatingValue));
+            RatingValue = 3.0;
 
-            RatingValue = string.Empty;
+            RaiseOnWindowUpdated(this, EventArgs.Empty);
+        }
+
+        private void OnSelectedUserChanged(object obj)
+        {
+            Movies = null;
+            OnResponsivnesLost(this, EventArgs.Empty);
+            var dataRepository = Container.GetInstance<IDataRepository>();
+            var userMovies = dataRepository.TrainingRatings.Where(r => r.User == SelectedUser).Select(r => r.Movie);
+            var ratedMovies = new ObservableCollection<Movie>(userMovies);
+
+            var unratedMovies = new ConcurrentBag<Movie>();
+            Parallel.ForEach(dataRepository.Movies, movie =>
+            {
+                if (!userMovies.Contains(movie))
+                    unratedMovies.Add(movie);
+            });
+
+            Movies = new ObservableCollection<Movie>(unratedMovies);
+            OnResponsivnesGained(this, EventArgs.Empty);
         }
     }
 }

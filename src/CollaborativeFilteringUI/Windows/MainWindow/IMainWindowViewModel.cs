@@ -9,5 +9,12 @@ namespace CollaborativeFilteringUI
 {
     public interface IMainWindowViewModel : IWindowViewModel
     {
+        int UsersCount { get; set; }
+
+        int MoviesCount { get; set; }
+
+        int TestRatingsCount { get; set; }
+
+        int TrainingRatingsCount { get; set; }
     }
 }

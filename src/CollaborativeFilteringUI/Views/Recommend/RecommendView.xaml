@@ -5,49 +5,32 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="5"/>
-            <RowDefinition Height="90"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="90"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="500"/>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <TextBox Grid.Row="1" Grid.Column="1" IsEnabled="False" HorizontalContentAlignment="Right" Margin="5">
-            <TextBox.BorderBrush>
-                <SolidColorBrush/>
-            </TextBox.BorderBrush> Wybierz użytkownika
-        </TextBox>
+    <StackPanel>
+        <Label Style="{StaticResource PageTitle}">Zarekomenduj filmy</Label>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
 
-        <ListView Grid.Row="1" Grid.Column="2" ItemsSource="{Binding Users}" SelectedItem="{Binding Mode=TwoWay, Path=SelectedUser}"  Margin="2" IsEnabled="{Binding IsResponsive}"></ListView>
+            <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource Descriptor}">Wybierz użytkownika</Label>
+            <ListView Grid.Row="0" Grid.Column="1" Style="{StaticResource ValuesPicker}"  ItemsSource="{Binding Users}" SelectedItem="{Binding Mode=TwoWay, Path=SelectedUser}" IsEnabled="{Binding IsResponsive}"/>
 
-        <TextBox Grid.Row="2" Grid.Column="1" IsEnabled="False" HorizontalContentAlignment="Right" Margin="5">
-            <TextBox.BorderBrush>
-                <SolidColorBrush/>
-            </TextBox.BorderBrush> Wybierz metodę rekomendacji
-        </TextBox>
+            <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource Descriptor}">Wybierz metodę rekomendacji</Label>
+            <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Recommendations}" SelectedItem="{Binding Mode=TwoWay, Path=SelectedMethod}" Margin="5" IsEnabled="{Binding IsResponsive}"></ComboBox>
 
-        <ComboBox Grid.Row="2" Grid.Column="2" ItemsSource="{Binding Recommendations}" SelectedItem="{Binding Mode=TwoWay, Path=SelectedMethod}" Margin="2" IsEnabled="{Binding IsResponsive}"></ComboBox>
+            <Button Grid.Row="2" Grid.Column="2" Command="{Binding RecommendMovie}" IsEnabled="{Binding IsResponsive}">Zarekomenduj film</Button>
 
-        <Button Grid.Row="3" Grid.Column="3" Margin="5" Command="{Binding RecommendMovie}" IsEnabled="{Binding IsResponsive}">Zarekomenduj film</Button>
-
-
-        <TextBox Grid.Row="4" Grid.Column="1" IsEnabled="False" HorizontalContentAlignment="Right" Margin="5">
-            <TextBox.BorderBrush>
-                <SolidColorBrush/>
-            </TextBox.BorderBrush> Zarekomendowane filmy
-        </TextBox>
-
-        <ListView Grid.Row="4" Grid.Column="2" ItemsSource="{Binding RecommendedMovies}" Margin="2" IsEnabled="{Binding IsResponsive}"></ListView>
-
-
-    </Grid>
+            <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource Descriptor}">Zarekomendowane filmy</Label>
+            <ListView Grid.Row="3" Grid.Column="1" Style="{StaticResource ValuesPicker}"  ItemsSource="{Binding RecommendedMovies}" IsEnabled="{Binding IsResponsive}"></ListView>
+        </Grid>
+    </StackPanel>
 </UserControl>

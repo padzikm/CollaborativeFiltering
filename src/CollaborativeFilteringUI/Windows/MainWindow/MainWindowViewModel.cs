@@ -1,7 +1,9 @@
-﻿using CollaborativeFilteringUI.Core;
+﻿using CollaborativeFiltering;
+using CollaborativeFilteringUI.Core;
 using CollaborativeFilteringUI.Views.AddMovie;
 using CollaborativeFilteringUI.Views.AddRating;
 using CollaborativeFilteringUI.Views.AddUser;
+using CollaborativeFilteringUI.Views.Evaluate;
 using CollaborativeFilteringUI.Views.GetRecommendationValue;
 using CollaborativeFilteringUI.Views.LoadData;
 using CollaborativeFilteringUI.Views.Recommend;
@@ -28,6 +30,9 @@ namespace CollaborativeFilteringUI
             AddMovie = new DelegateCommand<object>(OnAddMovie);
             AddRating = new DelegateCommand<object>(OnAddRating);
             Recommend = new DelegateCommand<object>(OnRecommend);
+            ClearData = new DelegateAsyncCommand<object>(OnClearData);
+            Evaluate = new DelegateCommand<object>(OnEvaluate);
+            RefreshDataInfo();
         }
 
         public ICommand LoadData { get; set; }
@@ -44,9 +49,21 @@ namespace CollaborativeFilteringUI
 
         public ICommand Recommend { get; set; }
 
+        public ICommand ClearData { get; set; }
+
+        public ICommand Evaluate { get; set; }
+
+        public int UsersCount { get; set; }
+
+        public int MoviesCount { get; set; }
+
+        public int TestRatingsCount { get; set; }
+
+        public int TrainingRatingsCount { get; set; }
+
         private void OnExit(object obj)
         {
-            Application.Current.Shutdown();
+            Application.Current.MainWindow.Close();
         }
 
         private void OnLoadData(object obj)
@@ -79,9 +96,38 @@ namespace CollaborativeFilteringUI
             ShowView<IRecommendViewModel>();
         }
 
+        private void OnEvaluate(object obj)
+        {
+            ShowView<IEvaluateViewModel>();
+        }
+
+        private void OnClearData(object obj)
+        {
+            var dataRepository = Container.GetInstance<IDataRepository>();
+            dataRepository.Users.Clear();
+            dataRepository.Movies.Clear();
+            dataRepository.TrainingRatings.Clear();
+            dataRepository.TestRatings.Clear();
+            UsersCount = dataRepository.Users.Count;
+            MoviesCount = dataRepository.Movies.Count;
+            TrainingRatingsCount = dataRepository.TrainingRatings.Count;
+            TestRatingsCount = dataRepository.TestRatings.Count;
+        }
+
         override protected void ViewModelOnWindowUpdated(object sender, EventArgs e)
         {
-            MessageBox.Show("Abc");
+            RefreshDataInfo();
         }
+
+        private void RefreshDataInfo()
+        {
+            var dataRepository = Container.GetInstance<IDataRepository>();
+            UsersCount = dataRepository.Users.Count;
+            MoviesCount = dataRepository.Movies.Count;
+            TrainingRatingsCount = dataRepository.TrainingRatings.Count;
+            TestRatingsCount = dataRepository.TestRatings.Count;
+        }
+
+        
     }
 }

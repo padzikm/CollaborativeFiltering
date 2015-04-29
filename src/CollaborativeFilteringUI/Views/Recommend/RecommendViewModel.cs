@@ -17,22 +17,23 @@ namespace CollaborativeFilteringUI.Views.Recommend
         public RecommendViewModel(IRecommendView view, IContainer container)
             : base(view, container)
         {
-            var dataRepository = Container.GetInstance<IDataRepository>();
-            Users = new ObservableCollection<User>(dataRepository.Users);
+            Users = new ObservableCollection<User>();
             RecommendedMovies = new ObservableCollection<IRating>();
-            movies = new List<Movie>(dataRepository.Movies);
 
-            SelectedUser = Users.FirstOrDefault();
+            Task.Run(() => 
+            {
+                var dataRepository = Container.GetInstance<IDataRepository>();
+                Users = new ObservableCollection<User>(dataRepository.Users);
+                SelectedUser = Users.FirstOrDefault();
 
-            var recProvider = Container.GetInstance<IRecommendationsProvider>();
-            Recommendations = new ObservableCollection<IRecommendation>(recProvider.GetRecommendations(dataRepository.TrainingRatings));
+                var recProvider = Container.GetInstance<IRecommendationsProvider>();
+                Recommendations = new ObservableCollection<IRecommendation>(recProvider.GetRecommendations(dataRepository.TrainingRatings));
+                SelectedMethod = Recommendations.FirstOrDefault();
+            });
 
-            SelectedMethod = Recommendations.FirstOrDefault();
-
+            Recommendations = new ObservableCollection<IRecommendation>();
             RecommendMovie = new DelegateAsyncCommand<object>(OnRecommendMovie, OnResponsivnesLost, OnResponsivnesGained);
         }
-
-        private List<Movie> movies;
 
         public ObservableCollection<User> Users { get; set; }
 
@@ -48,9 +49,19 @@ namespace CollaborativeFilteringUI.Views.Recommend
 
         private void OnRecommendMovie(object obj)
         {
+            var dataRepository = Container.GetInstance<IDataRepository>();
+            var userMovies = dataRepository.TrainingRatings.Where(r => r.User == SelectedUser).Select(r => r.Movie);
+
+            var unratedMovies = new ConcurrentBag<Movie>();
+            Parallel.ForEach(dataRepository.Movies, movie =>
+            {
+                if (!userMovies.Contains(movie))
+                    unratedMovies.Add(movie);
+            });
+
             var results = new ConcurrentBag<IRating>();
 
-            Parallel.ForEach(movies, m =>
+            Parallel.ForEach(unratedMovies, m =>
             {
                 try
                 {

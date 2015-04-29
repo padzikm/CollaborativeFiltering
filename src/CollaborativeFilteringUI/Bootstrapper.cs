@@ -1,7 +1,9 @@
 ﻿using CollaborativeFiltering;
+using CollaborativeFiltering.Evaluations;
 using CollaborativeFilteringUI.Views.AddMovie;
 using CollaborativeFilteringUI.Views.AddRating;
 using CollaborativeFilteringUI.Views.AddUser;
+using CollaborativeFilteringUI.Views.Evaluate;
 using CollaborativeFilteringUI.Views.GetRecommendationValue;
 using CollaborativeFilteringUI.Views.LoadData;
 using CollaborativeFilteringUI.Views.Recommend;
@@ -44,10 +46,15 @@ namespace CollaborativeFilteringUI
             x.For<IRecommendView>().Use<RecommendView>();
             x.For<IRecommendViewModel>().Use<RecommendViewModel>();
 
+            x.For<IEvaluateView>().Use<EvaluateView>();
+            x.For<IEvaluateViewModel>().Use<EvaluateViewModel>();
+
             x.For<IDataRepository>().Singleton().Use<InMemoryDataRepository>();
             x.Policies.SetAllProperties(y => y.OfType<IDataRepository>());
 
             x.For<IRecommendationsProvider>().Use<RecommendationsProvider>();
+
+            x.For<IEvaluatorsProvider>().Singleton().Use<EvaluatorsProvider>();
         }
     }
 }

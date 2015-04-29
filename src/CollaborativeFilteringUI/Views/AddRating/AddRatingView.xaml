@@ -2,51 +2,43 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="5"/>
-            <RowDefinition Height="90"/>
-            <RowDefinition Height="90"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="500"/>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <TextBox Grid.Row="1" Grid.Column="1" IsEnabled="False" HorizontalContentAlignment="Right" Margin="5">
-            <TextBox.BorderBrush>
-                <SolidColorBrush/>
-            </TextBox.BorderBrush> Wybierz użytkownika
-        </TextBox>
+    <StackPanel>
+        <Label Style="{StaticResource PageTitle}">Dodaj ocenę</Label>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
-        <ListView Grid.Row="1" Grid.Column="2" ItemsSource="{Binding Users}" SelectedItem="{Binding Mode=TwoWay, Path=SelectedUser}"  Margin="2"></ListView>
+            <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource Descriptor}">Wybierz użytkownika</Label>
+            <ListView Grid.Row="0" Grid.Column="1" Style="{StaticResource ValuesPicker}" ItemsSource="{Binding Users}" SelectedItem="{Binding Mode=TwoWay, Path=SelectedUser}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding SelectedUserChangedCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ListView>
 
-        <TextBox Grid.Row="2" Grid.Column="1" IsEnabled="False" HorizontalContentAlignment="Right" Margin="5">
-            <TextBox.BorderBrush>
-                <SolidColorBrush/>
-            </TextBox.BorderBrush> Wybierz film
-        </TextBox>
+            <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource Descriptor}">Wybierz film</Label>
+            <ListView Grid.Row="1" Grid.Column="1" Style="{StaticResource ValuesPicker}" ItemsSource="{Binding Movies}" SelectedItem="{Binding Mode=TwoWay, Path=SelectedMovie}"></ListView>
 
-        <ListView Grid.Row="2" Grid.Column="2" ItemsSource="{Binding Movies}" SelectedItem="{Binding Mode=TwoWay, Path=SelectedMovie}" Margin="2"></ListView>
+            <Label  Grid.Row="2" Grid.Column="0" Style="{StaticResource Descriptor}">Ocena</Label>
+            <Slider Grid.Row="2" Grid.Column="1" Value="{Binding RatingValue}"  VerticalAlignment="Center" Margin="5" Padding="5" Maximum="5" IsSnapToTickEnabled="True" TickFrequency="0.5"/>
+            <Label Grid.Row="2" Grid.Column="2" Style="{StaticResource ValueHolder}" Content="{Binding RatingValue}"/>
 
-        <TextBox Grid.Row="3" Grid.Column="1" IsEnabled="False" HorizontalContentAlignment="Right" Margin="5">
-            <TextBox.BorderBrush>
-                <SolidColorBrush/>
-            </TextBox.BorderBrush> Ocena
-        </TextBox>
-
-        <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding RatingValue, Mode=TwoWay}" Margin="5"></TextBox>
-
-        <Button Grid.Row="4" Grid.Column="3"  Margin="5" Command="{Binding Add}"  IsEnabled="{Binding IsResponsive}">Dodaj ocenę</Button>
-
-
-    </Grid>
+            <Button Grid.Row="3" Grid.Column="2" Command="{Binding Add}"  IsEnabled="{Binding IsResponsive}">Dodaj ocenę</Button>
+        </Grid>
+    </StackPanel>
 </UserControl>

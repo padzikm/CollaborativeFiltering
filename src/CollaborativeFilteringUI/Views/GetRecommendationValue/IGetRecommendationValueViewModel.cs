@@ -26,7 +26,7 @@ namespace CollaborativeFilteringUI.Views.GetRecommendationValue
 
         IRecommendation SelectedMethod { get; set; }
 
-        double RecommendationValue { get; set; }
+        IRating RecommendationValue { get; set; }
 
         ICommand GetRecommendationValue { get; set; }
 

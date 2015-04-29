@@ -8,7 +8,7 @@
                 <ResourceDictionary Source="Themes/Metro/Metro.MSControls.Core.Implicit.xaml" />
                 <ResourceDictionary Source="Themes/Metro/Metro.MSControls.Toolkit.Implicit.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
+
             <SolidColorBrush x:Key="NoBorder"/>
             <Style x:Key="Descriptor"  TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
                 <Setter Property="Margin" Value="5" />
@@ -31,12 +31,31 @@
                 <Setter Property="Height" Value="30"/>
             </Style>
 
+            <Style x:Key="PageTitle"  TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="IsEnabled" Value="False"/>
+                <Setter Property="BorderBrush" Value="{StaticResource NoBorder}"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            </Style>
+
             <Style x:Key="InputTextBox"  TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
                 <Setter Property="Margin" Value="5" />
                 <Setter Property="Padding" Value="5" />
                 <Setter Property="FontSize" Value="13"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
                 <Setter Property="Height" Value="30"/>
+            </Style>
+
+            <Style x:Key="ValuesPicker" TargetType="{x:Type ListView}">
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="Padding" Value="5" />
+                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Height" Value="200"/>
             </Style>
 
             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">

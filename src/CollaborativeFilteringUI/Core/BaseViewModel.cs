@@ -1,5 +1,6 @@
 ﻿using StructureMap;
 using System;
+using System.Windows.Input;
 
 namespace CollaborativeFilteringUI.Core
 {
@@ -15,11 +16,17 @@ namespace CollaborativeFilteringUI.Core
             IsResponsive = true;
         }
 
+        protected virtual void OnInit(object obj)
+        {
+        }
+
         public IView View { get; set; }
 
         public IContainer Container { get; set; }
 
         public bool IsResponsive { get; set; }
+
+        public ICommand InitCommand { get; set; }
 
         public event EventHandler OnWindowUpdated;
         public event EventHandler OnWindowResponsivnesLost;
