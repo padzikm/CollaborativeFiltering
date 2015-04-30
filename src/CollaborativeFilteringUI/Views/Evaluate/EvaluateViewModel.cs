@@ -53,11 +53,10 @@ namespace CollaborativeFilteringUI.Views.Evaluate
 
         private void OnEvaluate(object obj)
         {
-            ShowResults = true;
-
             var dataRepository = Container.GetInstance<IDataRepository>();
-            var rawResults = SelectedEvaluator.Evaluate(RecommendationsToCompare.Where(p => p.Item2 == true).Select(p => p.Item1), dataRepository.TestRatings).OrderBy(t => t.Item2);
+            var rawResults = SelectedEvaluator.Evaluate(RecommendationsToCompare.Where(p => p.Item2 == true).Select(p => p.Item1), dataRepository.TestRatings).OrderByDescending(t => t.Item2);
             EvaluationResults = new ObservableCollection<Pair<string, double>>(rawResults.Select(t => new Pair<string, double>(t.Item1.ToString(), t.Item2)));
+            ShowResults = true;
         }
     }
 }

@@ -40,6 +40,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="De.TorstenMandelkow.MetroChart">
+      <HintPath>..\packages\ModernUICharts.1.0.0\lib\De.TorstenMandelkow.MetroChart.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
@@ -112,6 +115,7 @@
     <Compile Include="Core\Converters\BoolToVisibilityNegate.cs" />
     <Compile Include="Core\Converters\DoubleToPercentString.cs" />
     <Compile Include="Core\Converters\DoubleToVisibility.cs" />
+    <Compile Include="Core\Converters\ToStringConverter.cs" />
     <Compile Include="Core\DelegateAsyncCommand.cs" />
     <Compile Include="Core\DelegateCommand.cs" />
     <Compile Include="Core\Utils\Pair.cs" />
