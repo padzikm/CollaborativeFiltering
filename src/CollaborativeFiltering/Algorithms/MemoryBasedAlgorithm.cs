@@ -66,7 +66,7 @@ namespace CollaborativeFiltering
                 if(!dict.ContainsKey(subject))
                     dict[subject] = RecommendSubject(rater, subject);
 
-            var sortedList = dict.Values.OrderByDescending(p => p.Value).AsEnumerable();
+            var sortedList = dict.Values.Where(p => p != null).Where(p => p.Value != null).OrderByDescending(p => p.Value).AsEnumerable();
 
             if (skip > 0)
                 sortedList = sortedList.Skip(skip);

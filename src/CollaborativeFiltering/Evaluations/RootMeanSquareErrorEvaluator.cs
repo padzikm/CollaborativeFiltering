@@ -13,20 +13,7 @@ namespace CollaborativeFiltering.Evaluations
 
         }
 
-        public override IEnumerable<Tuple<IRecommendation, double>> Evaluate(IEnumerable<IRecommendation> recommendations, IEnumerable<IRating> testRatings)
-        {
-            var results = new List<Tuple<IRecommendation, double>>();
-
-            foreach (var r in recommendations)
-            {
-                var error = RootMeanSquareError(r, testRatings);
-                results.Add(new Tuple<IRecommendation, double>(r, error));
-            }
-
-            return results;
-        }
-
-        public double RootMeanSquareError(IRecommendation recommendation, IEnumerable<IRating> ratings)
+        public override double CalculateError(IRecommendation recommendation, IEnumerable<IRating> ratings, IEnumerable<IRater> raters, IEnumerable<ISubject> subjects)
         {
             var sum = 0D;
             var count = 0;

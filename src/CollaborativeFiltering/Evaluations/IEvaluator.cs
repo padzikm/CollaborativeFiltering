@@ -8,7 +8,9 @@ namespace CollaborativeFiltering.Evaluations
 {
     public interface IEvaluator
     {
-        IEnumerable<Tuple<IRecommendation, double>> Evaluate(IEnumerable<IRecommendation> recommendations, IEnumerable<IRating> testRatings);
+        IEnumerable<Tuple<IRecommendation, double>> Evaluate(IEnumerable<IRecommendation> recommendations, IEnumerable<IRating> testRatings, IEnumerable<IRater> raters, IEnumerable<ISubject> subjects);
+
+        double CalculateError(IRecommendation recommendation, IEnumerable<IRating> ratings, IEnumerable<IRater> raters, IEnumerable<ISubject> subjects);
 
         string MethodName { get; set; }
     }

@@ -13,7 +13,19 @@ namespace CollaborativeFiltering.Evaluations
             MethodName = methodName;
         }
 
-        public abstract IEnumerable<Tuple<IRecommendation, double>> Evaluate(IEnumerable<IRecommendation> recommendations, IEnumerable<IRating> testRatings);
+        public IEnumerable<Tuple<IRecommendation, double>> Evaluate(IEnumerable<IRecommendation> recommendations, IEnumerable<IRating> testRatings, IEnumerable<IRater> raters, IEnumerable<ISubject> subjects)
+        {
+            var results = new List<Tuple<IRecommendation, double>>();
+
+            foreach (var r in recommendations)
+            {
+                var error = CalculateError(r, testRatings, raters, subjects);
+                results.Add(new Tuple<IRecommendation, double>(r, error));
+            }
+
+            return results;
+        }
+        public abstract double CalculateError(IRecommendation recommendation, IEnumerable<IRating> ratings, IEnumerable<IRater> raters, IEnumerable<ISubject> subjects);
 
         public string MethodName { get; set; }
 
