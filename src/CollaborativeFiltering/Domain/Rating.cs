@@ -44,5 +44,10 @@ namespace CollaborativeFiltering
 
             return rating;
         }
+
+        public override string ToString()
+        {
+            return Subject.ToString() + " - " + Math.Round(Value, 4).ToString();
+        }
     }
 }

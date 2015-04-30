@@ -54,7 +54,6 @@
     <Compile Include="Domain\ISubject.cs" />
     <Compile Include="Domain\SimpleRating.cs" />
     <Compile Include="Evaluations\BaseEvaluator.cs" />
-    <Compile Include="Evaluations\EvaluationTester.cs" />
     <Compile Include="Algorithms\InverseFrequency.cs" />
     <Compile Include="Evaluations\EvaluatorsProvider.cs" />
     <Compile Include="Evaluations\IEvaluator.cs" />

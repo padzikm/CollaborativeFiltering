@@ -1,4 +1,5 @@
-﻿namespace CollaborativeFiltering
+﻿using System;
+namespace CollaborativeFiltering
 {
     internal class SimpleRating : IRating
     {
@@ -16,6 +17,11 @@
             Rater = rater;
             Subject = subject;
             Value = value;
+        }
+
+        public override string ToString()
+        {
+            return Subject.ToString() + " - " + Math.Round(Value, 4).ToString();
         }
     }
 }
