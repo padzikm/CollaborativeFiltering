@@ -6,6 +6,7 @@ using CollaborativeFilteringUI.Views.AddUser;
 using CollaborativeFilteringUI.Views.Evaluate;
 using CollaborativeFilteringUI.Views.GetRecommendationValue;
 using CollaborativeFilteringUI.Views.LoadData;
+using CollaborativeFilteringUI.Views.LoadResults;
 using CollaborativeFilteringUI.Views.Recommend;
 using StructureMap;
 using System;
@@ -32,6 +33,7 @@ namespace CollaborativeFilteringUI
             Recommend = new DelegateCommand<object>(OnRecommend);
             ClearData = new DelegateAsyncCommand<object>(OnClearData);
             Evaluate = new DelegateCommand<object>(OnEvaluate);
+            LoadResults = new DelegateCommand<object>(OnLoadResults);
             RefreshDataInfo();
         }
 
@@ -52,6 +54,8 @@ namespace CollaborativeFilteringUI
         public ICommand ClearData { get; set; }
 
         public ICommand Evaluate { get; set; }
+
+        public ICommand LoadResults { get; set; }
 
         public int UsersCount { get; set; }
 
@@ -99,6 +103,11 @@ namespace CollaborativeFilteringUI
         private void OnEvaluate(object obj)
         {
             ShowView<IEvaluateViewModel>();
+        }
+
+        private void OnLoadResults(object obj)
+        {
+            ShowView<ILoadResultsViewModel>();
         }
 
         private void OnClearData(object obj)

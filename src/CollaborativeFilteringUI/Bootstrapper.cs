@@ -6,6 +6,7 @@ using CollaborativeFilteringUI.Views.AddUser;
 using CollaborativeFilteringUI.Views.Evaluate;
 using CollaborativeFilteringUI.Views.GetRecommendationValue;
 using CollaborativeFilteringUI.Views.LoadData;
+using CollaborativeFilteringUI.Views.LoadResults;
 using CollaborativeFilteringUI.Views.Recommend;
 using StructureMap;
 using System;
@@ -48,6 +49,9 @@ namespace CollaborativeFilteringUI
 
             x.For<IEvaluateView>().Use<EvaluateView>();
             x.For<IEvaluateViewModel>().Use<EvaluateViewModel>();
+
+            x.For<ILoadResultsView>().Use<LoadResultsView>();
+            x.For<ILoadResultsViewModel>().Use<LoadResultsViewModel>();
 
             x.For<IDataRepository>().Singleton().Use<InMemoryDataRepository>();
             x.Policies.SetAllProperties(y => y.OfType<IDataRepository>());

@@ -21,5 +21,19 @@ namespace CollaborativeFilteringUI.Utils
 
             File.WriteAllText(filePath, sb.ToString());
         }
+
+        public void LoadResults(string filePath, out List<Pair<string, double>> results, out string evaluationMethod)
+        {
+            var lines = File.ReadAllLines(filePath);
+            evaluationMethod = lines[0];
+
+            results = new List<Pair<string, double>>();
+            for(int i = 1; i < lines.Length; ++i)
+            {
+                var split = lines[i].Split(',');
+                var value = double.Parse(split[1]);
+                results.Add(new Pair<string, double>(split[0], value));
+            }
+        }
     }
 }

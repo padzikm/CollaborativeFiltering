@@ -34,6 +34,7 @@
                 <ScrollViewer HorizontalScrollBarVisibility="Auto">
                     <StackPanel Orientation="Horizontal">
                         <Button Command="{Binding Evaluate}" IsEnabled="{Binding IsResponsive}" Style="{StaticResource TopMenuButton}">Porównaj algorytmy</Button>
+                        <Button Command="{Binding LoadResults}" IsEnabled="{Binding IsResponsive}" Style="{StaticResource TopMenuButton}">Wczytaj wyniki</Button>
                         </StackPanel>
                 </ScrollViewer>
             </TabItem>

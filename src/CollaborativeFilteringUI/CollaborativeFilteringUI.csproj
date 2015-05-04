@@ -120,7 +120,6 @@
     <Compile Include="Core\DelegateCommand.cs" />
     <Compile Include="Core\Utils\Pair.cs" />
     <Compile Include="Utils\ResultsPersister.cs" />
-    <Compile Include="Utils\ToStringConverter.cs" />
     <Compile Include="Views\AddMovie\AddMovieView.xaml.cs">
       <DependentUpon>AddMovieView.xaml</DependentUpon>
     </Compile>
@@ -157,6 +156,12 @@
       <DependentUpon>LoadDataView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoadData\LoadDataViewModel.cs" />
+    <Compile Include="Views\LoadResults\ILoadResultsView.cs" />
+    <Compile Include="Views\LoadResults\ILoadResultsViewModel.cs" />
+    <Compile Include="Views\LoadResults\LoadResultsView.xaml.cs">
+      <DependentUpon>LoadResultsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoadResults\LoadResultsViewModel.cs" />
     <Compile Include="Views\Recommend\IRecommendView.cs" />
     <Compile Include="Views\Recommend\IRecommendViewModel.cs" />
     <Compile Include="Views\Recommend\RecommendView.xaml.cs">
@@ -211,6 +216,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LoadData\LoadDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoadResults\LoadResultsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
