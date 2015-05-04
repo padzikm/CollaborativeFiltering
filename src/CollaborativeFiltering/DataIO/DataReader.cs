@@ -92,12 +92,20 @@ namespace CollaborativeFiltering
             var moviesById = movies.ToDictionary(m => m.Id);
             var usersById = new ConcurrentDictionary<int, User>();
 
-            ReadRatings(trainingRatingsFile, percentToRead, moviesById, usersById, out trainingRatings);
-            ReadRatings(testRatingsFile, percentToRead, moviesById, usersById, out testRatings);
+            IEnumerable<Rating> allTrainingRatings;
+            IEnumerable<Rating> allTestRatings;
 
-            users = usersById.Select(u => u.Value);
-            movies = testRatings.GroupBy(p => p.Movie.Id).OrderByDescending(p => p.Count()).Select(p => p.First().Movie).ToList();
+            ReadRatings(trainingRatingsFile, percentToRead, moviesById, usersById, out allTrainingRatings);
+            ReadRatings(testRatingsFile, percentToRead, moviesById, usersById, out allTestRatings);
 
+            var allUsers = usersById.Select(u => u.Value);
+            movies = allTestRatings.GroupBy(p => p.Movie.Id).OrderByDescending(p => p.Count()).Select(p => p.First().Movie).ToList();
+
+            var usersToReturn = allUsers.OrderByDescending(u => u.Ratings.Count()).Take((int)((double)allUsers.Count() * percentToRead)).ToList();
+
+            testRatings = allTestRatings;
+            trainingRatings = allTrainingRatings;
+            users = usersToReturn;
         }
 
         private void ReadRatings(string ratingsFile, double percentToRead, Dictionary<long,Movie> movies, ConcurrentDictionary<int, User> usersById, out IEnumerable<Rating> ratings)
