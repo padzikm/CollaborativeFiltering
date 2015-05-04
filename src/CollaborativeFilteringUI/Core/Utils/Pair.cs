@@ -20,7 +20,7 @@ namespace CollaborativeFilteringUI.Core.Utils
 
         public override string ToString()
         {
-            return "Pair {" + Item1.ToString() + " , " + Item2.ToString() + "}";
+            return Item1.ToString() + "," + Item2.ToString();
         }
     }
 }

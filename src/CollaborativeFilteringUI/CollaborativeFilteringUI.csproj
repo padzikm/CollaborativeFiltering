@@ -119,6 +119,7 @@
     <Compile Include="Core\DelegateAsyncCommand.cs" />
     <Compile Include="Core\DelegateCommand.cs" />
     <Compile Include="Core\Utils\Pair.cs" />
+    <Compile Include="Utils\ResultsPersister.cs" />
     <Compile Include="Utils\ToStringConverter.cs" />
     <Compile Include="Views\AddMovie\AddMovieView.xaml.cs">
       <DependentUpon>AddMovieView.xaml</DependentUpon>

@@ -2,6 +2,8 @@
 using CollaborativeFiltering.Evaluations;
 using CollaborativeFilteringUI.Core;
 using CollaborativeFilteringUI.Core.Utils;
+using CollaborativeFilteringUI.Utils;
+using Microsoft.Win32;
 using StructureMap;
 using System;
 using System.Collections.Generic;
@@ -9,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace CollaborativeFilteringUI.Views.Evaluate
@@ -19,6 +22,7 @@ namespace CollaborativeFilteringUI.Views.Evaluate
             : base(view, container)
         {
             EvaluateCommand = new DelegateAsyncCommand<object>(OnEvaluate, OnResponsivnesLost, OnResponsivnesGained);
+            SaveCommand = new DelegateAsyncCommand<object>(OnSave, OnResponsivnesLost, OnResponsivnesGained);
             ShowResults = false;
 
             Task.Run(() =>
@@ -49,6 +53,8 @@ namespace CollaborativeFilteringUI.Views.Evaluate
 
         public bool ShowResults { get; set; }
 
+        public ICommand SaveCommand { get; set; }
+
         public ObservableCollection<Pair<string, double>> EvaluationResults { get; set; }
 
         private void OnEvaluate(object obj)
@@ -57,6 +63,43 @@ namespace CollaborativeFilteringUI.Views.Evaluate
             var rawResults = SelectedEvaluator.Evaluate(RecommendationsToCompare.Where(p => p.Item2 == true).Select(p => p.Item1), dataRepository.TestRatings, dataRepository.Users, dataRepository.Movies).OrderBy(t => t.Item2);
             EvaluationResults = new ObservableCollection<Pair<string, double>>(rawResults.Select(t => new Pair<string, double>(t.Item1.ToString(), t.Item2)));
             ShowResults = true;
+        }
+
+        private void OnSave(object obj)
+        {
+            var filePath = FindFile("Zapisz wyniki");
+
+            if(filePath == String.Empty)
+            {
+                MessageBox.Show("Problem z zapisem", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            var resultsPersister = new ResultsPersister();
+
+            try
+            {
+                resultsPersister.SaveResults(EvaluationResults.ToList(), SelectedEvaluator.ToString(), filePath);
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("Problem z zapisem", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+        }
+
+        private string FindFile(string windowTitle)
+        {
+            var dialog = new OpenFileDialog();
+            dialog.DefaultExt = ".txt";
+            dialog.CheckFileExists = false;
+            dialog.Filter = "Text files (*.txt)|*.txt";
+            dialog.Title = windowTitle;
+            var result = dialog.ShowDialog();
+
+            if (result != true)
+                return string.Empty;
+
+            return dialog.FileName;
         }
     }
 }

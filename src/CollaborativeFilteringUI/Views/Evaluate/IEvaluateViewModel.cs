@@ -22,6 +22,8 @@ namespace CollaborativeFilteringUI.Views.Evaluate
 
         ICommand EvaluateCommand { get; set; }
 
+        ICommand SaveCommand { get; set; }
+
         bool ShowResults { get; set; }
 
         ObservableCollection<Pair<string, double>> EvaluationResults { get; set; }

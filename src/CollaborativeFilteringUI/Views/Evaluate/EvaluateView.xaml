@@ -18,6 +18,7 @@
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -51,6 +52,15 @@
                     <Charts:ChartSeries ItemsSource="{Binding EvaluationResults}" DisplayMember="Item1" ValueMember="Item2" SeriesTitle="{Binding SelectedEvaluator, Converter={StaticResource toString}}"/>
                 </Charts:ClusteredBarChart.Series>
             </Charts:ClusteredBarChart>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="400"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                
+                <Button Grid.Column="2" Command="{Binding SaveCommand}" IsEnabled="{Binding IsResponsive}">Zapisz wyniki</Button>
+            </Grid>
         </StackPanel>
 
 
