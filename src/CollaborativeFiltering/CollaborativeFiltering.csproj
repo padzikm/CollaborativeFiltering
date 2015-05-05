@@ -35,6 +35,12 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Infer.Compiler">
+      <HintPath>..\lib\Infer.Compiler.dll</HintPath>
+    </Reference>
+    <Reference Include="Infer.Runtime">
+      <HintPath>..\lib\Infer.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms\AlgorithmCache.cs" />
+    <Compile Include="Algorithms\BayesianAlgorithm.cs" />
     <Compile Include="Algorithms\CaseAmplification.cs" />
     <Compile Include="Algorithms\MemoryBasedAlgorithmCache.cs" />
     <Compile Include="DataIO\DataReader.cs" />

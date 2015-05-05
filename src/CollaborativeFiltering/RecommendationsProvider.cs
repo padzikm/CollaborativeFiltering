@@ -21,6 +21,7 @@ namespace CollaborativeFiltering
             recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new CaseAmplification(ratings, new InverseFrequency(ratings)))));
             recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new CaseAmplification(ratings, new PearsonCorrelation(ratings)))));
             recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new CaseAmplification(ratings, new VectorSimilarity(ratings)))));
+            recommendations.Add(new BayesianAlgorithm(ratings));
 
             return recommendations;
         }
