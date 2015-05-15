@@ -60,6 +60,7 @@
     <Compile Include="Domain\IRating.cs" />
     <Compile Include="Domain\ISubject.cs" />
     <Compile Include="Domain\SimpleRating.cs" />
+    <Compile Include="Evaluations\AvarageRaterMeanAbsoluteErrorEvaluator.cs" />
     <Compile Include="Evaluations\BaseEvaluator.cs" />
     <Compile Include="Algorithms\InverseFrequency.cs" />
     <Compile Include="Evaluations\EvaluatorsProvider.cs" />
