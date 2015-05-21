@@ -45,7 +45,7 @@ namespace CollaborativeFiltering
             var firstFactor = frequencySum*(baseRatingsSquareSum - baseRatingsSum*baseRatingsSum);
             var secondFactor = frequencySum*(neighRatingsSquareSum - neighRatingsSum*neighRatingsSum);
             var factors = (double)(firstFactor*secondFactor);
-            var denominator = (decimal)Math.Sqrt(factors);
+            var denominator = (decimal)Math.Sqrt(Math.Abs(factors));
 
             if (denominator == 0)
                 return 0;
