@@ -49,7 +49,7 @@ namespace CollaborativeFiltering
 
         public override string ToString()
         {
-            return "Person Correlation";
+            return "Pearson Correlation";
         }
     }
 }

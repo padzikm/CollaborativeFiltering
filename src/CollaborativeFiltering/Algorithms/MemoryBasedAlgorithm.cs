@@ -8,7 +8,7 @@ namespace CollaborativeFiltering
 {
     public abstract class MemoryBasedAlgorithm : IRecommendation
     {
-        protected readonly List<IRating> Ratings;
+        protected internal List<IRating> Ratings { get; private set; }
 
         protected MemoryBasedAlgorithm(IEnumerable<IRating> ratings)
         {

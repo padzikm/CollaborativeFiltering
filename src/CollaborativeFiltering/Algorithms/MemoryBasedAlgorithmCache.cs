@@ -10,7 +10,7 @@ namespace CollaborativeFiltering.Algorithms
         private readonly ConcurrentDictionary<long, decimal> _userMeanVotesCache;
         private readonly ConcurrentDictionary<long, bool> _notCachedUsers; 
 
-        public MemoryBasedAlgorithmCache(MemoryBasedAlgorithm algorithm) : base(new List<IRating>())
+        public MemoryBasedAlgorithmCache(MemoryBasedAlgorithm algorithm) : base(algorithm.Ratings)
         {
             _algorithm = algorithm;
             _userWeightsCache = new ConcurrentDictionary<string, decimal>();
@@ -44,6 +44,7 @@ namespace CollaborativeFiltering.Algorithms
         {
             _notCachedUsers[rating.Rater.Id] = true;
             _algorithm.AddRating(rating);
+            base.AddRating(rating);
         }
 
         public override string ToString()
@@ -59,7 +60,7 @@ namespace CollaborativeFiltering.Algorithms
             if (isCached && _userMeanVotesCache.TryGetValue(rater.Id, out value))
                 return value;
 
-            value = _algorithm.RatersMeanVote(rater);
+            value = base.RatersMeanVote(rater);
 
             _userMeanVotesCache[rater.Id] = value;
 
