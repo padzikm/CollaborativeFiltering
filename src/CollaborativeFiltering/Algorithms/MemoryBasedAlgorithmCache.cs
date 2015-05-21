@@ -10,7 +10,7 @@ namespace CollaborativeFiltering.Algorithms
         private readonly ConcurrentDictionary<long, decimal> _userMeanVotesCache;
         private readonly ConcurrentDictionary<long, bool> _notCachedUsers; 
 
-        public MemoryBasedAlgorithmCache(IEnumerable<IRating> ratings, MemoryBasedAlgorithm algorithm) : base(ratings)
+        public MemoryBasedAlgorithmCache(MemoryBasedAlgorithm algorithm) : base(new List<IRating>())
         {
             _algorithm = algorithm;
             _userWeightsCache = new ConcurrentDictionary<string, decimal>();
@@ -23,7 +23,7 @@ namespace CollaborativeFiltering.Algorithms
             var isBaseUserCached = !_notCachedUsers.TryUpdate(baseRater.Id, false, true);
             var isNeighbourCached = !_notCachedUsers.TryUpdate(neighbour.Id, false, true);
             var areCached = isBaseUserCached && isNeighbourCached;
-
+            
             var key = string.Format("{0}_{1}", baseRater.Id, neighbour.Id);
             var reverseKey = string.Format("{0}_{1}", neighbour.Id, baseRater.Id);
             var cachedWeight = 0M;
@@ -43,8 +43,7 @@ namespace CollaborativeFiltering.Algorithms
         public override void AddRating(IRating rating)
         {
             _notCachedUsers[rating.Rater.Id] = true;
-
-            base.AddRating(rating);
+            _algorithm.AddRating(rating);
         }
 
         public override string ToString()
@@ -52,7 +51,7 @@ namespace CollaborativeFiltering.Algorithms
             return _algorithm.ToString();
         }
 
-        protected override decimal RatersMeanVote(IRater rater)
+        protected internal override decimal RatersMeanVote(IRater rater)
         {
             var isCached = !_notCachedUsers.TryUpdate(rater.Id, false, true);
             var value = 0M;
@@ -60,7 +59,7 @@ namespace CollaborativeFiltering.Algorithms
             if (isCached && _userMeanVotesCache.TryGetValue(rater.Id, out value))
                 return value;
 
-            value = base.RatersMeanVote(rater);
+            value = _algorithm.RatersMeanVote(rater);
 
             _userMeanVotesCache[rater.Id] = value;
 

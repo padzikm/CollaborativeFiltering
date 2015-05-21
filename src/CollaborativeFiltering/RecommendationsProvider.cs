@@ -1,9 +1,5 @@
-﻿using CollaborativeFiltering.Algorithms;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using CollaborativeFiltering.Algorithms;
 
 namespace CollaborativeFiltering
 {
@@ -13,14 +9,14 @@ namespace CollaborativeFiltering
         {
             var recommendations = new List<IRecommendation>();
 
-            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new PearsonCorrelation(ratings))));
-            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new DefaultVoting(ratings, Rating.DefaultValue))));
-            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new InverseFrequency(ratings))));
-            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new VectorSimilarity(ratings))));
-            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new CaseAmplification(ratings, new DefaultVoting(ratings, Rating.DefaultValue)))));
-            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new CaseAmplification(ratings, new InverseFrequency(ratings)))));
-            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new CaseAmplification(ratings, new PearsonCorrelation(ratings)))));
-            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(ratings, new CaseAmplification(ratings, new VectorSimilarity(ratings)))));
+            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(new PearsonCorrelation(ratings))));
+            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(new DefaultVoting(ratings, Rating.DefaultValue))));
+            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(new InverseFrequency(ratings))));
+            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(new VectorSimilarity(ratings))));
+            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(new CaseAmplification(ratings, new DefaultVoting(ratings, Rating.DefaultValue)))));
+            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(new CaseAmplification(ratings, new InverseFrequency(ratings)))));
+            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(new CaseAmplification(ratings, new PearsonCorrelation(ratings)))));
+            recommendations.Add(new AlgorithmCache(new MemoryBasedAlgorithmCache(new CaseAmplification(ratings, new VectorSimilarity(ratings)))));
             recommendations.Add(new BayesianAlgorithm(ratings));
 
             return recommendations;

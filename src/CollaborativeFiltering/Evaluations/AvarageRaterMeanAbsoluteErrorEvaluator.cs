@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace CollaborativeFiltering.Evaluations
 {
-    class AvarageRaterMeanAbsoluteErrorEvaluator : BaseEvaluator
+    public class AvarageRaterMeanAbsoluteErrorEvaluator : BaseEvaluator
     {
         public AvarageRaterMeanAbsoluteErrorEvaluator() : base("Avarage mean absolute error evaluation")
         {

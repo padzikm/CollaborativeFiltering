@@ -8,21 +8,24 @@ namespace CollaborativeFiltering
 {
     public abstract class MemoryBasedAlgorithm : IRecommendation
     {
-        protected readonly List<IRating> _ratings;
+        protected readonly List<IRating> Ratings;
 
         protected MemoryBasedAlgorithm(IEnumerable<IRating> ratings)
         {
-            _ratings = ratings.ToList();
+            if(ratings == null)
+                throw new ArgumentNullException("ratings");
+
+            Ratings = ratings.ToList();
         }
 
         public virtual IRating RecommendSubject(IRater rater, ISubject subject)
         {
-            var alreadyRated = _ratings.Find(p => p.Rater.Id == rater.Id && p.Subject.Id == subject.Id);
+            var alreadyRated = Ratings.Find(p => p.Rater.Id == rater.Id && p.Subject.Id == subject.Id);
 
             if (alreadyRated != null)
                 return alreadyRated;
 
-            var ratings = _ratings.Where(p => p.Subject.Id == subject.Id && p.Rater.Id != rater.Id).ToList();
+            var ratings = Ratings.Where(p => p.Subject.Id == subject.Id && p.Rater.Id != rater.Id).ToList();
 
             if (!ratings.Any())
                 return null;
@@ -78,12 +81,12 @@ namespace CollaborativeFiltering
 
         public virtual void AddRating(IRating rating)
         {
-            _ratings.Add(rating);
+            Ratings.Add(rating);
         }
 
         internal abstract decimal Weight(IRater baseRater, IRater neighbour);
 
-        protected virtual decimal RatersMeanVote(IRater rater)
+        protected internal virtual decimal RatersMeanVote(IRater rater)
         {
             var sum = 0M;
             var count = 0;

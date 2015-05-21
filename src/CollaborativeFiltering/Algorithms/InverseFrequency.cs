@@ -58,13 +58,13 @@ namespace CollaborativeFiltering
         private decimal GetFrequency(ISubject subject)
         {
             if (_userCount == null)
-                _userCount = _ratings.GroupBy(p => p.Rater.Id).Count();
+                _userCount = Ratings.GroupBy(p => p.Rater.Id).Count();
 
             var value = 0M;
 
             if (!_frequencies.TryGetValue(subject.Id, out value))
             {
-                var movieRateCout = (double)_ratings.Count(p => p.Subject.Id == subject.Id);
+                var movieRateCout = (double)Ratings.Count(p => p.Subject.Id == subject.Id);
                 var tmp = _userCount.Value/movieRateCout;
                 value = (decimal)Math.Log(tmp);
                 _frequencies.TryAdd(subject.Id, value);
