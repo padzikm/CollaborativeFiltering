@@ -24,6 +24,7 @@ namespace CollaborativeFilteringUI.Views.Evaluate
             EvaluateCommand = new DelegateAsyncCommand<object>(OnEvaluate, OnResponsivnesLost, OnResponsivnesGained);
             SaveCommand = new DelegateAsyncCommand<object>(OnSave, OnResponsivnesLost, OnResponsivnesGained);
             ShowResults = false;
+            EvaluationResults = new ObservableCollection<Pair<string, double>>();
 
             Task.Run(() =>
                 {
@@ -61,8 +62,16 @@ namespace CollaborativeFilteringUI.Views.Evaluate
         {
             var dataRepository = Container.GetInstance<IDataRepository>();
             var rawResults = SelectedEvaluator.Evaluate(RecommendationsToCompare.Where(p => p.Item2 == true).Select(p => p.Item1), dataRepository.TestRatings, dataRepository.Users, dataRepository.Movies).OrderBy(t => t.Item2);
-            EvaluationResults = new ObservableCollection<Pair<string, double>>(rawResults.Select(t => new Pair<string, double>(t.Item1.ToString(), t.Item2)));
-            ShowResults = true;
+
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                EvaluationResults.Clear();
+                var toAdd = new List<Pair<string, double>>(rawResults.Select(t => new Pair<string, double>(t.Item1.ToString(), t.Item2)));
+                foreach (var result in toAdd)
+                    EvaluationResults.Add(result);
+                ShowResults = true;
+            });
+
         }
 
         private void OnSave(object obj)

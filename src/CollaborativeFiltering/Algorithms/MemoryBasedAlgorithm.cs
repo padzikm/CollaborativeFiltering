@@ -37,14 +37,18 @@ namespace CollaborativeFiltering
 
             Parallel.ForEach(ratings, options, rating =>
             {
-                var weight = Weight(rater, rating.Rater);
-                var mean = RatersMeanVote(rating.Rater);
-                var value = (decimal) rating.Value;
-                var diff = value - mean;
-                var val = weight*diff;
+                try
+                {
+                    var weight = Weight(rater, rating.Rater);
+                    var mean = RatersMeanVote(rating.Rater);
+                    var value = (decimal)rating.Value;
+                    var diff = value - mean;
+                    var val = weight * diff;
 
-                weightSumBag.Add(weight);
-                sumBag.Add(val);
+                    weightSumBag.Add(weight);
+                    sumBag.Add(val);
+                }
+                catch (Exception) { }
             });
 
             var sum = sumBag.Sum();
