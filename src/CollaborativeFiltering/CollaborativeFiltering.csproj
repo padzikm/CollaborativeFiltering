@@ -86,7 +86,9 @@
     <Compile Include="Evaluations\IEvaluatorsProvider.cs" />
     <Compile Include="Evaluations\MeanAbsoluteErrorEvaluator.cs" />
     <Compile Include="Evaluations\RootMeanSquareErrorEvaluator.cs" />
-    <Compile Include="Evaluations\TopListErrorEvaluator.cs" />
+    <Compile Include="Evaluations\TopListAccuracyEvaluator.cs" />
+    <Compile Include="Evaluations\TopListRelevancyEvaluator.cs" />
+    <Compile Include="Evaluations\TopListSignificancyEvaluator.cs" />
     <Compile Include="Services\IRatingService.cs" />
     <Compile Include="Algorithms\IRecommendation.cs" />
     <Compile Include="Algorithms\MemoryBasedAlgorithm.cs" />

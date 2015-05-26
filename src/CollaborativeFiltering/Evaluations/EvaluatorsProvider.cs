@@ -14,9 +14,9 @@ namespace CollaborativeFiltering.Evaluations
             evaluators.Add(new MeanAbsoluteErrorEvaluator());
             evaluators.Add(new RootMeanSquareErrorEvaluator());
             evaluators.Add(new AvarageRaterMeanAbsoluteErrorEvaluator());
-            evaluators.Add(new TopListErrorEvaluator(new MeanAbsoluteErrorEvaluator()));
-            evaluators.Add(new TopListErrorEvaluator(new RootMeanSquareErrorEvaluator()));
-            evaluators.Add(new TopListErrorEvaluator(new AvarageRaterMeanAbsoluteErrorEvaluator()));
+            evaluators.Add(new TopListSignificancyEvaluator());
+            evaluators.Add(new TopListAccuracyEvaluator());
+            evaluators.Add(new TopListRelevancyEvaluator());
 
             return evaluators;
         }

@@ -1,0 +1,9 @@
+Top list significancy evaluation
+Inverse Frequency,0.999047625526357
+Inverse Frequency with Case Amplification,0.999108849599663
+Pearson Correlation,0.999925170577071
+Vector Similarity,0.999931973251883
+Vector Similarity with Case Amplification,0.999931973251883
+Default voting,0.999945578601506
+Pearson Correlation with Case Amplification,0.999945578601506
+Default voting with Case Amplification,1

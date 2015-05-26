@@ -85,9 +85,7 @@ namespace ConsoleTester
                 new MeanAbsoluteErrorEvaluator(),
                 new RootMeanSquareErrorEvaluator(),
                 new AvarageRaterMeanAbsoluteErrorEvaluator(),
-                new TopListErrorEvaluator(new MeanAbsoluteErrorEvaluator()),
-                new TopListErrorEvaluator(new RootMeanSquareErrorEvaluator()),
-                new TopListErrorEvaluator(new AvarageRaterMeanAbsoluteErrorEvaluator()),
+                new TopListSignificancyEvaluator()
             };
         } 
 

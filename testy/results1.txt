@@ -1,0 +1,9 @@
+Mean absolute error evaluation
+Vector Similarity with Case Amplification,0.13347673292011
+Vector Similarity,0.134751762655652
+Pearson Correlation,0.145918810720527
+Pearson Correlation with Case Amplification,0.149598203586386
+Default voting with Case Amplification,0.222302421309188
+Inverse Frequency,0.235406881394673
+Inverse Frequency with Case Amplification,0.266874386397932
+Default voting,1

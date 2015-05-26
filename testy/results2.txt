@@ -1,0 +1,9 @@
+Root mean square error evaluation
+Vector Similarity with Case Amplification,0.00641723712158923
+Vector Similarity,0.00647158912577933
+Pearson Correlation,0.0139270540473435
+Pearson Correlation with Case Amplification,0.018517118305263
+Default voting with Case Amplification,0.0273104895536208
+Inverse Frequency,0.055524501506217
+Inverse Frequency with Case Amplification,0.0585127395700478
+Default voting,1

@@ -1,0 +1,9 @@
+Top list relevancy evaluation
+Vector Similarity,0.999944281268158
+Pearson Correlation,0.99946934541103
+Vector Similarity with Case Amplification,0.999946934541103
+Default voting,0.999949587814048
+Pearson Correlation with Case Amplification,0.999949587814048
+Default voting with Case Amplification,0.999970813997607
+Inverse Frequency,0.999973467270552
+Inverse Frequency with Case Amplification,1
