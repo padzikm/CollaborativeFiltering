@@ -66,7 +66,8 @@ namespace CollaborativeFilteringUI.Views.Evaluate
             App.Current.Dispatcher.Invoke(() =>
             {
                 EvaluationResults.Clear();
-                var toAdd = new List<Pair<string, double>>(rawResults.Select(t => new Pair<string, double>(t.Item1.ToString(), t.Item2)));
+                var maxError = rawResults.Max(r => r.Item2);
+                var toAdd = new List<Pair<string, double>>(rawResults.Select(t => new Pair<string, double>(t.Item1.ToString(), t.Item2 / maxError)));
                 foreach (var result in toAdd)
                     EvaluationResults.Add(result);
                 ShowResults = true;

@@ -13,8 +13,10 @@ namespace CollaborativeFiltering.Evaluations
             var evaluators =  new List<IEvaluator>();
             evaluators.Add(new MeanAbsoluteErrorEvaluator());
             evaluators.Add(new RootMeanSquareErrorEvaluator());
+            evaluators.Add(new AvarageRaterMeanAbsoluteErrorEvaluator());
             evaluators.Add(new TopListErrorEvaluator(new MeanAbsoluteErrorEvaluator()));
             evaluators.Add(new TopListErrorEvaluator(new RootMeanSquareErrorEvaluator()));
+            evaluators.Add(new TopListErrorEvaluator(new AvarageRaterMeanAbsoluteErrorEvaluator()));
 
             return evaluators;
         }
