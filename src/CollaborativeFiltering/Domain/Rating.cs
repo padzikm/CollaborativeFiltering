@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace CollaborativeFiltering
 {
@@ -47,7 +48,7 @@ namespace CollaborativeFiltering
 
         public override string ToString()
         {
-            return Subject.ToString() + " - " + Math.Round(Value, 4).ToString();
+            return Subject.ToString() + " - " + Math.Round(Value, 4).ToString(CultureInfo.InvariantCulture);
         }
     }
 }

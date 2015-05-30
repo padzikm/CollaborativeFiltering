@@ -2,6 +2,7 @@
 using CollaborativeFilteringUI.Core.Utils;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace CollaborativeFilteringUI.Utils
             sb.AppendLine(evaluationMethod);
 
             foreach (var result in results)
-                sb.AppendLine(result.ToString());
+                sb.AppendLine(result.Item1.ToString() + "," + result.Item2.ToString(CultureInfo.InvariantCulture));
 
             File.WriteAllText(filePath, sb.ToString());
         }
@@ -31,7 +32,7 @@ namespace CollaborativeFilteringUI.Utils
             for(int i = 1; i < lines.Length; ++i)
             {
                 var split = lines[i].Split(',');
-                var value = double.Parse(split[1]);
+                var value = double.Parse(split[1], CultureInfo.InvariantCulture);
                 results.Add(new Pair<string, double>(split[0], value));
             }
         }
